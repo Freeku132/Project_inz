@@ -1,34 +1,46 @@
 <template>
-    <nav class="bg-gray-100 flex justify-between p-5 ">
-        <div>
-            <h1 class="h1 light:text-red-600 dark:text-blue-600">Page Title</h1>
 
-        </div>
-        <div class="flex space-x-8">
-            <a href="#" class="link">
-                <p>
-                    Main Page
-                </p>
-            </a>
-            <a href="#" class="link">
-                <p>
-                    About Project
-                </p>
-            </a>
-        </div>
-
-    </nav>
-    <h1>
-        Hello world
-    </h1>
+    <main class="mx-auto">
+        <h1 class="">
+            Hello world
+        </h1>
+    </main>
 
 </template>
 
 <script>
+import Layout from "@/Shared/Layout.vue"
+export default {
+    layout: Layout,
+}
 
-    localStorage.theme = 'dark';
+
+// export default {
+//     data() {
+//         return {
+//             themes:
+//                 {
+//                     'theme-light': 'white',
+//                     'theme-dark': 'black',
+//                 },
+//             selectedTheme: 'theme-light'
+//         };
+//     },
+//     created() {
+//         this.selectedTheme = localStorage.getItem('theme') || "theme-light";
+//     },
+//     watch:{
+//         selectedTheme(){
+//             document.body.className = document.body.className.replace(/theme-\w+/, this.selectedTheme);
+//             localStorage.setItem('theme', this.selectedTheme);
+//         }
+//     }
+// }
 
 </script>
 
 <script setup>
 </script>
+
+<style>
+</style>

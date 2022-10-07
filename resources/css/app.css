@@ -1,3 +1,6 @@
+@import'./themes/dark.css';
+@import './themes/light.css';
+@import "./Components/card.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -8,5 +11,10 @@
     }
     h2{
         @apply text-xl
+    }
+    a{
+        @apply text-blue-600;
+        @apply underline
+
     }
 }

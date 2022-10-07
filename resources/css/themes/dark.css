@@ -1,0 +1,6 @@
+.theme-dark{
+    --page-background-color: #1e293b;
+    --text-default-color: #e5e7eb;
+    --border-default-color:#475569 ;
+    --page-background-image: linear-gradient(45deg, #1e293b 70%, #475569 );
+}
