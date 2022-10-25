@@ -1,6 +1,9 @@
 .theme-light{
-    --page-background-color:#f3f4f6 ;
+    --page-background-color: #ffffff;
+    --page2-background-color: #d7d7d7;
     --text-default-color: #1e293b;
     --border-default-color:#c7d2fe;
     --page-background-image: linear-gradient(45deg, rgba(50, 138, 241, 0.22), rgba(99, 123, 255, 0));
+    --container-background-color: #cbd5e1;
+    --border-container-color: #94a3b8;
 }

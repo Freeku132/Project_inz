@@ -20,5 +20,8 @@
         "tailwindcss": "^3.1.8",
         "vite": "^3.0.0",
         "vue": "^3.2.31"
+    },
+    "dependencies": {
+        "vue-cal": "^4.8.1"
     }
 }

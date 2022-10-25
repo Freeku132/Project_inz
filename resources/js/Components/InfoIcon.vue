@@ -1,24 +1,21 @@
 <template>
-    <section
 
+    <div class="flex flex-col items-center">
+    <div
+        class="w-8 "
     >
-    <Component
-        is="Button"
-        class="w-8"  @click="visibility = !visibility"
-        @keydown.esc.prevent="visibility = false"
-    >
+
         <slot/>
-    </Component>
+
+    </div>
     <Component
-        @focusout="visibility = false"
         is="Button"
         @click="copy"
-        v-if="visibility"
-        class="absolute left-48 md:left-44 bg-container px-4 border-2 border-container font-semibold rounded-xl   md:mt-9 mt-10">
+        class="px-4 font-semibold  mt-2">
         {{information}}
-        <p v-show="copied">{{iconName}} was copied</p>
+        <p v-show="copied">{{iconName.charAt(0).toUpperCase() + iconName.slice(1)}} was copied</p>
     </Component>
-    </section>
+    </div>
 </template>
 
 <script setup>

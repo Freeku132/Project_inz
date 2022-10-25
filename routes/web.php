@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EventsController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -28,8 +29,10 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/', function () {
-    return Inertia::render('Home');
+Route::get('/', [EventsController::class, 'index']);
+Route::post('/store', [EventsController::class, 'store']);
+Route::get('/profile', function (){
+    return Inertia::render('Profile');
 });
 
 require __DIR__.'/auth.php';

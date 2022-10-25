@@ -15,13 +15,18 @@ module.exports = {
                 sans: ['Nunito', ...defaultTheme.fontFamily.sans],
             },
             backgroundColor: {
-                page: 'var(--page-background-color)'
+                page: 'var(--page-background-color)',
+                page2: 'var(--page2-background-color)',
+                container: 'var(--container-background-color)',
+
             },
             colors: {
-                default: 'var(--text-default-color)'
+                default: 'var(--text-default-color)',
+                'bg-semi-75': 'rgba(0, 0, 0, 0.75)',
             },
             borderColor:{
-                default: 'var(--border-default-color)'
+                default: 'var(--border-default-color)',
+                container: 'var(--border-container-color)'
             },
             backgroundImage: {
                 default: 'var(--page-background-image)'
