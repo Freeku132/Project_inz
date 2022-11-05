@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\EventsController;
+use App\Http\Controllers\TeacherEventController;
+use App\Http\Controllers\UsersController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -34,5 +36,13 @@ Route::post('/store', [EventsController::class, 'store']);
 Route::get('/profile', function (){
     return Inertia::render('Profile');
 });
+
+Route::get('/profile/{user}', [UsersController::class, 'show'])->name('profile');
+
+Route::get('profile/{user}/events', [TeacherEventController::class, 'index']);
+Route::post('/event/create', [TeacherEventController::class, 'store']);
+
+Route::post('/event/{event}/update', [TeacherEventController::class,'update']);
+
 
 require __DIR__.'/auth.php';

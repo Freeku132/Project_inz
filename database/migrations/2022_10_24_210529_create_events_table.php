@@ -17,10 +17,12 @@ return new class extends Migration
             $table->id();
             $table->dateTime('start');
             $table->dateTime('end');
-            $table->string('subject');
-            $table->string('message');
+            $table->string('subject')->nullable();
+            $table->string('message')->nullable();
             $table->string('room');
             $table->string('class');
+            $table->foreignId('teacher_id')->nullable()->constrained('users');
+            $table->foreignId('student_id')->nullable()->constrained('users');
             $table->timestamps();
         });
     }

@@ -19,7 +19,6 @@ class EventsController extends Controller
             $startDate = \Illuminate\Support\Carbon::now()->subDays(3)->format('Y-m-d h:i');
             $endDate = \Illuminate\Support\Carbon::now()->addDays(3)->format('Y-m-d h:i');
 
-            //$currentDate = '2022-10-16 07:48';
         }
 
 //    $builder = \App\Models\Event::query()
@@ -53,7 +52,9 @@ class EventsController extends Controller
             'subject' => 'required',
             'message' => 'required',
             'room' => 'required',
-            'class' => 'required']);
+            'class' => 'required',
+            'teacher' => 'required',
+            'student' => 'required']);
 
 
         if( $request->start === $request->startNew && $request->end === $request->endNew){
@@ -68,7 +69,10 @@ class EventsController extends Controller
                 'subject' => $request->subject,
                 'message' => $request->message,
                 'room' => $request->room,
-                'class' => 'busy'
+                'teacher_id' => $request->teacher,
+                'student_id' => $request->student,
+                'class' => 'busy',
+
 
             ]);
 
@@ -89,6 +93,7 @@ class EventsController extends Controller
                     'subject' => $request->subject,
                     'message' => $request->message,
                     'room' => $request->room,
+                    'teacher_id' => $request->teacher,
                     'class' => 'free'
                 ]);
                 Event::create([
@@ -97,6 +102,8 @@ class EventsController extends Controller
                     'subject' => $request->subject,
                     'message' => $request->message,
                     'room' => $request->room,
+                    'teacher_id' => $request->teacher,
+                    'student_id' => $request->student,
                     'class' => 'busy'
                 ]);
                 return back();
@@ -107,6 +114,7 @@ class EventsController extends Controller
                     'subject' => $request->subject,
                     'message' => $request->message,
                     'room' => $request->room,
+                    'teacher_id' => $request->teacher,
                     'class' => 'free'
                 ]);
                 Event::create([
@@ -115,6 +123,8 @@ class EventsController extends Controller
                     'subject' => $request->subject,
                     'message' => $request->message,
                     'room' => $request->room,
+                    'teacher_id' => $request->teacher,
+                    'student_id' => $request->student,
                     'class' => 'busy'
                 ]);
 
@@ -132,6 +142,7 @@ class EventsController extends Controller
             'subject' => $request->subject,
             'message' => $request->message,
             'room' => $request->room,
+            'teacher_id' => $request->teacher,
             'class' => 'free'
         ]);
         Event::create([
@@ -140,6 +151,8 @@ class EventsController extends Controller
             'subject' => $request->subject,
             'message' => $request->message,
             'room' => $request->room,
+            'teacher_id' => $request->teacher,
+            'student_id' => $request->student,
             'class' => 'busy'
         ]);
         Event::create([
@@ -148,11 +161,12 @@ class EventsController extends Controller
             'subject' => $request->subject,
             'message' => $request->message,
             'room' => $request->room,
+            'teacher_id' => $request->teacher,
             'class' => 'free'
         ]);
 
 
-        return back();
+        return back()->with('succes_message', 'You has been successfully reserved event');
 
     }
 }
