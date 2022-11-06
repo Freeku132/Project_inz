@@ -41,8 +41,6 @@ class EventsController extends Controller
 
     public function store( Request $request)
     {
-
-        //dd($request);
         $request->validate([
             'id' => 'nullable',
             'start' => 'required',
@@ -57,112 +55,35 @@ class EventsController extends Controller
             'student' => 'required']);
 
 
-        if( $request->start === $request->startNew && $request->end === $request->endNew){
-
-            if(Event::find($request->id)){
-                Event::destroy($request->id);
-            }
-
+        if($request->start != $request->startNew){
             Event::create([
-                'start' => $request->startNew,
-                'end' => $request->endNew,
+                'start' => $request->start,
+                'end' => $request->startNew,
                 'subject' => $request->subject,
                 'message' => $request->message,
                 'room' => $request->room,
                 'teacher_id' => $request->teacher,
-                'student_id' => $request->student,
-                'class' => 'busy',
-
-
+                'class' => 'free'
             ]);
-
-            return back();
+        }
+        if($request->end != $request->endNew){
+            Event::create([
+                'start' => $request->endNew,
+                'end' => $request->end,
+                'subject' => $request->subject,
+                'message' => $request->message,
+                'room' => $request->room,
+                'teacher_id' => $request->teacher,
+                'class' => 'free'
+            ]);
         }
 
-        if ( $request->start === $request->startNew || $request->end === $request->endNew){
-
-            if(Event::find($request->id)){
-                Event::destroy($request->id);
-            }
-
-            if ($request->start === $request->startNew) {
-
-                Event::create([
-                    'start' => $request->endNew,
-                    'end' => $request-> end,
-                    'subject' => $request->subject,
-                    'message' => $request->message,
-                    'room' => $request->room,
-                    'teacher_id' => $request->teacher,
-                    'class' => 'free'
-                ]);
-                Event::create([
-                    'start' => $request->startNew,
-                    'end' => $request-> endNew,
-                    'subject' => $request->subject,
-                    'message' => $request->message,
-                    'room' => $request->room,
-                    'teacher_id' => $request->teacher,
-                    'student_id' => $request->student,
-                    'class' => 'busy'
-                ]);
-                return back();
-            } else {
-                Event::create([
-                    'start' => $request->start,
-                    'end' => $request-> startNew,
-                    'subject' => $request->subject,
-                    'message' => $request->message,
-                    'room' => $request->room,
-                    'teacher_id' => $request->teacher,
-                    'class' => 'free'
-                ]);
-                Event::create([
-                    'start' => $request->startNew,
-                    'end' => $request-> endNew,
-                    'subject' => $request->subject,
-                    'message' => $request->message,
-                    'room' => $request->room,
-                    'teacher_id' => $request->teacher,
-                    'student_id' => $request->student,
-                    'class' => 'busy'
-                ]);
-
-                return back();
-            }
-        }
-
-        if(Event::find($request->id)){
-            Event::destroy($request->id);
-        }
-
-        Event::create([
-            'start' => $request->start,
-            'end' => $request-> startNew,
-            'subject' => $request->subject,
-            'message' => $request->message,
-            'room' => $request->room,
-            'teacher_id' => $request->teacher,
-            'class' => 'free'
-        ]);
-        Event::create([
+        $event =Event::findOrFail($request->id);
+        $event->update([
             'start' => $request->startNew,
-            'end' => $request-> endNew,
-            'subject' => $request->subject,
-            'message' => $request->message,
-            'room' => $request->room,
-            'teacher_id' => $request->teacher,
+            'end' => $request->endNew,
             'student_id' => $request->student,
             'class' => 'busy'
-        ]);
-        Event::create([
-            'start' => $request->endNew,
-            'end' => $request-> end,
-            'subject' => $request->subject,
-            'message' => $request->message,
-            'room' => $request->room,
-            'teacher_id' => $request->teacher,
-            'class' => 'free'
         ]);
 
 
