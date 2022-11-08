@@ -87,7 +87,7 @@ class EventsController extends Controller
         ]);
 
 
-        return back()->with('succes_message', 'You has been successfully reserved event');
+        return back()->with('success_message', 'You has been successfully reserved event');
 
     }
 }

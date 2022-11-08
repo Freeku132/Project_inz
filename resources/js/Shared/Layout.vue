@@ -9,6 +9,7 @@
             <Link href="/" > Main Page</Link>
             <Link href="#" > About Project</Link>
             <Link href="/profile" > Author Profile</Link>
+            <Link :href="route('dashboard') " > Dashboard</Link>
         </div>
 
         <ThemeSwitcher />

@@ -17,7 +17,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
 
         $role1 = Role::factory()->create([
             'id' => 1,
@@ -32,19 +31,19 @@ class DatabaseSeeder extends Seeder
             'name' => 'student'
         ]);
 
-        User::factory()->create([
+        $user1 = User::factory()->create([
             'name' => 'admin',
             'password' => '$2y$10$lnHMRaXDApRVMHLqgKlWb.p7ciXt0m0nZC7Go05N8e7hFt5dXoTP2',
             'email' => 'admin@admin.pl',
             'role_id' => $role2
         ]);
-        User::factory()->create([
+        $user2 = User::factory()->create([
             'name' => 'student1',
             'password' => '$2y$10$lnHMRaXDApRVMHLqgKlWb.p7ciXt0m0nZC7Go05N8e7hFt5dXoTP2',
             'email' => 'student1@student.pl',
             'role_id' => $role3
         ]);
-        User::factory()->create([
+        $user3 = User::factory()->create([
             'name' => 'student2',
             'password' => '$2y$10$lnHMRaXDApRVMHLqgKlWb.p7ciXt0m0nZC7Go05N8e7hFt5dXoTP2',
             'email' => 'student2@student.pl',
@@ -55,25 +54,20 @@ class DatabaseSeeder extends Seeder
             'start' => '2022-10-10 8:00',
             'end' => '2022-10-10 9:30',
             'class' => 'free',
-            'teacher_id' => 1,
+            'teacher_id' => $user1,
         ]);
         Event::factory()->create([
             'start' => '2022-10-11 10:00',
             'end' => '2022-10-11 11:30',
             'class' => 'free',
-            'teacher_id' => 1,
+            'teacher_id' => $user1,
         ]);
         Event::factory()->create([
             'start' => '2022-10-12 9:00',
             'end' => '2022-10-12 10:30',
             'class' => 'free',
-            'teacher_id' => 1,
+            'teacher_id' => $user1,
         ]);
 
-
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
     }
 }

@@ -17,7 +17,7 @@ class UserPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->role->id === 2;
+        return $user->role->name === 'teacher' || $user->role->name === 'admin';
     }
 
     /**

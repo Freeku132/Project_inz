@@ -11,12 +11,11 @@
                     <div class=" p-8 rounded-2xl md:w-2/3 ">
                         <form
                             @submit.prevent="submit" class="flex flex-col bg-page rounded-3xl">
-                            <div class="bg-green-600 rounded-t-3xl p-2 text-center flex flex-row justify-between">
-
+                            <div class="bg-green-600 rounded-t-3xl p-2 text-center flex flex-col justify-between">
                                 <p>{{form.start + ' - ' + form.end}}</p>
                                 <div class="space-x-8">
-                                <button v-if="form.class === 'busy'" class=" bg-green-700 font-bold text-xl  px-1 rounded-md">Accept</button>
-                                <button v-if="props.user.id === auth.id" class=" relative mr-5 bg-red-600 font-bold text-xl px-1  rounded-md">Cancel</button>
+                                    <button type="button" v-if="form.class === 'busy'" class=" bg-green-700 font-bold text-xl  px-1 rounded-md">Accept</button>
+                                    <button type="button" v-if="props.user.id === auth.id" class=" relative mr-5 bg-red-600 font-bold text-xl px-1  rounded-md">Revoke</button>
                                 </div>
                             </div>
 
@@ -25,22 +24,26 @@
                             </div>
                             <label for=content class="font-bold mx-5 mt-5 bg-page2 rounded-t-md p-1">Subject:/Temat:</label>
                             <input v-model="form.subject" class="bg-page rounded pl-3 p-1 mx-5 border border-default focus:outline-none " />
+                            <div class=" font-semibold text-red-500 p-1 mx-5" v-if="form.errors.subject">{{form.errors.subject}}</div>
 
                             <label for=content class="font-bold mx-5  bg-page2 p-1">Message:/Wiadomość:</label>
                             <textarea v-model="form.message" class="bg-page mx-5 border border-default focus:ring-0 focus:outline-none focus:border-default mb-0.5" />
+                            <div class=" font-semibold text-red-500 p-1 mx-5" v-if="form.errors.message">{{form.errors.message}}</div>
 
-                            <label for="room" class="font-bold mx-5  bg-page2 p-1">Room: {{form.room}}</label>
-                            <input disabled class="mx-5 bg-page pl-3 p-1 border border-default" :value="form.room + '997'">
+                            <label for="room" class="font-bold mx-5  bg-page2 p-1">Room:</label>
+                            <input disabled class="mx-5 bg-page pl-3 p-1 border border-default" :value="form.room">
 
                             <label for="endNew" class="font-bold mx-5 bg-page2 p-1">Start Time:/Czas rozpoczęcia:</label>
                             <select v-model="form.startNew" @change="setEndOptions()" class="bg-page mx-5  border-default">
                                 <option v-for="option in startOptions" :value="option">{{option}}</option>
                             </select>
+                            <div class=" font-semibold text-red-500 p-1 mx-5" v-if="form.errors.startNew">{{form.errors.startNew}}</div>
 
                             <label for="endNew" class="font-bold mx-5 bg-page2 p-1">End Time:/Czas zakończenia:</label>
                             <select v-model="form.endNew" class="bg-page mx-5 rounded-b-md border border-default">
                                 <option v-for="option in endOptions" :value="option">{{option}}</option>
                             </select>
+                            <div class=" font-semibold text-red-500 p-1 mx-5" v-if="form.errors.endNew">{{form.errors.endNew}}</div>
 
                             <div class="flex justify-between">
                                 <button type="submit" class="bg-green-500 w-1/4 h-10 rounded-bl-xl mt-5 disabled:bg-gray-600" :disabled="form.processing || form.class==='busy'">Submit</button>
@@ -50,7 +53,6 @@
                             </div>
                         </form>
                     </div>
-
                 </div>
 
 
@@ -77,8 +79,6 @@
                         :resizeX=true
                         @view-change="logEvents($event)"
 
-
-
                     >
                         <template #event="{event, view}">
                             <div class="items-center">
@@ -99,13 +99,14 @@
 </template>
 
 <script setup>
-import {Head, useForm} from '@inertiajs/inertia-vue3';
+import {useForm} from '@inertiajs/inertia-vue3';
 import VueCal from 'vue-cal'
 import 'vue-cal/dist/vuecal.css'
 import {ref, watch} from 'vue';
 import {throttle} from "lodash/function";
 import {Inertia} from "@inertiajs/inertia";
 import {usePage} from "@inertiajs/inertia-vue3"
+import {useToast} from "vue-toastification";
 
 
 
@@ -115,6 +116,8 @@ let props = defineProps({
     currentDate: String,
     user: Object
 })
+
+const toast = useToast();
 
 let showForm = ref(false);
 
@@ -138,7 +141,9 @@ let submit = () =>{
         {
             preserveState:true,
             onSuccess: () => {
-                showForm.value = false
+                showForm.value = false;
+                toast.success(usePage().props.value.flash.success_message);
+
             }
         })
 }
@@ -156,16 +161,13 @@ let specialHours = {
 let startOptions = ref([]); // Available hours to choose on book
 let endOptions = ref([]); // Available hours to choose on book
 
-
 function onEventClick(event, e) {
     if (usePage().props.value.auth.user) {
-        if (event.class === 'free' || usePage().props.value.auth.user.id === props.user.id) {
+        if (event.class === 'free' || usePage().props.value.auth.user.id === props.user.id
+        ) {
             let start = event.start.format('YYYY-MM-DD HH:mm')
             let end = event.end.format('YYYY-MM-DD HH:mm')
-
             let diff = ((event.end.getTime() - event.start.getTime()) / 60000) / 15;
-            // console.log(diff)
-
             startOptions.value = [];
             endOptions.value = [];
 
@@ -173,7 +175,6 @@ function onEventClick(event, e) {
                 if (event.end.getTime() === new Date(event.start.getTime() + 15 * 60000).format('YYYY-MM-DD HH:mm')) {
                     return;
                 }
-                // console.log(startOptions)
                 startOptions.value.push(new Date(event.start.getTime() + (i * 15 * 60000)).format('YYYY-MM-DD HH:mm'))
             }
 
@@ -189,10 +190,13 @@ function onEventClick(event, e) {
             form.class = event.class
             form.teacher = props.user.id
             form.student = usePage().props.value.auth.user.id
-            // Prevent navigating to narrower view (default vue-cal behavior).
-            // e.stopPropagation()
+            return;
         }
+        toast.error('admin')
+        return;
     }
+    toast.error('auth');
+    return;
 }
 
 
@@ -207,14 +211,12 @@ function setEndOptions() {
 }
 
 
-// Change week and get new events(for week)
 let startDate = ref();
 let endDate = ref();
-// let currentDate = props.currentDate
+
 
 function logEvents(event){
-    // console.log(event.startDate)
-    // console.log(event.endDate)
+
     startDate.value = event.startDate.format('YYYY-MM-DD HH:mm')
     endDate.value = event.endDate.format('YYYY-MM-DD HH:mm')
 }
@@ -230,7 +232,7 @@ watch(startDate, throttle( (value) => {
         preserveScroll: true,
         preserveState:true
     });
-}, 300))
+}, 300));
 
 </script>
 
@@ -241,7 +243,6 @@ watch(startDate, throttle( (value) => {
     font-size: 0.9em;
     font-weight: bold;
 }
-
 
 
 .closed {
@@ -260,7 +261,7 @@ watch(startDate, throttle( (value) => {
 .free {background-color: forestgreen;color:black;}
 .busy {background-color: gray;color: black;}
 .cancelled {background-color: red;color: black;}
-.claim {background-color: red;color:black;}
+.accept {background-color: darkgray;color: black;}
 
 
 /* Green-theme. */

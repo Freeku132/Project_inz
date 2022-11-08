@@ -1,9 +1,6 @@
 <template>
     <form @submit.prevent="createEvent">
-        <div class="flex flex-col w-1/3 bg-page rounded-xl m-4 p-4" >
-            <label>Data</label>
-            <input type="date" v-model="form.date" class="bg-page text-default">
-            <div class=" font-semibold text-red-500" v-if="form.errors.day">{{form.errors.day}}</div>
+        <div class="flex flex-col md:w-1/3 bg-page rounded-xl m-4 p-4" >
             <label>Day</label>
             <select v-model="form.day" class="bg-page text-default">
                 <option value="1">Monday</option>
@@ -21,11 +18,6 @@
             <label>End Time</label>
             <input type="time" v-model="form.endTime" class="bg-page text-default">
             <div class=" font-semibold text-red-500" v-if="form.errors.endTime">{{form.errors.endTime}}</div>
-            <div class="flex items-center mt-2">
-                <label>Semester</label>
-                <input type="checkbox" class="text-default ml-5 border border-gray-300" v-model="form.semester" >
-            </div>
-            <div class=" font-semibold text-red-500" v-if="form.errors.semester">{{form.errors.semester}}</div>
             <label>Week</label>
             <select v-model="form.week" class="bg-page text-default">
                 <option value="A">A</option>
@@ -36,28 +28,33 @@
             <label>Room</label>
             <input type="text" v-model="form.room" class="bg-page text-default">
             <div class=" font-semibold text-red-500" v-if="form.errors.room">{{form.errors.room}}</div>
-            <button type="submit" class="bg-page2 mt-2 rounded-md p-2 mx-auto" >CREATE</button>
+            <button type="submit" class="bg-page2 mt-2 rounded-md p-2 mx-auto disabled:bg-page" :disabled="form.processing" >CREATE</button>
         </div>
     </form>
 </template>
 
 <script setup>
-import {useForm} from "@inertiajs/inertia-vue3";
+import {useForm, usePage} from "@inertiajs/inertia-vue3";
+import {useToast} from "vue-toastification";
 
 
 
 let form = useForm({
     'day' : '',
-    'date' : '',
     'startTime' : '',
     'endTime' : '',
-    'semester' : '',
     'week' : '',
     'room' : '',
 })
+const toast = useToast();
+
 
 let createEvent = () =>{
-    form.post('/event/create');
+    form.post('/event/create', {
+        onSuccess: () => {
+            toast.success(usePage().props.value.flash.success_message, {})
+        }
+    });
 }
 
 </script>

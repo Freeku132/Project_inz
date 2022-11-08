@@ -14,11 +14,13 @@ class TeacherEventController extends Controller
     {
         $events = Event::query()
             ->with(['teacher', 'student'])
+
             ->where('teacher_id', $user->id)
             ->where('class', 'busy')
             ->orWhere('class', 'claim')
             ->where('teacher_id', $user->id)
-            ->get();
+            ->orderBy('updated_at')
+            ->paginate(20);
 
 
         return Inertia::render('Teacher/EventsIndex',[
@@ -26,9 +28,17 @@ class TeacherEventController extends Controller
             'events' => $events,
         ]);
     }
-    public function update(Request $request)
+    public function update(User $user,Request $request, Event $event)
     {
-        dd($request);
+
+
+        $event = Event::findOrFail($request->id);
+
+        $event->update([
+            'class' => $request->class
+        ]);
+
+        return redirect('/profile/'.$user->id.'/events')->with('success_message', 'You has been completed change event status to '.$request->class);
     }
 
     public function store(Request $request)
@@ -37,18 +47,16 @@ class TeacherEventController extends Controller
   //      dd($request);
         $request->validate([
             'day' => 'required',
-            'date' => 'required',
             'startTime' => 'required',
             'endTime' => 'required',
-            'semester' => 'nullable|boolean',
             'week' => 'required',
             'room' => 'required',
         ]);
 
-//        $startSemester = '01-10-2022';
-        $startSemester = '25-02-2023';
-//        $endSemesterDate = "20-02-2023";
-        $endSemesterDate = "12-07-2023";
+        $startSemester = '01-10-2022';
+//        $startSemester = '25-02-2023';
+        $endSemesterDate = "20-02-2023";
+//        $endSemesterDate = "12-07-2023";
 
         $endSemesterDate = Carbon::create($endSemesterDate);
         $startSemesterDate = Carbon::parse($startSemester);
@@ -127,34 +135,41 @@ class TeacherEventController extends Controller
             if($request->week === 'A/B'){
                 if($weekArray[$item['week']] === 'A' || $weekArray[$item['week']] === 'B'){
                     if($item['startDate'] < Carbon::create($startSemester)){
-                        echo $item['week']. '-tej nie ';
+
                     } else {
-                        echo $item['week'];
-                        echo "- $request->week ";
+                        Event::create([
+                        'start' => $item['startDate'],
+                        'end' => $item['endDate'],
+                        'subject'=> '',
+                        'message' => '',
+                        'room' => $request->room,
+                        'class' => 'free',
+                        'teacher_id'  => auth()->id(),
+                            ]);
                     }
                 }
 
 
             }elseif ($weekArray[$item['week']] === $request->week){
                 if($item['startDate'] < Carbon::create($startSemester)){
-                    echo $item['week'].'-tej nie ';
+
                 } else {
                     echo $item['week'];
                     echo "- $request->week ";
-//                Event::create([
-//                    'start' => $item['startDate'],
-//                    'end' => $item['endDate'],
-//                    'title'=> 'test',
-//                    'content' => 'testcont',
-//                    'contentFull' => 'contentdfull',
-//                    'class' => 'free',
-//                    'teacher_id'  => auth()->id(),
-//
-//                ]);
+                    Event::create([
+                        'start' => $item['startDate'],
+                        'end' => $item['endDate'],
+                        'subject'=> '',
+                        'message' => '',
+                        'room' => $request->room,
+                        'class' => 'free',
+                        'teacher_id'  => auth()->id(),
+                    ]);
                 }
             }
         }
 
-        dd($dayDates);
+
+        return redirect()->back()->with('success_message', 'Creating events completed');
     }
 }
