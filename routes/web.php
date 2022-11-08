@@ -3,6 +3,7 @@
 use App\Http\Controllers\EventsController;
 use App\Http\Controllers\TeacherEventController;
 use App\Http\Controllers\UsersController;
+use App\Models\User;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -31,7 +32,9 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/', [EventsController::class, 'index']);
+Route::get('/',[UsersController::class, 'index']);
+
+
 Route::post('/store', [EventsController::class, 'store']);
 Route::get('/profile', function (){
     return Inertia::render('Profile');
@@ -39,10 +42,11 @@ Route::get('/profile', function (){
 
 Route::get('/profile/{user}', [UsersController::class, 'show'])->name('profile');
 
-Route::get('profile/{user}/events', [TeacherEventController::class, 'index']);
-Route::post('/event/create', [TeacherEventController::class, 'store']);
 
-Route::post('/event/{event}/update', [TeacherEventController::class,'update']);
+
+Route::get('profile/{user}/events', [TeacherEventController::class, 'index'])->can('update','user');
+Route::post('event/create', [TeacherEventController::class, 'store'])->can('viewAny', User::class);
+Route::post('/profile/{user}/events/{event}/update', [TeacherEventController::class,'update'])->can('viewAny', User::class)->name('events.update');
 
 
 require __DIR__.'/auth.php';
