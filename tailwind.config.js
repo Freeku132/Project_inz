@@ -17,15 +17,18 @@ module.exports = {
             backgroundColor: {
                 page: 'var(--page-background-color)',
                 page2: 'var(--page2-background-color)',
+                page3: 'var(--page3-background-color)',
                 container: 'var(--container-background-color)',
 
             },
             colors: {
                 default: 'var(--text-default-color)',
+                default2: 'var(--text-default2-color)',
                 'bg-semi-75': 'rgba(0, 0, 0, 0.75)',
             },
             borderColor:{
                 default: 'var(--border-default-color)',
+                focus: 'var(--border-focus-color)',
                 container: 'var(--border-container-color)'
             },
             backgroundImage: {

@@ -1,5 +1,5 @@
 <script setup>
-import GuestLayout from '@/Layouts/GuestLayout.vue';
+
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
@@ -24,11 +24,18 @@ const submit = () => {
     });
 };
 </script>
+<script>
+import Layout from "@/Shared/Layout.vue"
+export default {
+    layout: Layout,
+}
+</script>
 
 <template>
-    <GuestLayout>
+
         <Head title="Reset Password" />
 
+    <div class="mx-auto md:w-1/3 p-5 mt-20">
         <form @submit.prevent="submit">
             <div>
                 <InputLabel for="email" value="Email" />
@@ -54,5 +61,5 @@ const submit = () => {
                 </PrimaryButton>
             </div>
         </form>
-    </GuestLayout>
+    </div>
 </template>

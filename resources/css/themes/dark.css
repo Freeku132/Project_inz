@@ -2,8 +2,11 @@
 
     --page-background-color: #121f38;
     --page2-background-color: #0d172a;
+    --page3-background-color: #0b1323;
     --text-default-color: #e5e7eb;
+    --text-default2-color: #a1a1a1;
     --border-default-color:#475569 ;
+    --border-focus-color: #7b92b0;
     --page-background-image: linear-gradient(45deg, #1e293b 70%, #475569 );
     --container-background-color: #475569;
     --border-container-color: #4b5563;

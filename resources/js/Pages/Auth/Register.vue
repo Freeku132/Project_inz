@@ -1,5 +1,4 @@
 <script setup>
-import GuestLayout from '@/Layouts/GuestLayout.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
@@ -21,10 +20,16 @@ const submit = () => {
 };
 </script>
 
+<script>
+import Layout from "@/Shared/Layout.vue"
+export default {
+    layout: Layout,
+}
+</script>
 <template>
-    <GuestLayout>
         <Head title="Register" />
 
+    <div class="w-1/3 mt-20 mx-auto">
         <form @submit.prevent="submit">
             <div>
                 <InputLabel for="name" value="Name" />
@@ -51,7 +56,7 @@ const submit = () => {
             </div>
 
             <div class="flex items-center justify-end mt-4">
-                <Link :href="route('login')" class="underline text-sm text-gray-600 hover:text-gray-900">
+                <Link :href="route('login')" class="underline text-sm text-default hover:text-default2">
                     Already registered?
                 </Link>
 
@@ -60,5 +65,5 @@ const submit = () => {
                 </PrimaryButton>
             </div>
         </form>
-    </GuestLayout>
+    </div>
 </template>

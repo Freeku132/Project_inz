@@ -18,12 +18,18 @@ const submit = () => {
     form.post(route('password.email'));
 };
 </script>
+<script>
+import Layout from "@/Shared/Layout.vue"
+export default {
+    layout: Layout,
+}
+</script>
 
 <template>
-    <GuestLayout>
+    <div class="mx-auto md:w-1/3 p-5 mt-20">
         <Head title="Forgot Password" />
 
-        <div class="mb-4 text-sm text-gray-600">
+        <div class="mb-4 text-sm text-default">
             Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.
         </div>
 
@@ -44,5 +50,5 @@ const submit = () => {
                 </PrimaryButton>
             </div>
         </form>
-    </GuestLayout>
+    </div>
 </template>
