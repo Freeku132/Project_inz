@@ -71,7 +71,7 @@
                         :max-date="'2022-10-14'"
                         :editable-events="{ title: false, drag: false, resize: false, delete: false, create: false }"
                         locale="en"
-                        :events="props.events"
+                        :events="props.events.data"
                         :special-hours="specialHours"
                         :on-event-click="onEventClick"
                         :xsmall=true
@@ -259,9 +259,9 @@ watch(startDate, throttle( (value) => {
 }
 
 .free {background-color: forestgreen;color:black;}
-.busy {background-color: gray;color: black;}
+.busy {background-color: darkorange;color: black;}
 .cancelled {background-color: red;color: black;}
-.accept {background-color: darkgray;color: black;}
+.accept {background-color: gray;color: black;}
 
 
 /* Green-theme. */

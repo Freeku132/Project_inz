@@ -18,5 +18,8 @@ class Event extends Model
     public function student()
     {
         return $this->belongsTo(User::class, 'student_id');
+    }    public function eventClass()
+    {
+        return $this->belongsTo(EventClass::class, 'class');
     }
 }

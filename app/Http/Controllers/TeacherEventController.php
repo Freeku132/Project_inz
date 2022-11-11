@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\EventResource;
 use App\Models\Event;
+use App\Models\EventClass;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -10,17 +12,31 @@ use Inertia\Inertia;
 
 class TeacherEventController extends Controller
 {
+
     public function index(User $user)
     {
-        $events = Event::query()
-            ->with(['teacher', 'student'])
+        $busyClass = EventClass::query()->where('name', 'busy')->first();
+        $acceptedClass = EventClass::query()->where('name', 'accepted')->first();
 
+        $events = Event::query()
+            ->with(['teacher', 'student', 'eventClass'])
             ->where('teacher_id', $user->id)
-            ->where('class', 'busy')
-            ->orWhere('class', 'claim')
+            ->where('class', $busyClass->id)
+            ->orWhere('class', $acceptedClass->id)
             ->where('teacher_id', $user->id)
             ->orderBy('updated_at')
-            ->paginate(20);
+            ->paginate(5)
+            ->through(fn($event) => [
+                'id'      => $event->id,
+                'subject' => $event->subject,
+                'message' => $event->message,
+                'start'    => $event->start,
+                'end'    => $event->end,
+                'teacher' => $event->teacher,
+                'student' => $event->student,
+                'room' => $event->room,
+                'class' => $event->eventClass->name
+            ]);
 
 
         return Inertia::render('Teacher/EventsIndex',[
@@ -28,21 +44,28 @@ class TeacherEventController extends Controller
             'events' => $events,
         ]);
     }
-    public function update(User $user,Request $request, Event $event)
+
+
+    public function update(User $user,Request $request)
     {
 
 
         $event = Event::findOrFail($request->id);
 
+        $class = EventClass::query()->where('name', $request->class)->first();
+
         $event->update([
-            'class' => $request->class
+            'class' => $class->id
         ]);
 
         return redirect('/profile/'.$user->id.'/events')->with('success_message', 'You has been completed change event status to '.$request->class);
     }
 
+
     public function store(Request $request)
     {
+        $freeClass = EventClass::query()->where('name', 'free')->first();
+
 
   //      dd($request);
         $request->validate([
@@ -112,8 +135,6 @@ class TeacherEventController extends Controller
         ];
 
 
-
-
         $diff = (date_diff($endSemesterDate, $chosenDayDate)->days)/7;
 
 
@@ -138,14 +159,14 @@ class TeacherEventController extends Controller
 
                     } else {
                         Event::create([
-                        'start' => $item['startDate'],
-                        'end' => $item['endDate'],
-                        'subject'=> '',
-                        'message' => '',
-                        'room' => $request->room,
-                        'class' => 'free',
-                        'teacher_id'  => auth()->id(),
-                            ]);
+                        'start'      => $item['startDate'],
+                        'end'        => $item['endDate'],
+                        'room'       => $request->room,
+                        'class'      => $freeClass->id,
+                        'subject'    => '',
+                        'message'    => '',
+                        'teacher_id' => auth()->id(),
+                        ]);
                     }
                 }
 
@@ -157,18 +178,17 @@ class TeacherEventController extends Controller
                     echo $item['week'];
                     echo "- $request->week ";
                     Event::create([
-                        'start' => $item['startDate'],
-                        'end' => $item['endDate'],
-                        'subject'=> '',
-                        'message' => '',
-                        'room' => $request->room,
-                        'class' => 'free',
-                        'teacher_id'  => auth()->id(),
+                        'start'      => $item['startDate'],
+                        'end'        => $item['endDate'],
+                        'room'       => $request->room,
+                        'class'      => $freeClass->id,
+                        'subject'    => '',
+                        'message'    => '',
+                        'teacher_id' => auth()->id(),
                     ]);
                 }
             }
         }
-
 
         return redirect()->back()->with('success_message', 'Creating events completed');
     }
