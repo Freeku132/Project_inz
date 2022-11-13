@@ -6,15 +6,43 @@
         </div>
 
         <div class="flex flex-col md:flex-row md:space-x-8 text-default">
-            <Link class="text-default" :href="route('teachers.index')" > All Teachers</Link>
-            <Link class="text-default" href="#" > About Project</Link>
-            <Link class="text-default" href="/profile" > Author Profile</Link>
-            <Link class="text-default" :href="route('dashboard') " > Dashboard</Link>
+            <Link class="text-default" :href="route('home') " >    {{ lang.get('nav.home') }}</Link>
+            <Link class="text-default" :href="route('teachers.index')" > {{ lang.get('nav.teachers') }}</Link>
+            <Link class="text-default" href="#" > {{ lang.get('nav.about') }}</Link>
+            <Link class="text-default" href="/profile" > {{ lang.get('nav.profile') }}</Link>
         </div>
 
         <div class="items-center flex">
+
         <ThemeSwitcher />
-        <div v-if="$page.props.auth.user" >
+<!--            <select class="text-default bg-page ring-0  focus:ring-0 hover:text-default2 focus:border-default border-default rounded-md text-sm md:mr-5 ease-in-out " v-model="chosenLang" @change="selectLang">-->
+<!--                <option value="pl">PL</option>-->
+<!--                <option value="en">EN</option>-->
+<!--            </select>-->
+            <Dropdown align="right" class="mr-5" width="48">
+                <template #trigger>
+                    <span class="inline-flex rounded-md ">
+                        <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-default bg-page hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                            {{ chosenLang.toString().toUpperCase() }}
+
+                            <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                    </span>
+                </template>
+
+                <template #content>
+                    <DropdownLink @click="selectLang('pl')" class="bg-page text-default" method="post" as="button">
+                        PL
+                    </DropdownLink>
+                    <DropdownLink @click="selectLang('en')" class="bg-page text-default" method="post" as="button">
+                        EN
+                    </DropdownLink>
+                </template>
+            </Dropdown>
+
+            <div v-if="$page.props.auth.user" >
             <Dropdown align="right" width="48">
                 <template #trigger>
                     <span class="inline-flex rounded-md ">
@@ -30,15 +58,15 @@
 
                 <template #content>
                     <DropdownLink :href="route('logout')" class="bg-page text-default" method="post" as="button">
-                        Log Out
+                        {{ lang.get('nav.logout') }}
                     </DropdownLink>
                 </template>
             </Dropdown>
         </div>
         <div v-else>
-            <Link :href="route('login')" class="text-sm text-default dark:text-gray-500 underline">Log in</Link>
+            <Link :href="route('login')" class="text-sm text-default dark:text-gray-500 underline"> {{ lang.get('nav.login') }}</Link>
 
-            <Link :href="route('register')" class="ml-4 text-sm text-default dark:text-gray-500 underline">Register</Link>
+            <Link :href="route('register')" class="ml-4 text-sm text-default dark:text-gray-500 underline"> {{ lang.get('nav.register') }}</Link>
         </div>
         </div>
     </nav>
@@ -52,7 +80,23 @@ import ThemeSwitcher from "@/Components/ThemeSwitcher.vue";
 import {Link} from "@inertiajs/inertia-vue3";
 import Dropdown from "@/Components/Dropdown.vue"
 import DropdownLink from "@/Components/DropdownLink.vue"
+import Lang from "lang.js";
+import messages from "/lang/messages.json"
+import {ref} from "vue";
 
+
+var lang = ref(new Lang({
+    messages: messages
+}));
+
+let chosenLang = ref(localStorage.getItem('lang') || 'en');
+lang.value.setLocale(chosenLang)
+lang.value.setFallback(chosenLang)
+
+let selectLang = (value) => {
+    localStorage.setItem('lang', value);
+    location.reload()
+}
 
 </script>
 

@@ -1,0 +1,22 @@
+{
+        "en.login": {
+            "email": "Email",
+            "password": "Password",
+            "remember": "Remember Me",
+            "forgot": "Forgot your password?",
+            "login": "LOG IN"
+        },
+        "pl.login": {
+            "email": "Email",
+            "password": "Hasło",
+            "remember": "Zapamiętaj mnie",
+            "forgot": "Zapomniałeś hasła?",
+            "login": "Zaloguj"
+        },
+    "en.error": {
+        "email": "EN ERROR"
+    },
+    "pl.error": {
+        "email": "PL ERROR"
+    }
+}

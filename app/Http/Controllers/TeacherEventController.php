@@ -58,7 +58,8 @@ class TeacherEventController extends Controller
             'class' => $class->id
         ]);
 
-        return redirect('/profile/'.$user->id.'/events')->with('success_message', 'You has been completed change event status to '.$request->class);
+        return redirect()->back()->with('success_message', 'You has been completed change event status to '.$request->class);
+//        return redirect('/profile/'.$user->id.'/events')->with('success_message', 'You has been completed change event status to '.$request->class);
     }
 
 

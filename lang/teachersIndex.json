@@ -1,0 +1,16 @@
+{
+    "en.teachersIndex": {
+        "header": "All Teachers",
+        "name" : "Name",
+        "email": "Email",
+        "others": "Others",
+        "search": "Search..."
+    },
+    "pl.teachersIndex": {
+        "header": "Lista Wszystkich Nauczycieli",
+        "name" : "Imie i nazwisko",
+        "email": "Email",
+        "others": "Inne",
+        "search": "Szukaj..."
+    }
+}

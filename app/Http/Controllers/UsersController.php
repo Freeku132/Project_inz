@@ -21,7 +21,8 @@ class UsersController extends Controller
             ->when($request->input('search'), function ($query, $search){
                 $query->where('name', 'like', '%'.$search.'%');
             })
-            ->paginate(5);
+            ->paginate(5)
+            ->withQueryString();
 
         $filters = $request->only(['search']);
 

@@ -1,0 +1,27 @@
+{
+        "en.greetings": {
+            "hi": "Hello World"
+        },
+        "pl.greetings": {
+            "hi": "Witaj swiecie"
+        },
+        "en.nav": {
+            "home": "Home",
+            "teachers": "All Teachers",
+            "about": "About",
+            "profile": "Profile",
+            "logout": "Log out",
+            "login": "Log in",
+            "register": "Register"
+        },
+        "pl.nav": {
+            "home": "Strona Główna",
+            "teachers": "Wszyscy Nauczyciele",
+            "about": "O Projekcie",
+            "profile": "Profil",
+            "logout": "Wyloguj",
+            "login": "Zaloguj",
+            "register": "Zarejestruj się"
+        }
+
+}
