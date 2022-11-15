@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\EventResource;
+use App\Events\EventUpdated;
 use App\Models\Event;
 use App\Models\EventClass;
 use App\Models\User;
@@ -57,6 +57,9 @@ class TeacherEventController extends Controller
         $event->update([
             'class' => $class->id
         ]);
+
+//        Mail::to($event->student->email)->send(new UpdateEventMail($event));
+        EventUpdated::dispatch($event);
 
         return redirect()->back()->with('success_message', 'You has been completed change event status to '.$request->class);
 //        return redirect('/profile/'.$user->id.'/events')->with('success_message', 'You has been completed change event status to '.$request->class);

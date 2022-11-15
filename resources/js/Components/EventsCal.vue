@@ -14,8 +14,8 @@
                             <div class="bg-green-600 rounded-t-3xl p-2 text-center flex flex-col justify-between">
                                 <p>{{form.start + ' - ' + form.end}}</p>
                                 <div class="space-x-8">
-                                    <button type="button" v-if="form.class === 'busy'" class=" bg-green-700 font-bold text-xl  px-1 rounded-md">Accept</button>
-                                    <button type="button" v-if="props.user.id === auth.id" class=" relative mr-5 bg-red-600 font-bold text-xl px-1  rounded-md">Revoke</button>
+                                    <button type="button" v-if="form.class === 'busy'" @click.prevent="changeStatus('accepted')" class=" bg-green-700 font-bold text-xl  px-1 rounded-md disabled:bg-gray-500" :disabled="changeStatusForm.processing">Accept</button>
+                                    <button type="button" v-if="props.user.id === auth.id" @click.prevent="changeStatus('cancelled')" class=" relative mr-5 bg-red-600 font-bold text-xl px-1  rounded-md disabled:bg-gray-500" :disabled="changeStatusForm.processing">Revoke</button>
                                 </div>
                             </div>
 
@@ -233,6 +233,23 @@ watch(startDate, throttle( (value) => {
         preserveState:true
     });
 }, 300));
+
+let changeStatusForm = useForm({
+    id:'',
+    class:'',
+})
+
+
+let changeStatus = (value) => {
+    changeStatusForm.id = form.id
+    changeStatusForm.class = value
+    changeStatusForm.patch('/profile/'+props.user.id+'/events/'+form.id+'/update',{
+        onSuccess: () => {
+            toast.success(usePage().props.value.flash.success_message, {})
+        },
+    })
+}
+
 
 </script>
 

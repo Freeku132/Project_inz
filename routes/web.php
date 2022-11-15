@@ -4,7 +4,6 @@ use App\Http\Controllers\EventsController;
 use App\Http\Controllers\TeacherEventController;
 use App\Http\Controllers\UsersController;
 use App\Models\User;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -19,34 +18,28 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/laravel', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
-
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::get('/',[UsersController::class, 'index']);
+Route::get('/', function () {
+    return Inertia::render('Home');
+})->name('home');
 
 
-Route::post('/store', [EventsController::class, 'store']);
-Route::get('/profile', function (){
-    return Inertia::render('Profile');
-});
-
+Route::get('/teachers',[UsersController::class, 'index'])->name('teachers.index');
 Route::get('/profile/{user}', [UsersController::class, 'show'])->name('profile');
 
 
 
-Route::get('profile/{user}/events', [TeacherEventController::class, 'index'])->can('update','user');
+Route::post('/store', [EventsController::class, 'store']);
+
+
+
+Route::get('/profile/{user}/events', [TeacherEventController::class, 'index'])->can('update','user')->name('event-teacher.index');
+Route::patch('/profile/{user}/events/{event}/update', [TeacherEventController::class,'update'])->can('viewAny', User::class)->name('events.update');
 Route::post('event/create', [TeacherEventController::class, 'store'])->can('viewAny', User::class);
-Route::post('/profile/{user}/events/{event}/update', [TeacherEventController::class,'update'])->can('viewAny', User::class)->name('events.update');
 
 
+
+
+Route::get('/profile', function (){
+    return Inertia::render('Profile');
+});
 require __DIR__.'/auth.php';

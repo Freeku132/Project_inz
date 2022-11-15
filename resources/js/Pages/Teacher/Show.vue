@@ -66,10 +66,23 @@
             </div>
 
             <div class="border-l-2 border-default pl-2 mt-8 min-h-screen md:mt-0 font-semibold md:w-3/4">
+                <!--Page Path -->
+                <div class="flex text-xl m-5">
+                    <Link :href=" route('profile' , user.id)" class="text-default no-underline">Profile</Link>
+                </div>
 
                 <div v-if="can.viewAny" class="">
 
-                <FreeEventForm  v-if="create"/>
+                    <div v-if="create">
+                        <div class="z-50 fixed inset-0 w-full h-screen flex items-center justify-center bg-bg-semi-75">
+                            <div class="md:w-2/3 flex flex-col bg-page rounded-xl m-4 p-4">
+                                <div class="text-right">
+                                    <button type="button" class="text-right rounded px-2 bg-red-500" @click="create = !create">x</button>
+                                </div>
+                                <FreeEventForm />
+                            </div>
+                        </div>
+                    </div>
 
                 <EventsCal :user="user" :events="events" :currentDate="currentDate"/>
                 </div>

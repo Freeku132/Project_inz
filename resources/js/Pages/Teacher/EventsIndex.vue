@@ -15,9 +15,15 @@
             </div>
 
             <div class="border-l-2 border-default pl-2 mt-8 min-h-screen md:mt-0 font-semibold md:w-3/4">
-                <div class="overflow-x-auto relative">
-                    <table class="w-full text-xl text-left text-default">
-                        <tr class="text-default uppercase bg-page">
+                <!--Page Path -->
+                <div class="flex text-xl m-5">
+                    <Link :href=" route('profile' , user.id)"  class="text-default no-underline">Profile</Link> <p>-></p>
+                    <Link :href=" route('event-teacher.index' , user.id)"  class="text-default no-underline">Events List</Link>
+                </div>
+
+                <div class="overflow-x-auto relative m-5 rounded-xl">
+                    <table class="w-full text-xl text-left text-default ">
+                        <tr class="text-default uppercase bg-page ">
                             <th scope="col" class="py-3 px-6">
                                 Date
                             </th>
@@ -31,20 +37,18 @@
                                 Class
                             </th>
                             <th scope="col" class="py-3 px-6">
-
                             </th>
                         </tr>
                         <TableComponent v-for="event in events.data" :event="event" :user="props.user"/>
                     </table>
+                </div>
 
-                    <div class="items-center mt-10 mb-40 text-2xl text-center justify-center flex flex-row space-x-8">
-                        <Link :href="events.prev_page_url">Prev</Link>
-                        <p>{{events.current_page}}</p>
-                        <Link :href="events.next_page_url">Next</Link>
+                <div class="flex justify-center">
+                    <div v-for="link in events.links">
+                        <Pagination :link="link"/>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </template>
@@ -59,11 +63,16 @@ export default {
 
 import TableComponent from "@/Components/TableComponent.vue";
 import {Link} from "@inertiajs/inertia-vue3";
+import {defineAsyncComponent} from "vue";
 
 let props = defineProps({
     user: Object,
     events: Object
 })
+
+let Pagination = defineAsyncComponent( () => {
+    return import("@/Components/Pagination.vue");
+} )
 
 </script>
 

@@ -1,6 +1,6 @@
 <template>
     <form @submit.prevent="createEvent">
-        <div class="flex flex-col md:w-1/3 bg-page rounded-xl m-4 p-4" >
+        <div class="flex flex-col bg-page rounded-xl m-4 p-4" >
             <label>Day</label>
             <select v-model="form.day" class="bg-page text-default">
                 <option value="1">Monday</option>

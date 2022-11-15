@@ -1,18 +1,18 @@
 <template>
-    <tr  :class="event.class" class=" uppercase text-default bg-page">
+    <tr  :class="'uppercase border border-default text-default '+ event.class">
         <th scope="row" class="py-4 px-6 font-medium text-default whitespace-nowrap">
             {{event.start}} - {{event.end}}
         </th>
-        <th  class="py-4 px-6">
+        <th  class="py-4 px-6 text-default">
             {{event.subject}}
         </th>
-        <th  class="py-4 px-6">
+        <th  class="py-4 px-6 text-default">
             {{event.student.name}}-{{event.student.email}}
         </th>
-        <th  class="py-4 px-6">
+        <th  class="py-4 px-6 text-default">
             {{event.class}}
         </th>
-        <th  class="py-4 px-6">
+        <th  class="py-4 px-6 text-default">
             <div class="items-center flex flex-col text-center">
                 <button @click.prevent="showModal(event.id)" class="p-1 rounded bg-green-600"> show</button>
             </div>
@@ -26,7 +26,7 @@
         >
             <div class=" p-4 bg-page rounded-2xl md:w-2/3 flex flex-col">
                 <div class="text-right">
-                <button class="bg-red-500 p-1 px-2 mx-auto rounded-md" @click.prevent="showModal(null)">X</button>
+                <button class="bg-red-500  px-2 mx-auto rounded-md" @click.prevent="showModal(null)">x</button>
                 </div>
                     <label for=content class="font-bold mx-5 mt-5 bg-page2 rounded-t-md p-1">Subject:/Temat:</label>
                     <div class="bg-page rounded pl-3 p-1 mx-5 border border-default focus:outline-none ">
@@ -54,10 +54,10 @@
                         {{event.end}}
                     </div>
                     <div class="text-center space-x-8">
-                        <button @click.prevent="submit('accept')" class="p-1 rounded bg-green-600">
+                        <button @click.prevent="submit('accepted')" class="p-1 rounded bg-green-600 disabled:bg-gray-500" :disabled="form.processing">
                             Accept
                         </button>
-                        <button @click.prevent="submit('cancelled')" class="p-1 rounded bg-red-600 mt-3">
+                        <button @click.prevent="submit('cancelled')" class="p-1 rounded bg-red-600 mt-3 disabled:bg-gray-500" :disabled="form.processing">
                             Decline
                         </button>
                     </div>
@@ -101,7 +101,7 @@ let form = useForm({
 let submit = (value) => {
     form.id = props.event.id
     form.class = value
-    form.post('/profile/'+props.user.id+'/events/'+props.event.id+'/update',{
+    form.patch('/profile/'+props.user.id+'/events/'+props.event.id+'/update',{
         onSuccess: () => {
             toast.success(usePage().props.value.flash.success_message, {})
             showModal();
@@ -113,7 +113,7 @@ let submit = (value) => {
 
 <style scoped>
 .free {background-color: forestgreen;}
-.claim {background-color: darkorange;}
-.busy {background-color: gray;}
+.busy {background-color: orange;}
+.accepted {background-color: gray;}
 .cancelled {background-color: red;}
 </style>
