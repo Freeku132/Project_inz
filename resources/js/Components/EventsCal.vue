@@ -70,7 +70,7 @@
                         :min-date="'2022-10-12'"
                         :max-date="'2022-10-14'"
                         :editable-events="{ title: false, drag: false, resize: false, delete: false, create: false }"
-                        locale="en"
+                        :locale="chosenLang"
                         :events="props.events.data"
                         :special-hours="specialHours"
                         :on-event-click="onEventClick"
@@ -83,7 +83,7 @@
                         <template #event="{event, view}">
                             <div class="items-center">
                                 <div class="flex justify-center">
-                                    <div v-html="'Room:' + event.room"/>
+                                    <div v-html="event.class"/>
                                 </div>
                                 <div class="flex flex-col md:flex-row justify-center">
                                     <div>{{event.start.format('HH:mm')}}-</div>
@@ -107,8 +107,18 @@ import {throttle} from "lodash/function";
 import {Inertia} from "@inertiajs/inertia";
 import {usePage} from "@inertiajs/inertia-vue3"
 import {useToast} from "vue-toastification";
+import Lang from "lang.js";
+import loginViewMessages from "../../../lang/login.json";
 
 
+let lang = ref(new Lang({
+    messages: loginViewMessages
+}));
+
+let chosenLang = ref(localStorage.getItem('lang') || 'en');
+
+lang.value.setLocale(chosenLang);
+lang.value.setFallback(chosenLang);
 
 
 let props = defineProps({
@@ -137,7 +147,7 @@ let form = useForm({
     student:'',
 })
 let submit = () =>{
-    form.post('/store',
+    form.post('/event/store',
         {
             preserveState:true,
             onSuccess: () => {
@@ -223,7 +233,7 @@ function logEvents(event){
 
 
 watch(startDate, throttle( (value) => {
-    Inertia.get('/profile/'+props.user.id, {
+    Inertia.get('/teachers/'+props.user.id, {
         currentDate: value,
         startDate: startDate.value,
         endDate: endDate.value
@@ -243,7 +253,7 @@ let changeStatusForm = useForm({
 let changeStatus = (value) => {
     changeStatusForm.id = form.id
     changeStatusForm.class = value
-    changeStatusForm.patch('/profile/'+props.user.id+'/events/'+form.id+'/update',{
+    changeStatusForm.patch('/teachers/'+props.user.id+'/events/'+form.id+'/update',{
         onSuccess: () => {
             toast.success(usePage().props.value.flash.success_message, {})
         },

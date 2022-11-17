@@ -13,19 +13,26 @@ use Inertia\Inertia;
 class TeacherEventController extends Controller
 {
 
-    public function index(User $user)
+    public function index(Request $request, User $user)
     {
+
         $busyClass = EventClass::query()->where('name', 'busy')->first();
         $acceptedClass = EventClass::query()->where('name', 'accepted')->first();
 
+
+
+
+
+
         $events = Event::query()
             ->with(['teacher', 'student', 'eventClass'])
-            ->where('teacher_id', $user->id)
+            ->orWhere('teacher_id', $user->id)
             ->where('class', $busyClass->id)
             ->orWhere('class', $acceptedClass->id)
             ->where('teacher_id', $user->id)
-            ->orderBy('updated_at')
+            ->orderByDesc('start')
             ->paginate(5)
+            ->withQueryString()
             ->through(fn($event) => [
                 'id'      => $event->id,
                 'subject' => $event->subject,
@@ -39,11 +46,75 @@ class TeacherEventController extends Controller
             ]);
 
 
+
+        if($request->input('event')){
+            if ($request->input('page') === null){
+                $events = Event::query()
+                    ->where('id' , $request->input('event'))
+                    ->with(['teacher', 'student', 'eventClass'])
+                    ->union(Event::query()
+                    ->orWhere('teacher_id', $user->id)
+                    ->where('class', $busyClass->id)
+                    ->orWhere('class', $acceptedClass->id)
+                    ->where('teacher_id', $user->id)
+                    ->orderByDesc('start')
+            )
+                    ->paginate(5)
+                    ->withQueryString()
+                    ->through(fn($event) => [
+                        'id'      => $event->id,
+                        'subject' => $event->subject,
+                        'message' => $event->message,
+                        'start'    => $event->start,
+                        'end'    => $event->end,
+                        'teacher' => $event->teacher,
+                        'student' => $event->student,
+                        'room' => $event->room,
+                        'class' => $event->eventClass->name
+                    ]);
+
+            }
+        }
+
+
+//        dd($events);
+        if ($request->only(['page'])) {
+        $filters = $request->only(['page']);
+            } else {
+            $filters = ['page' => 1];
+        }
+
+        $selected = $request->only(['event']);
+
+
+
+
         return Inertia::render('Teacher/EventsIndex',[
             'user' => $user,
             'events' => $events,
+            'filters' => $filters,
+            'selected' => $selected,
         ]);
     }
+
+    //                $events = Event::query()
+//                    ->when($request->input('event'), function ($query) use ($request, $user, $busyClass, $acceptedClass){
+//
+//                        $query->when($request->input(['page']) === null , function ($query) use ($request, $user, $busyClass, $acceptedClass){
+//                            $query->union(Event::query()->
+//                            with(['teacher', 'student', 'eventClass'])
+//                                ->where('id', $request->input('event'))
+//                                ->orWhere('teacher_id', $user->id)
+//                                ->where('class', $busyClass->id)
+//                                ->orWhere('class', $acceptedClass->id)
+//                                ->where('teacher_id', $user->id)) ;
+//
+//                        });
+//
+//
+//                    });
+
+
 
 
     public function update(User $user,Request $request)

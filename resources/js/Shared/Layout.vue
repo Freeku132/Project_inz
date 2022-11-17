@@ -57,6 +57,13 @@
                 </template>
 
                 <template #content>
+
+                    <DropdownLink v-if="$page.props.auth.user.role_id === 2" :href="route('teachers.show', $page.props.auth.user)" class="bg-page text-default" method="get" as="button">
+                        Profile
+                    </DropdownLink>
+                    <DropdownLink v-if="$page.props.auth.user.role_id === 2" :href="route('event-teacher.index', $page.props.auth.user)" class="bg-page text-default" method="get" as="button">
+                        Event List
+                    </DropdownLink>
                     <DropdownLink :href="route('logout')" class="bg-page text-default" method="post" as="button">
                         {{ lang.get('nav.logout') }}
                     </DropdownLink>

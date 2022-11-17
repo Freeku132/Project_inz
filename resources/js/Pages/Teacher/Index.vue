@@ -18,7 +18,7 @@
             <tr v-for="user in users.data" class="bg-page border border-grey-500 md:border-none block md:table-row">
                 <td class="p-2 md:border md:border-default text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">{{ lang.get('teachersIndex.name')}}</span>
 
-                    <Link :href="'/profile/'+user.id">{{user.name}}</Link>
+                    <Link :href="route('teachers.show', user)">{{user.name}}</Link>
                 </td>
                 <td class="p-2 md:border md:border-default text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">{{ lang.get('teachersIndex.email')}}</span>{{user.email}}</td>
                 <td class="p-2 md:border md:border-default text-left md:text-center block md:table-cell">

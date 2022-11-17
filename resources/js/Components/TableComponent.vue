@@ -14,7 +14,7 @@
         </th>
         <th  class="py-4 px-6 text-default">
             <div class="items-center flex flex-col text-center">
-                <button @click.prevent="showModal(event.id)" class="p-1 rounded bg-green-600"> show</button>
+                <button @click.prevent="showModal(event.id, props.filters.page)" class="p-1 rounded bg-green-600"> show</button>
             </div>
 
         </th>
@@ -26,7 +26,7 @@
         >
             <div class=" p-4 bg-page rounded-2xl md:w-2/3 flex flex-col">
                 <div class="text-right">
-                <button class="bg-red-500  px-2 mx-auto rounded-md" @click.prevent="showModal(null)">x</button>
+                <button class="bg-red-500  px-2 mx-auto rounded-md" @click.prevent="showModal( NULL, props.filters.page)">x</button>
                 </div>
                     <label for=content class="font-bold mx-5 mt-5 bg-page2 rounded-t-md p-1">Subject:/Temat:</label>
                     <div class="bg-page rounded pl-3 p-1 mx-5 border border-default focus:outline-none ">
@@ -79,17 +79,23 @@ const toast = useToast();
 
 let props = defineProps({
     event: Object,
-    user: Object
+    user: Object,
+    filters: Object,
+    selected: Object,
 });
 
-let show = ref(usePage().url.value.slice(24) == props.event.id);
+
+let show = ref(props.selected.event == props.event.id);
 
 
-let showModal = (value) => {
-    Inertia.get('/profile/'+props.user.id +'/events/', {
-        event : value
+
+let showModal = (value, second) => {
+    Inertia.get('/teachers/'+props.user.id +'/events/', {
+        event : value,
+        page : second
     })
 }
+
 
 
 let form = useForm({
@@ -101,7 +107,7 @@ let form = useForm({
 let submit = (value) => {
     form.id = props.event.id
     form.class = value
-    form.patch('/profile/'+props.user.id+'/events/'+props.event.id+'/update',{
+    form.patch('/teachers/'+props.user.id+'/events/'+props.event.id+'/update',{
         onSuccess: () => {
             toast.success(usePage().props.value.flash.success_message, {})
             showModal();

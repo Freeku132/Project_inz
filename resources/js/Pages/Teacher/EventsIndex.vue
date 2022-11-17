@@ -15,10 +15,9 @@
             </div>
 
             <div class="border-l-2 border-default pl-2 mt-8 min-h-screen md:mt-0 font-semibold md:w-3/4">
-                <!--Page Path -->
+
                 <div class="flex text-xl m-5">
-                    <Link :href=" route('profile' , user.id)"  class="text-default no-underline">Profile</Link> <p>-></p>
-                    <Link :href=" route('event-teacher.index' , user.id)"  class="text-default no-underline">Events List</Link>
+                    <Link :href=" route('teachers.show' , user.id)"  class=" bg-page px-2 py-1 rounded-md hover:bg-page2 text-default no-underline">WSTECZ</Link>
                 </div>
 
                 <div class="overflow-x-auto relative m-5 rounded-xl">
@@ -39,7 +38,7 @@
                             <th scope="col" class="py-3 px-6">
                             </th>
                         </tr>
-                        <TableComponent v-for="event in events.data" :event="event" :user="props.user"/>
+                        <TableComponent v-for="event in events.data" :event="event" :user="props.user" :filters="filters" :selected="props.selected"/>
                     </table>
                 </div>
 
@@ -67,7 +66,9 @@ import {defineAsyncComponent} from "vue";
 
 let props = defineProps({
     user: Object,
-    events: Object
+    events: Object,
+    filters: Object,
+    selected: Object,
 })
 
 let Pagination = defineAsyncComponent( () => {

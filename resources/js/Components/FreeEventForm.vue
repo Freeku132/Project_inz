@@ -50,7 +50,7 @@ const toast = useToast();
 
 
 let createEvent = () =>{
-    form.post('/event/create', {
+    form.post('/teachers/event/store', {
         onSuccess: () => {
             toast.success(usePage().props.value.flash.success_message, {})
         }

@@ -59,19 +59,15 @@
 
                     <button v-if="can.createEvent" @click="create = !create" class="bg-page p-2 rounded m-4">Add new event</button>
 
-                    <Link class="bg-page p-2 rounded m-4 no-underline text-default" v-if="can.createEvent" :href="'/profile/'+user.id+'/events'" >
+                    <Link class="bg-page p-2 rounded m-4 no-underline text-default" v-if="can.createEvent" :href="route('event-teacher.index', user.id)">
                         Events List
                     </Link>
                 </div>
             </div>
 
             <div class="border-l-2 border-default pl-2 mt-8 min-h-screen md:mt-0 font-semibold md:w-3/4">
-                <!--Page Path -->
-                <div class="flex text-xl m-5">
-                    <Link :href=" route('profile' , user.id)" class="text-default no-underline">Profile</Link>
-                </div>
 
-                <div v-if="can.viewAny" class="">
+                <div v-if="can.teacher" class="">
 
                     <div v-if="create">
                         <div class="z-50 fixed inset-0 w-full h-screen flex items-center justify-center bg-bg-semi-75">
