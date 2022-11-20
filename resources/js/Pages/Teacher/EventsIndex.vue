@@ -32,13 +32,38 @@
                             <th scope="col" class="py-3 px-6">
                                 Student
                             </th>
+
                             <th scope="col" class="py-3 px-6">
-                                Class
+                                <Dropdown align="right" class="mr-5" width="48">
+                                    <template #trigger>
+                                <span class="inline-flex rounded-md ">
+                                    <button type="button" class="inline-flex uppercase font-bold items-center px-3 py-2 border border-transparent leading-4 font-medium rounded-md text-default bg-page hover:text-default2 focus:outline-none transition ease-in-out duration-150">
+                                        {{category}}
+                                        <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                        </svg>
+                                    </button>
+                                </span>
+                                    </template>
+
+                                    <template #content>
+                                        <DropdownLink @click="changeCategory('all')" class="bg-page text-default uppercase font-bold" as="button">
+                                            All
+                                        </DropdownLink>
+                                        <DropdownLink @click="changeCategory('accepted')" class="bg-page text-default uppercase font-bold" as="button">
+                                            Accepted
+                                        </DropdownLink>
+                                        <DropdownLink @click="changeCategory('busy')" class="bg-page text-default  uppercase font-bold" as="button">
+                                            Busy
+                                        </DropdownLink>
+                                    </template>
+                                </Dropdown>
                             </th>
                             <th scope="col" class="py-3 px-6">
+                                Action
                             </th>
                         </tr>
-                        <TableComponent v-for="event in events.data" :event="event" :user="props.user" :filters="filters" :selected="props.selected"/>
+                        <TableComponent v-for="event in events.data" :event="event" :user="props.user" :filters="filters" :selected="props.selected" :category="props.category"/>
                     </table>
                 </div>
 
@@ -63,17 +88,31 @@ export default {
 import TableComponent from "@/Components/TableComponent.vue";
 import {Link} from "@inertiajs/inertia-vue3";
 import {defineAsyncComponent} from "vue";
+import Dropdown from "@/Components/Dropdown.vue"
+import DropdownLink from "@/Components/DropdownLink.vue"
+import {Inertia} from "@inertiajs/inertia";
 
 let props = defineProps({
     user: Object,
     events: Object,
     filters: Object,
     selected: Object,
+    category: String,
 })
+
+let category = props.category || 'All';
 
 let Pagination = defineAsyncComponent( () => {
     return import("@/Components/Pagination.vue");
 } )
+console.log(props.category)
+
+let changeCategory = (value) => {
+    Inertia.get(route('event-teacher.index', props.user), {
+        selected: props.selected,
+        category: value
+    })
+}
 
 </script>
 

@@ -25,9 +25,10 @@ class UserPolicy
      * Determine whether the user can create models.
      *
      * @param  \App\Models\User  $user
+     * @param  \App\Models\User  $model
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function publicProfile(User $user, User $model)
+    public function publicProfile(?User $user, User $model)
     {
         return $model->role->name === 'teacher';
     }

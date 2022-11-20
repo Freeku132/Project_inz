@@ -16,19 +16,44 @@ class TeacherEventController extends Controller
     public function index(Request $request, User $user)
     {
 
-        $busyClass = EventClass::query()->where('name', 'busy')->first();
-        $acceptedClass = EventClass::query()->where('name', 'accepted')->first();
 
 
 
+        if($request->input('category')){
+            if($request->input('category') === 'busy'){
+                $category = [2];
+            } elseif($request->input('category') === 'accepted'){
+                $category = [3];
+            } else{
+                $category = [2, 3];
+            }
+        } else {
+            $category = [1,2,3,4];
+        }
 
 
+        if($request->input('event')){
+            if ($request->input('page') === null) {
+                $eventId = $request->input('event');
+            } else{
+                $eventId = null;
+            }
+        }else {
+            $eventId = null;
+        }
 
         $events = Event::query()
+            ->when($eventId, function ($query) use ($eventId) {
+                 $query->where('id', $eventId)->get();
+            })
+            ->when($request->input('category') && $request->input('category') !== 'all', function ($query) use ($category) {
+                $query->whereIn('class', $category);
+            }, function ($query){
+                $query->whereIn('class', [2,3]);
+            })
             ->with(['teacher', 'student', 'eventClass'])
-            ->orWhere('teacher_id', $user->id)
-            ->where('class', $busyClass->id)
-            ->orWhere('class', $acceptedClass->id)
+//            ->whereIn('class', $category)
+            ->whereDate('start','>' ,Carbon::now()->format('Y-m-d'))
             ->where('teacher_id', $user->id)
             ->orderByDesc('start')
             ->paginate(5)
@@ -47,37 +72,59 @@ class TeacherEventController extends Controller
 
 
 
-        if($request->input('event')){
-            if ($request->input('page') === null){
-                $events = Event::query()
-                    ->where('id' , $request->input('event'))
-                    ->with(['teacher', 'student', 'eventClass'])
-                    ->union(Event::query()
-                    ->orWhere('teacher_id', $user->id)
-                    ->where('class', $busyClass->id)
-                    ->orWhere('class', $acceptedClass->id)
-                    ->where('teacher_id', $user->id)
-                    ->orderByDesc('start')
-            )
-                    ->paginate(5)
-                    ->withQueryString()
-                    ->through(fn($event) => [
-                        'id'      => $event->id,
-                        'subject' => $event->subject,
-                        'message' => $event->message,
-                        'start'    => $event->start,
-                        'end'    => $event->end,
-                        'teacher' => $event->teacher,
-                        'student' => $event->student,
-                        'room' => $event->room,
-                        'class' => $event->eventClass->name
-                    ]);
 
-            }
-        }
+//        $events = Event::query()
+//            ->with(['teacher', 'student', 'eventClass'])
+//            ->whereIn('class', [2,3])
+//            ->whereDate('start','>' ,Carbon::now()->format('Y-m-d'))
+//            ->where('teacher_id', $user->id)
+//            ->orderBy('start')
+//            ->paginate(5)
+//            ->withQueryString()
+//            ->through(fn($event) => [
+//                'id'      => $event->id,
+//                'subject' => $event->subject,
+//                'message' => $event->message,
+//                'start'    => $event->start,
+//                'end'    => $event->end,
+//                'teacher' => $event->teacher,
+//                'student' => $event->student,
+//                'room' => $event->room,
+//                'class' => $event->eventClass->name
+//            ]);
+//
+////        dd($events);
+//
+//
+//        if($request->input('event')){
+//            if ($request->input('page') === null){
+//                $events = Event::query()
+//                    ->where('id' , $request->input('event'))
+//                    ->with(['teacher', 'student', 'eventClass'])
+//                    ->union(Event::query()
+//                    ->whereIn('class', [2,3])
+//                    ->whereDate('start','>' ,Carbon::now()->format('Y-m-d'))
+//                    ->where('teacher_id', $user->id)
+//                    ->orderByDesc('start')
+//                    )
+//                    ->paginate(5)
+//                    ->withQueryString()
+//                    ->through(fn($event) => [
+//                        'id'      => $event->id,
+//                        'subject' => $event->subject,
+//                        'message' => $event->message,
+//                        'start'    => $event->start,
+//                        'end'    => $event->end,
+//                        'teacher' => $event->teacher,
+//                        'student' => $event->student,
+//                        'room' => $event->room,
+//                        'class' => $event->eventClass->name
+//                    ]);
+//
+//            }
+//        }
 
 
-//        dd($events);
         if ($request->only(['page'])) {
         $filters = $request->only(['page']);
             } else {
@@ -94,6 +141,7 @@ class TeacherEventController extends Controller
             'events' => $events,
             'filters' => $filters,
             'selected' => $selected,
+            'category' => $request->input('category')
         ]);
     }
 

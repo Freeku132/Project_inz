@@ -82,6 +82,7 @@ let props = defineProps({
     user: Object,
     filters: Object,
     selected: Object,
+    category: Object
 });
 
 
@@ -92,7 +93,8 @@ let show = ref(props.selected.event == props.event.id);
 let showModal = (value, second) => {
     Inertia.get('/teachers/'+props.user.id +'/events/', {
         event : value,
-        page : second
+        page : second,
+        category: props.category
     })
 }
 
