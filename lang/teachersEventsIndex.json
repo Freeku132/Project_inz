@@ -1,0 +1,49 @@
+{
+    "en.teachersEventsIndex": {
+        "title" : "Events List",
+        "back": "Back"
+    },
+    "pl.teachersEventsIndex": {
+        "title" : "Lista spotkań",
+        "back": "Wstecz"
+    },
+    "en.table": {
+        "date": "Appointment date",
+        "topic": "Topic",
+        "student": "Student",
+        "message": "Message",
+        "room": "Room",
+        "startTime": "Start Time",
+        "endTime": "End Time",
+        "category": {
+            "all": "All",
+            "busy": "Busy",
+            "accepted": "Accepted"
+        },
+        "action": "Action",
+        "show" : "Show",
+        "accept" : "Accept",
+        "decline" : "Decline",
+        "success_message": "You has been completed change event status to "
+
+    },
+    "pl.table": {
+        "date": "Termin spotkania",
+        "topic": "Temat",
+        "student": "Student",
+        "message": "Wiadomość",
+        "room": "Sala",
+        "startTime": "Czas rozpoczęcia",
+        "endTime": "Czas zakończenia",
+        "category": {
+            "all": "Wszystkie",
+            "busy": "Zarezerwowany",
+            "accepted": "Potwierdzony"
+        },
+        "action": "Więcej",
+        "show": "Pokaż",
+        "accept" : "Potwierdź",
+        "decline" : "Odrzuć",
+        "success_message": "Pomyślnie zmieniono status spotkania na "
+    }
+}

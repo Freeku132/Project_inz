@@ -12,44 +12,46 @@
                         <form
                             @submit.prevent="submit" class="flex flex-col bg-page rounded-3xl">
                             <div class="bg-green-600 rounded-t-3xl p-2 text-center flex flex-col justify-between">
-                                <p>{{form.start + ' - ' + form.end}}</p>
+                                <p>{{form.start + '-' + new Date(form.end).format('HH:mm')}}</p>
                                 <div class="space-x-8">
-                                    <button type="button" v-if="form.class === 'busy'" @click.prevent="changeStatus('accepted')" class=" bg-green-700 font-bold text-xl  px-1 rounded-md disabled:bg-gray-500" :disabled="changeStatusForm.processing">Accept</button>
-                                    <button type="button" v-if="props.user.id === auth.id" @click.prevent="changeStatus('cancelled')" class=" relative mr-5 bg-red-600 font-bold text-xl px-1  rounded-md disabled:bg-gray-500" :disabled="changeStatusForm.processing">Revoke</button>
+                                    <button type="button" v-if="form.class === 'busy'" @click.prevent="changeStatus('accepted')" class=" bg-green-700 font-bold text-xl  px-1 rounded-md disabled:bg-gray-500" :disabled="changeStatusForm.processing">{{props.lang.get('teachersShow.accept')}}</button>
+                                    <button type="button" v-if="props.user.id === auth.id" @click.prevent="changeStatus('cancelled')" class=" relative mr-5 bg-red-600 font-bold text-xl px-1  rounded-md disabled:bg-gray-500" :disabled="changeStatusForm.processing">{{props.lang.get('teachersShow.revoke')}}</button>
                                 </div>
                             </div>
 
                             <div class="flex mx-auto space-x-8 mt-3">
 
                             </div>
-                            <label for=content class="font-bold mx-5 mt-5 bg-page2 rounded-t-md p-1">Subject:/Temat:</label>
+                            <label for=content class="font-bold mx-5 mt-5 bg-page2 rounded-t-md p-1">{{props.lang.get('teachersShow.subject')}}</label>
                             <input v-model="form.subject" class="bg-page rounded pl-3 p-1 mx-5 border border-default focus:outline-none " />
                             <div class=" font-semibold text-red-500 p-1 mx-5" v-if="form.errors.subject">{{form.errors.subject}}</div>
 
-                            <label for=content class="font-bold mx-5  bg-page2 p-1">Message:/Wiadomość:</label>
+                            <label for=content class="font-bold mx-5  bg-page2 p-1">{{props.lang.get('teachersShow.message')}}</label>
                             <textarea v-model="form.message" class="bg-page mx-5 border border-default focus:ring-0 focus:outline-none focus:border-default mb-0.5" />
                             <div class=" font-semibold text-red-500 p-1 mx-5" v-if="form.errors.message">{{form.errors.message}}</div>
 
-                            <label for="room" class="font-bold mx-5  bg-page2 p-1">Room:</label>
+                            <label for="room" class="font-bold mx-5  bg-page2 p-1">{{props.lang.get('teachersShow.room')}}</label>
                             <input disabled class="mx-5 bg-page pl-3 p-1 border border-default" :value="form.room">
 
-                            <label for="endNew" class="font-bold mx-5 bg-page2 p-1">Start Time:/Czas rozpoczęcia:</label>
+                            <label for="endNew" class="font-bold mx-5 bg-page2 p-1">{{props.lang.get('teachersShow.startTime')}}</label>
                             <select v-model="form.startNew" @change="setEndOptions()" class="bg-page mx-5  border-default">
                                 <option v-for="option in startOptions" :value="option">{{option}}</option>
                             </select>
                             <div class=" font-semibold text-red-500 p-1 mx-5" v-if="form.errors.startNew">{{form.errors.startNew}}</div>
 
-                            <label for="endNew" class="font-bold mx-5 bg-page2 p-1">End Time:/Czas zakończenia:</label>
+                            <label for="endNew" class="font-bold mx-5 bg-page2 p-1">{{props.lang.get('teachersShow.endTime')}}</label>
                             <select v-model="form.endNew" class="bg-page mx-5 rounded-b-md border border-default">
                                 <option v-for="option in endOptions" :value="option">{{option}}</option>
                             </select>
                             <div class=" font-semibold text-red-500 p-1 mx-5" v-if="form.errors.endNew">{{form.errors.endNew}}</div>
 
                             <div class="flex justify-between">
-                                <button type="submit" class="bg-green-500 w-1/4 h-10 rounded-bl-xl mt-5 disabled:bg-gray-600" :disabled="form.processing || form.class==='busy'">Submit</button>
+                                <button type="submit"
+                                        class="bg-green-500 w-1/4 h-10 rounded-bl-xl mt-5 disabled:bg-gray-600"
+                                        :disabled="form.processing || form.class==='busy'">{{props.lang.get('teachersShow.submit')}}</button>
                                 <button type="button"
                                         class="bg-red-600 rounded-br-xl mt-5 w-1/4"
-                                        @click="showForm = false">Cancel</button>
+                                        @click="showForm = false">{{props.lang.get('teachersShow.cancel')}}</button>
                             </div>
                         </form>
                     </div>
@@ -70,7 +72,7 @@
                         :min-date="'2022-10-12'"
                         :max-date="'2022-10-14'"
                         :editable-events="{ title: false, drag: false, resize: false, delete: false, create: false }"
-                        :locale="chosenLang"
+                        :locale="props.lang.getLocale()"
                         :events="props.events.data"
                         :special-hours="specialHours"
                         :on-event-click="onEventClick"
@@ -83,7 +85,7 @@
                         <template #event="{event, view}">
                             <div class="items-center">
                                 <div class="flex justify-center">
-                                    <div v-html="event.class"/>
+                                    <div v-html="props.lang.get('class.'+event.class)"/>
                                 </div>
                                 <div class="flex flex-col md:flex-row justify-center">
                                     <div>{{event.start.format('HH:mm')}}-</div>
@@ -107,24 +109,17 @@ import {throttle} from "lodash/function";
 import {Inertia} from "@inertiajs/inertia";
 import {usePage} from "@inertiajs/inertia-vue3"
 import {useToast} from "vue-toastification";
-import Lang from "lang.js";
-import loginViewMessages from "../../../lang/login.json";
 
 
-let lang = ref(new Lang({
-    messages: loginViewMessages
-}));
 
-let chosenLang = ref(localStorage.getItem('lang') || 'en');
 
-lang.value.setLocale(chosenLang);
-lang.value.setFallback(chosenLang);
 
 
 let props = defineProps({
     events: Object,
     currentDate: String,
-    user: Object
+    user: Object,
+    lang: Object,
 })
 
 const toast = useToast();
@@ -202,10 +197,10 @@ function onEventClick(event, e) {
             form.student = usePage().props.value.auth.user.id
             return;
         }
-        toast.error('admin')
+        toast.error(props.lang.value.get('teachersShow.admin'));
         return;
     }
-    toast.error('auth');
+    toast.error(props.lang.value.get('teachersShow.auth'));
     return;
 }
 

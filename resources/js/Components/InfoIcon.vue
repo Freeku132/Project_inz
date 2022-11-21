@@ -13,7 +13,7 @@
         @click="copy"
         class="px-4 font-semibold  mt-2">
         {{information}}
-        <p v-show="copied">{{iconName.charAt(0).toUpperCase() + iconName.slice(1)}} was copied</p>
+        <p v-show="copied">{{ props.copyInfo }}</p>
     </Component>
     </div>
 </template>
@@ -28,7 +28,7 @@ let block = ref(null);
 let {copy, copied, supported} = useClipboard(props.information);
 
 let props = defineProps({
-    iconName: String,
+    copyInfo: String,
     information : String,
     visibility: Boolean,
 })

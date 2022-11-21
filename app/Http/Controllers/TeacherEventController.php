@@ -145,25 +145,6 @@ class TeacherEventController extends Controller
         ]);
     }
 
-    //                $events = Event::query()
-//                    ->when($request->input('event'), function ($query) use ($request, $user, $busyClass, $acceptedClass){
-//
-//                        $query->when($request->input(['page']) === null , function ($query) use ($request, $user, $busyClass, $acceptedClass){
-//                            $query->union(Event::query()->
-//                            with(['teacher', 'student', 'eventClass'])
-//                                ->where('id', $request->input('event'))
-//                                ->orWhere('teacher_id', $user->id)
-//                                ->where('class', $busyClass->id)
-//                                ->orWhere('class', $acceptedClass->id)
-//                                ->where('teacher_id', $user->id)) ;
-//
-//                        });
-//
-//
-//                    });
-
-
-
 
     public function update(User $user,Request $request)
     {
@@ -180,8 +161,7 @@ class TeacherEventController extends Controller
 //        Mail::to($event->student->email)->send(new UpdateEventMail($event));
         EventUpdated::dispatch($event);
 
-        return redirect()->back()->with('success_message', 'You has been completed change event status to '.$request->class);
-//        return redirect('/profile/'.$user->id.'/events')->with('success_message', 'You has been completed change event status to '.$request->class);
+        return redirect()->back()->with('success_message', $request->class);
     }
 
 

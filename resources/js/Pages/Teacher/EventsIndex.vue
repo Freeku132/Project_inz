@@ -1,4 +1,7 @@
 <template>
+    <Head>
+        <title> {{ lang.get('teachersEventsIndex.title') }} </title>
+    </Head>
     <div>
         <div class="flex flex-col md:flex-row md:justify-end">
             <div class="md:w-1/4 md:fixed left-1 z-40">
@@ -17,20 +20,22 @@
             <div class="border-l-2 border-default pl-2 mt-8 min-h-screen md:mt-0 font-semibold md:w-3/4">
 
                 <div class="flex text-xl m-5">
-                    <Link :href=" route('teachers.show' , user.id)"  class=" bg-page px-2 py-1 rounded-md hover:bg-page2 text-default no-underline">WSTECZ</Link>
+                    <Link :href=" route('teachers.show' , user.id)"
+                          class=" bg-page px-2 py-1 rounded-md hover:bg-page2 text-default no-underline">
+                        {{ lang.get('teachersEventsIndex.back')}}</Link>
                 </div>
 
                 <div class="overflow-x-auto relative m-5 rounded-xl">
                     <table class="w-full text-xl text-left text-default ">
                         <tr class="text-default uppercase bg-page ">
                             <th scope="col" class="py-3 px-6">
-                                Date
+                                {{ lang.get('table.date') }}
                             </th>
                             <th scope="col" class="py-3 px-6">
-                                Topic
+                                {{ lang.get('table.topic')}}
                             </th>
                             <th scope="col" class="py-3 px-6">
-                                Student
+                                {{ lang.get('table.student')}}
                             </th>
 
                             <th scope="col" class="py-3 px-6">
@@ -48,22 +53,22 @@
 
                                     <template #content>
                                         <DropdownLink @click="changeCategory('all')" class="bg-page text-default uppercase font-bold" as="button">
-                                            All
+                                            {{lang.get('table.category.all')}}
                                         </DropdownLink>
                                         <DropdownLink @click="changeCategory('accepted')" class="bg-page text-default uppercase font-bold" as="button">
-                                            Accepted
+                                            {{lang.get('table.category.accepted')}}
                                         </DropdownLink>
                                         <DropdownLink @click="changeCategory('busy')" class="bg-page text-default  uppercase font-bold" as="button">
-                                            Busy
+                                            {{lang.get('table.category.busy')}}
                                         </DropdownLink>
                                     </template>
                                 </Dropdown>
                             </th>
                             <th scope="col" class="py-3 px-6">
-                                Action
+                                {{ lang.get('table.action') }}
                             </th>
                         </tr>
-                        <TableComponent v-for="event in events.data" :event="event" :user="props.user" :filters="filters" :selected="props.selected" :category="props.category"/>
+                        <TableComponent v-for="event in events.data" :event="event" :user="props.user" :filters="filters" :selected="props.selected" :category="props.category" :lang="lang"/>
                     </table>
                 </div>
 
@@ -87,10 +92,12 @@ export default {
 
 import TableComponent from "@/Components/TableComponent.vue";
 import {Link} from "@inertiajs/inertia-vue3";
-import {defineAsyncComponent} from "vue";
+import {defineAsyncComponent, ref} from "vue";
 import Dropdown from "@/Components/Dropdown.vue"
 import DropdownLink from "@/Components/DropdownLink.vue"
 import {Inertia} from "@inertiajs/inertia";
+import Lang from "lang.js";
+import teachersEventsIndex from "../../../../lang/teachersEventsIndex.json";
 
 let props = defineProps({
     user: Object,
@@ -100,12 +107,12 @@ let props = defineProps({
     category: String,
 })
 
-let category = props.category || 'All';
+
 
 let Pagination = defineAsyncComponent( () => {
     return import("@/Components/Pagination.vue");
 } )
-console.log(props.category)
+
 
 let changeCategory = (value) => {
     Inertia.get(route('event-teacher.index', props.user), {
@@ -113,6 +120,18 @@ let changeCategory = (value) => {
         category: value
     })
 }
+
+
+let lang = ref(new Lang({
+    messages: teachersEventsIndex
+}));
+
+let chosenLang = ref(localStorage.getItem('lang') || 'en');
+
+lang.value.setLocale(chosenLang);
+lang.value.setFallback(chosenLang);
+
+let category = props.category ? lang.value.get('table.category.'+props.category) : lang.value.get('table.category.all');
 
 </script>
 

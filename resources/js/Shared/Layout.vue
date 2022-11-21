@@ -2,7 +2,7 @@
     <nav class="md:sticky top-0 z-40 flex md:flex-row flex-col border-b backdrop-blur border-default justify-between p-5 supports-backdrop-blur:bg-white/60 bg-transparent items-center">
         <!--        <nav class=" sticky top-0 z-40 w-full backdrop-blur flex-none transition-colors duration-500 lg:z-50 lg:border-b lg:border-slate-900/10 dark:border-slate-50/[0.06] bg-white/95 supports-backdrop-blur:bg-white/60 dark:bg-transparent">-->
         <div>
-            <h1 class="h1 text-default ">Page Title</h1>
+            <h1 class="h1 text-default ">{{ lang.get('nav.title') }}</h1>
         </div>
 
         <div class="flex flex-col md:flex-row md:space-x-8 text-default">
@@ -59,10 +59,10 @@
                 <template #content>
 
                     <DropdownLink v-if="$page.props.auth.user.role_id === 2" :href="route('teachers.show', $page.props.auth.user)" class="bg-page text-default" method="get" as="button">
-                        Profile
+                        {{ lang.get('nav.profile') }}
                     </DropdownLink>
                     <DropdownLink v-if="$page.props.auth.user.role_id === 2" :href="route('event-teacher.index', $page.props.auth.user)" class="bg-page text-default" method="get" as="button">
-                        Event List
+                        {{ lang.get('nav.eventList') }}
                     </DropdownLink>
                     <DropdownLink :href="route('logout')" class="bg-page text-default" method="post" as="button">
                         {{ lang.get('nav.logout') }}

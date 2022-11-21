@@ -1,7 +1,7 @@
 <template>
 
     <Head>
-        <title>Profile {{user.name}}</title>
+        <title> {{user.name}}</title>
     </Head>
     <div>
         <div class="flex flex-col md:flex-row md:justify-end">
@@ -19,7 +19,7 @@
                     <!-- PHONE ICON -->
                     <!-- PHONE ICON -->
                     <InfoIcon :information="phoneNumber.Number"
-                              :icon-name="Object.keys(phoneNumber)[0]"
+                              :copyInfo="lang.get('teachersShow.number')"
                     >
                             <svg class="w-8 h-8" version="1.1" width="256" height="256" viewBox="0 0 256 256" xml:space="preserve">
                             <defs>
@@ -37,7 +37,7 @@
                     <!-- EMAIL ICON -->
                     <!-- EMAIL ICON -->
                     <InfoIcon :information="user.email"
-                              :icon-name="Object.keys(user)[2]"
+                              :copyInfo="lang.get('teachersShow.emailCopy')"
                     >
                         <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                              viewBox="0 0 309.267 309.267" style="enable-background:new 0 0 309.267 309.267;" xml:space="preserve">
@@ -57,10 +57,10 @@
                             </g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g></svg>
                     </InfoIcon>
 
-                    <button v-if="can.createEvent" @click="create = !create" class="bg-page p-2 rounded m-4">Add new event</button>
+                    <button v-if="can.createEvent" @click="create = !create" class="bg-page hover:bg-page2 p-2 rounded m-4">{{ lang.get('teachersShow.addEvents')}}</button>
 
-                    <Link class="bg-page p-2 rounded m-4 no-underline text-default" v-if="can.createEvent" :href="route('event-teacher.index', user.id)">
-                        Events List
+                    <Link class="bg-page p-2 rounded m-4 no-underline text-default text-center hover:bg-page2" v-if="can.createEvent" :href="route('event-teacher.index', user.id)">
+                        {{lang.get('teachersShow.eventsList')}}
                     </Link>
                 </div>
             </div>
@@ -75,12 +75,12 @@
                                 <div class="text-right">
                                     <button type="button" class="text-right rounded px-2 bg-red-500" @click="create = !create">x</button>
                                 </div>
-                                <FreeEventForm />
+                                <FreeEventForm :lang="lang"/>
                             </div>
                         </div>
                     </div>
 
-                <EventsCal :user="user" :events="events" :currentDate="currentDate"/>
+                <EventsCal :user="user" :events="events" :currentDate="currentDate" :lang="lang"/>
                 </div>
             </div>
         </div>
@@ -102,6 +102,8 @@ import EventsCal from "@/Components/EventsCal.vue";
 import FreeEventForm from "@/Components/FreeEventForm.vue"
 import {ref} from "vue";
 import {Link} from "@inertiajs/inertia-vue3";
+import Lang from "lang.js";
+import teacherShow from "../../../../lang/teachersShow.json";
 
 let props = defineProps({
     user : Object,
@@ -114,6 +116,12 @@ const phoneNumber = {
     Number: '999-998-997'
 }
 let create = ref(false);
+
+let lang = ref(new Lang({
+    messages: teacherShow
+}));
+let chosenLang = ref(localStorage.getItem('lang') || 'en');
+lang.value.setLocale(chosenLang)
 
 </script>
 

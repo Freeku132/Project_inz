@@ -1,5 +1,8 @@
 <template>
-    <Layout>
+    <Head>
+        <title>{{ lang.get('teachersIndex.title')}} </title>
+    </Head>
+
     <div class="mt-20 w-2/3 mx-auto text-default">
         <div class="flex flex-col md:flex-row justify-between  p-3">
         <h1 class="text-3xl font-semibold">    {{ lang.get('teachersIndex.header')}}</h1>
@@ -37,14 +40,14 @@
 <!--        <Pagination :link="users.next_page_url">Next</Pagination>-->
     </div>
 
-    </Layout>
+
 </template>
 
 <script>
-// import Layout from "@/Shared/Layout.vue"
-// export default {
-//     layout: Layout,
-// }
+import Layout from "@/Shared/Layout.vue"
+export default {
+    layout: Layout,
+}
 
 
 
@@ -57,19 +60,16 @@ import {debounce} from "lodash/function";
 import {Inertia} from "@inertiajs/inertia";
 import {defineAsyncComponent} from "vue";
 import Lang from "lang.js";
-import messages from "../../../../lang/teachersIndex.json";
-import Layout from "@/Shared/Layout.vue";
+import teacherIndex from "../../../../lang/teachersIndex.json";
+
 
 
 
 
 let lang = ref(new Lang({
-    messages: messages
+    messages: teacherIndex
 }));
-
 let chosenLang = ref(localStorage.getItem('lang') || 'en');
-
-
 lang.value.setLocale(chosenLang)
 
 let props = defineProps({

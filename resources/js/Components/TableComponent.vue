@@ -10,11 +10,11 @@
             {{event.student.name}}-{{event.student.email}}
         </th>
         <th  class="py-4 px-6 text-default">
-            {{event.class}}
+            {{props.lang.get('table.category.'+event.class)}}
         </th>
         <th  class="py-4 px-6 text-default">
             <div class="items-center flex flex-col text-center">
-                <button @click.prevent="showModal(event.id, props.filters.page)" class="p-1 rounded bg-green-600"> show</button>
+                <button @click.prevent="showModal(event.id, props.filters.page)" class="p-1 rounded bg-green-600"> {{props.lang.get('table.show')}}</button>
             </div>
 
         </th>
@@ -28,37 +28,37 @@
                 <div class="text-right">
                 <button class="bg-red-500  px-2 mx-auto rounded-md" @click.prevent="showModal( NULL, props.filters.page)">x</button>
                 </div>
-                    <label for=content class="font-bold mx-5 mt-5 bg-page2 rounded-t-md p-1">Subject:/Temat:</label>
+                    <label for=content class="font-bold mx-5 mt-5 bg-page2 rounded-t-md p-1">{{ props.lang.get('table.topic') }}</label>
                     <div class="bg-page rounded pl-3 p-1 mx-5 border border-default focus:outline-none ">
                         {{event.subject}}
                     </div>
-                    <label for="endNew" class="font-bold mx-5 bg-page2 p-1">Student</label>
+                    <label for="endNew" class="font-bold mx-5 bg-page2 p-1">{{ props.lang.get('table.student') }}</label>
                     <div class="mx-5 bg-page pl-3 p-1 border border-default">
                          {{event.student.email}} - {{event.student.name}}
                     </div>
 
-                    <label for=content class="font-bold mx-5  bg-page2 p-1">Message:/Wiadomość:</label>
+                    <label for=content class="font-bold mx-5  bg-page2 p-1">{{ props.lang.get('table.message') }}</label>
                     <div class="bg-page mx-5 border border-default focus:ring-0 pl-3 p-1 focus:outline-none focus:border-default mb-0.5" >
                         {{event.message}}
                     </div>
 
-                    <label for="room" class="font-bold mx-5  bg-page2 p-1">Room: </label>
+                    <label for="room" class="font-bold mx-5  bg-page2 p-1">{{ props.lang.get('table.room') }} </label>
                     <input disabled class="mx-5 bg-page pl-3 p-1 border border-default" :value="event.room">
 
-                    <label for="endNew" class="font-bold mx-5 bg-page2 p-1">Start Time:/Czas rozpoczęcia:</label>
+                    <label for="endNew" class="font-bold mx-5 bg-page2 p-1">{{ props.lang.get('table.startTime') }}</label>
                     <div class="mx-5 bg-page pl-3 p-1 border border-default">
                         {{event.start}}
                     </div>
-                    <label for="endNew" class="font-bold mx-5 bg-page2 p-1">End Time:/Czas zakończenia:</label>
+                    <label for="endNew" class="font-bold mx-5 bg-page2 p-1">{{ props.lang.get('table.endTime') }}</label>
                     <div class="mx-5 bg-page pl-3 p-1 border border-default">
                         {{event.end}}
                     </div>
                     <div class="text-center space-x-8">
                         <button @click.prevent="submit('accepted')" class="p-1 rounded bg-green-600 disabled:bg-gray-500" :disabled="form.processing">
-                            Accept
+                            {{ props.lang.get('table.accept') }}
                         </button>
                         <button @click.prevent="submit('cancelled')" class="p-1 rounded bg-red-600 mt-3 disabled:bg-gray-500" :disabled="form.processing">
-                            Decline
+                            {{ props.lang.get('table.decline') }}
                         </button>
                     </div>
             </div>
@@ -82,7 +82,8 @@ let props = defineProps({
     user: Object,
     filters: Object,
     selected: Object,
-    category: Object
+    category: String,
+    lang: Object
 });
 
 
@@ -111,7 +112,7 @@ let submit = (value) => {
     form.class = value
     form.patch('/teachers/'+props.user.id+'/events/'+props.event.id+'/update',{
         onSuccess: () => {
-            toast.success(usePage().props.value.flash.success_message, {})
+            toast.success(props.lang.get('table.success_message') + props.lang.get('table.category.'+ usePage().props.value.flash.success_message), {})
             showModal();
         },
     })
