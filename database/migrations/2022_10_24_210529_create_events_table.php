@@ -18,6 +18,7 @@ return new class extends Migration
             $table->dateTime('start');
             $table->dateTime('end');
             $table->string('subject')->nullable();
+            $table->string('student_info')->nullable();
             $table->string('message')->nullable();
             $table->string('room');
             $table->foreignId('class')->constrained('event_classes');

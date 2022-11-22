@@ -26,6 +26,10 @@
                             <input v-model="form.subject" class="bg-page rounded pl-3 p-1 mx-5 border border-default focus:outline-none " />
                             <div class=" font-semibold text-red-500 p-1 mx-5" v-if="form.errors.subject">{{form.errors.subject}}</div>
 
+                            <label for=content class="font-bold mx-5 mt-5 bg-page2 rounded-t-md p-1">Grade level, and group</label>
+                            <input v-model="form.student_info" class="bg-page rounded pl-3 p-1 mx-5 border border-default focus:outline-none " />
+                            <div class=" font-semibold text-red-500 p-1 mx-5" v-if="form.errors.student_info">{{form.errors.student_info}}</div>
+
                             <label for=content class="font-bold mx-5  bg-page2 p-1">{{props.lang.get('teachersShow.message')}}</label>
                             <textarea v-model="form.message" class="bg-page mx-5 border border-default focus:ring-0 focus:outline-none focus:border-default mb-0.5" />
                             <div class=" font-semibold text-red-500 p-1 mx-5" v-if="form.errors.message">{{form.errors.message}}</div>
@@ -133,6 +137,7 @@ let form = useForm({
     start:'',
     end:'',
     subject:'',
+    student_info:'',
     message:'',
     room:'',
     class:'',
@@ -147,7 +152,7 @@ let submit = () =>{
             preserveState:true,
             onSuccess: () => {
                 showForm.value = false;
-                toast.success(usePage().props.value.flash.success_message);
+                toast.success(props.lang.get('teachersShow.' + usePage().props.value.flash.success_message));
 
             }
         })
@@ -191,6 +196,7 @@ function onEventClick(event, e) {
             form.start = start
             form.end = end
             form.subject = event.subject
+            form.student_info = event.student_info
             form.message = event.message
             form.class = event.class
             form.teacher = props.user.id

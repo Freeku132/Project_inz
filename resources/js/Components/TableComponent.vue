@@ -36,6 +36,10 @@
                     <div class="mx-5 bg-page pl-3 p-1 border border-default">
                          {{event.student.email}} - {{event.student.name}}
                     </div>
+                    <label for="endNew" class="font-bold mx-5 bg-page2 p-1">{{ props.lang.get('table.student_info') }}</label>
+                    <div class="mx-5 bg-page pl-3 p-1 border border-default">
+                         {{event.student_info}}
+                    </div>
 
                     <label for=content class="font-bold mx-5  bg-page2 p-1">{{ props.lang.get('table.message') }}</label>
                     <div class="bg-page mx-5 border border-default focus:ring-0 pl-3 p-1 focus:outline-none focus:border-default mb-0.5" >

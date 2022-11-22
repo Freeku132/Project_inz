@@ -16,9 +16,6 @@ class TeacherEventController extends Controller
     public function index(Request $request, User $user)
     {
 
-
-
-
         if($request->input('category')){
             if($request->input('category') === 'busy'){
                 $category = [2];
@@ -59,15 +56,16 @@ class TeacherEventController extends Controller
             ->paginate(5)
             ->withQueryString()
             ->through(fn($event) => [
-                'id'      => $event->id,
-                'subject' => $event->subject,
-                'message' => $event->message,
-                'start'    => $event->start,
-                'end'    => $event->end,
-                'teacher' => $event->teacher,
-                'student' => $event->student,
-                'room' => $event->room,
-                'class' => $event->eventClass->name
+                'id'            => $event->id,
+                'subject'       => $event->subject,
+                'message'       => $event->message,
+                'student_info'  => $event->student_info,
+                'start'         => $event->start,
+                'end'           => $event->end,
+                'teacher'       => $event->teacher,
+                'student'       => $event->student,
+                'room'          => $event->room,
+                'class'         => $event->eventClass->name
             ]);
 
 
@@ -262,13 +260,14 @@ class TeacherEventController extends Controller
 
                     } else {
                         Event::create([
-                        'start'      => $item['startDate'],
-                        'end'        => $item['endDate'],
-                        'room'       => $request->room,
-                        'class'      => $freeClass->id,
-                        'subject'    => '',
-                        'message'    => '',
-                        'teacher_id' => auth()->id(),
+                        'start'       => $item['startDate'],
+                        'end'         => $item['endDate'],
+                        'room'        => $request->room,
+                        'class'       => $freeClass->id,
+                        'subject'     => '',
+                        'message'     => '',
+                        'student_info'=> '',
+                        'teacher_id'  => auth()->id(),
                         ]);
                     }
                 }
@@ -281,13 +280,14 @@ class TeacherEventController extends Controller
                     echo $item['week'];
                     echo "- $request->week ";
                     Event::create([
-                        'start'      => $item['startDate'],
-                        'end'        => $item['endDate'],
-                        'room'       => $request->room,
-                        'class'      => $freeClass->id,
-                        'subject'    => '',
-                        'message'    => '',
-                        'teacher_id' => auth()->id(),
+                        'start'       => $item['startDate'],
+                        'end'         => $item['endDate'],
+                        'room'        => $request->room,
+                        'class'       => $freeClass->id,
+                        'subject'     => '',
+                        'message'     => '',
+                        'student_info'=> '',
+                        'teacher_id'  => auth()->id(),
                     ]);
                 }
             }

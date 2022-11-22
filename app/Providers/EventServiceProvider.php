@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Events\EventBooking;
 use App\Events\EventUpdated;
+use App\Listeners\SendBookingEventMail;
 use App\Listeners\SendEventUpdateMail;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -22,6 +24,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         EventUpdated::class => [
             SendEventUpdateMail::class,
+        ],
+        EventBooking::class => [
+            SendBookingEventMail::class,
         ],
 
     ];

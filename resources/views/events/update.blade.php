@@ -1,7 +1,7 @@
 @component('mail::message')
 # Konsultacje
 <h2>
-Status konsultacji ({{$event->start}} - {{$event->end}}),
+Status konsultacji ({{$event->start}} - {{\Illuminate\Support\Carbon::create($event->end)->format('H:i:s')}},
 <br>
 u prowadzącego: {{$event->teacher->name}}
 <br>

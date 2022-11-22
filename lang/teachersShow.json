@@ -16,7 +16,8 @@
         "revoke": "Revoke",
         "accept": "Accept",
         "addEvents": "Declare new appointment date",
-        "eventsList": "Check appointment list"
+        "eventsList": "Check appointment list",
+        "created_info": "You has been successfully reserved appointment"
     },
     "pl.teachersShow": {
         "title": "Profil",
@@ -35,7 +36,8 @@
         "revoke": "Odrzuć",
         "accept": "Potwierdź",
         "addEvents": "Dodaj nową godzinę konsultacji",
-        "eventsList": "Sprawdź listę zarezerwowanych terminów"
+        "eventsList": "Sprawdź listę zarezerwowanych terminów",
+        "created_info": "Pomyślnie zarezerwowano spotkanie"
     },
     "en.class": {
         "free": "Free",
