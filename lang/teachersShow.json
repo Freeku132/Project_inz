@@ -7,6 +7,7 @@
         "auth": "Only logged in users can book an appointment",
         "admin": "The appointment has already been booked",
         "subject": "Appointment subject:",
+        "grade_group": "Grade level and group",
         "message": "Message to teacher:",
         "room": "Room:",
         "startTime": "Start time:",
@@ -27,6 +28,7 @@
         "auth": "Tylko zalogowani użytkownicy mogą zarezerwować termin",
         "admin": "Termin został już zerezerwowany",
         "subject": "Temat wizyty:",
+        "grade_group": "Kierunek, rok, grupa",
         "message": "Wiadomość do prowadzącego:",
         "room": "Sala:",
         "startTime": "Godzina rozpoczęcia:",
@@ -82,5 +84,25 @@
         "week": "Tydzień",
         "room": "Sala",
         "create": "Dodaj"
+    },
+    "en.errors": {
+        "subject": "The subject field is required",
+        "grade_group": "The grade level and group field is required",
+        "message": "The message field is required",
+        "startNew": "Start time field is required",
+        "endNew": "End time field is required",
+        "day": "The day field is required",
+        "week": "Selecting one option is required",
+        "room": "The room field is required"
+    },
+    "pl.errors": {
+        "subject": "Temat jest wymagany",
+        "grade_group": "Kierunek, rok i grupa jest wymagana",
+        "message": "Wiadomość jest wymagana",
+        "startNew": "Należy wybrać godzinę rozpoczęcia",
+        "endNew": "Należy wybrać godzinę zakończenia",
+        "day": "Dzień jest wymagany",
+        "week": "Należy wybrać symbol tygodnia",
+        "room": "Sala jest wymagana"
     }
 }

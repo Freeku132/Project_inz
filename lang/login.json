@@ -14,9 +14,11 @@
             "login": "Zaloguj"
         },
     "en.error": {
-        "email": "EN ERROR"
+        "email": "These credentials do not match our records.",
+        "password": "The password field is required"
     },
     "pl.error": {
-        "email": "PL ERROR"
+        "email": "Nieprawidłowy login lub hasło",
+        "password": "Pole hasła jest wymagane"
     }
 }

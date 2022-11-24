@@ -1,0 +1,32 @@
+{
+        "en.register": {
+            "name": "Name",
+            "email": "Email",
+            "password": "Password",
+            "confirmPassword": "Confirm Password",
+            "registered": "Already registered?",
+            "register": "Zarejestruj",
+            "login": "LOG IN"
+        },
+        "pl.register": {
+            "name": "Imie i naziwksko",
+            "email": "Email",
+            "password": "Hasło",
+            "confirmPassword": "Potwierdź hasło",
+            "registered": "Masz już konto?",
+            "register": "Zarejestruj",
+            "login": "Zaloguj"
+        },
+    "en.error": {
+        "name": "The name field is required",
+        "email": "The email field is required",
+        "password": "The password field is required",
+        "confirmPassword": "The password field is required"
+    },
+    "pl.error": {
+        "name": "Imie i nazwisko jest wymagane",
+        "email": "Email jest wymagany",
+        "password": "Hasło jest wymagane",
+        "confirmPassword": ""
+    }
+}

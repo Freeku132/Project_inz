@@ -40,7 +40,7 @@ class UserPolicy
      */
     public function studentProfile(User $user, User $model)
     {
-        return $model->role->name === 'student';
+        return $model->role->name === 'student' && $model->name === $user->name;
     }
 
     /**

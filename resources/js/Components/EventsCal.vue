@@ -23,31 +23,31 @@
 
                             </div>
                             <label for=content class="font-bold mx-5 mt-5 bg-page2 rounded-t-md p-1">{{props.lang.get('teachersShow.subject')}}</label>
-                            <input v-model="form.subject" class="bg-page rounded pl-3 p-1 mx-5 border border-default focus:outline-none " />
-                            <div class=" font-semibold text-red-500 p-1 mx-5" v-if="form.errors.subject">{{form.errors.subject}}</div>
+                            <input v-model="form.subject" class="bg-page rounded pl-3 p-1 mx-5 border border-default focus:outline-none " required />
+                            <div class=" font-semibold text-red-500 p-1 mx-5" v-if="form.errors.subject">{{ props.lang.get('errors.subject') }}</div>
 
-                            <label for=content class="font-bold mx-5 mt-5 bg-page2 rounded-t-md p-1">Grade level, and group</label>
-                            <input v-model="form.student_info" class="bg-page rounded pl-3 p-1 mx-5 border border-default focus:outline-none " />
-                            <div class=" font-semibold text-red-500 p-1 mx-5" v-if="form.errors.student_info">{{form.errors.student_info}}</div>
+                            <label for=content class="font-bold mx-5 mt-5 bg-page2 rounded-t-md p-1">{{props.lang.get('teachersShow.grade_group')}}</label>
+                            <input v-model="form.student_info" class="bg-page rounded pl-3 p-1 mx-5 border border-default focus:outline-none " required />
+                            <div class=" font-semibold text-red-500 p-1 mx-5" v-if="form.errors.student_info">{{ props.lang.get('errors.grade_group') }}</div>
 
                             <label for=content class="font-bold mx-5  bg-page2 p-1">{{props.lang.get('teachersShow.message')}}</label>
-                            <textarea v-model="form.message" class="bg-page mx-5 border border-default focus:ring-0 focus:outline-none focus:border-default mb-0.5" />
-                            <div class=" font-semibold text-red-500 p-1 mx-5" v-if="form.errors.message">{{form.errors.message}}</div>
+                            <textarea v-model="form.message" class="bg-page mx-5 border border-default focus:ring-0 focus:outline-none focus:border-default mb-0.5" required />
+                            <div class=" font-semibold text-red-500 p-1 mx-5" v-if="form.errors.message">{{ props.lang.get('errors.message') }}</div>
 
                             <label for="room" class="font-bold mx-5  bg-page2 p-1">{{props.lang.get('teachersShow.room')}}</label>
                             <input disabled class="mx-5 bg-page pl-3 p-1 border border-default" :value="form.room">
 
                             <label for="endNew" class="font-bold mx-5 bg-page2 p-1">{{props.lang.get('teachersShow.startTime')}}</label>
-                            <select v-model="form.startNew" @change="setEndOptions()" class="bg-page mx-5  border-default">
+                            <select v-model="form.startNew" @change="setEndOptions()" class="bg-page mx-5  border-default" required>
                                 <option v-for="option in startOptions" :value="option">{{option}}</option>
                             </select>
-                            <div class=" font-semibold text-red-500 p-1 mx-5" v-if="form.errors.startNew">{{form.errors.startNew}}</div>
+                            <div class=" font-semibold text-red-500 p-1 mx-5" v-if="form.errors.startNew">{{ props.lang.get('errors.startNew') }}</div>
 
                             <label for="endNew" class="font-bold mx-5 bg-page2 p-1">{{props.lang.get('teachersShow.endTime')}}</label>
-                            <select v-model="form.endNew" class="bg-page mx-5 rounded-b-md border border-default">
+                            <select v-model="form.endNew" class="bg-page mx-5 rounded-b-md border border-default" required>
                                 <option v-for="option in endOptions" :value="option">{{option}}</option>
                             </select>
-                            <div class=" font-semibold text-red-500 p-1 mx-5" v-if="form.errors.endNew">{{form.errors.endNew}}</div>
+                            <div class=" font-semibold text-red-500 p-1 mx-5" v-if="form.errors.endNew">{{ props.lang.get('errors.endNew') }}</div>
 
                             <div class="flex justify-between">
                                 <button type="submit"
