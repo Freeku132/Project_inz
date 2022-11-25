@@ -182,6 +182,21 @@ class TeacherEventController extends Controller
         $endSemesterDate = "20-02-2023";
 //        $endSemesterDate = "12-07-2023";
 
+        $freeDays = [
+            '0'  => '31-10-2022',
+            '1'  => '01-11-2022',
+            '2'  => '11-11-2022',
+            '3'  => '23-12-2022',
+            '4'  => '24-12-2022',
+            '5'  => '25-12-2022',
+            '6'  => '26-12-2022',
+            '7'  => '27-12-2022',
+            '8'  => '28-12-2022',
+            '9'  => '29-12-2022',
+            '10' => '30-12-2022',
+            '11' => '30-12-2022',
+        ];
+
         $endSemesterDate = Carbon::create($endSemesterDate);
         $startSemesterDate = Carbon::parse($startSemester);
 
@@ -241,12 +256,20 @@ class TeacherEventController extends Controller
 
         $dayDates = collect([]);
         for ($i = 0; $diff >= $i; $i++){
+
             $dayDates->add([
-                'date' =>$chosenDayDate->toDateString(),
+                'date'      => $chosenDayDate->toDateString(),
                 'startDate' => Carbon::create($chosenDayDate->format('Y-m-d')." ".$request->startTime),
-                'endDate' => Carbon::create($chosenDayDate->format('Y-m-d')." ".$request->endTime),
-                'week' => Carbon::create($chosenDayDate)->week
+                'endDate'   => Carbon::create($chosenDayDate->format('Y-m-d')." ".$request->endTime),
+                'week'      => Carbon::create($chosenDayDate)->week
             ]);
+
+            foreach ($freeDays as $freeDay) {
+                if ($chosenDayDate == Carbon::create($freeDay)) {
+                    $dayDates->forget($i);
+                }
+            }
+
             $chosenDayDate->addDays(7);
         }
 
