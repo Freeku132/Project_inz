@@ -203,10 +203,10 @@ function onEventClick(event, e) {
             form.student = usePage().props.value.auth.user.id
             return;
         }
-        toast.error(props.lang.value.get('teachersShow.admin'));
+        toast.error(props.lang.get('teachersShow.admin'));
         return;
     }
-    toast.error(props.lang.value.get('teachersShow.auth'));
+    toast.error(props.lang.get('teachersShow.auth'));
     return;
 }
 
