@@ -1,0 +1,51 @@
+{
+    "en.adminPanelSemester": {
+        "start_date" : "Start semester date",
+        "end_date": "End semester date",
+        "set_new_semester" : "Set new semester",
+        "semester_years": "Semester years (example: 2022/2023)",
+        "week": "Week",
+        "week_designation": "Week designations",
+        "null": "Null",
+        "free_days": "Free days",
+        "add": "Add",
+        "add_error": "Date entered incorrectly",
+        "delete": "Delete",
+        "cancel": "Cancel",
+        "delete_info": "Are you sure you want to delete the date?",
+        "set" : "Set"
+
+
+    },
+    "pl.adminPanelSemester": {
+        "start_date" : "Data rozpoczęcia semestru",
+        "end_date": "Data zakończenia semestru",
+        "set_new_semester" : "Ustaw nowy semestr",
+        "semester_years": "Rok akademicki (przykład: 2022/2023)",
+        "week": "Tydzień",
+        "week_designation": "Oznaczenia tygodni",
+        "null": "Brak",
+        "free_days": "Dni wolne",
+        "add": "Dodaj",
+        "add_error": "Data została podana nieprawidłowo",
+        "delete": "Usuń",
+        "cancel": "Anuluj",
+        "delete_info": "Czy na pewno chcesz usunąć datę?",
+        "set": "Ustaw"
+
+    },
+    "en.errors": {
+        "name": "The name field is required",
+        "email": "The email field is required",
+        "password": "Incorrect password. Password should have: at least 7 characters",
+        "role": "Start role field is required"
+
+    },
+    "pl.errors": {
+        "name": "Nazwa jest wymagana",
+        "email": "Email jest wymagany",
+        "password": "Niepoprawne hasło. Hasło powinno składać się przynajmniej z 7 znaków",
+        "role": "Rola jest wymagana"
+    }
+
+}

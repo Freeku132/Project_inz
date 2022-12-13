@@ -1,0 +1,9 @@
+{
+    "en.adminPanel": {
+        "info": "Hello, here you can manage system users and semester settings. In the future, a module for managing events and obtaining statistical data will be added."
+    },
+    "pl.adminPanel": {
+        "info": "Witaj, w tym miejscu możesz zarządzać użytkownikami systemu, oraz ustawieniami semestru. W przyszłości zostanie dodany moduł zarządzania eventami i uzyskiwania danych statystycznych."
+
+    }
+}

@@ -1,0 +1,49 @@
+{
+    "en.adminPanelUsers": {
+        "title" : "Teachers",
+        "header": "All Teachers",
+        "name" : "Name",
+        "email": "Email",
+        "others": "Others",
+        "search": "Search...",
+        "edit": "Edit",
+        "delete": "Delete",
+        "password": "Password",
+        "role": "Role",
+        "cancel": "Cancel",
+        "add_new": "Add user",
+        "add": "Add",
+        "delete_info": "Are you sure want to delete the user?"
+
+    },
+    "pl.adminPanelUsers": {
+        "title" : "Prowadzący",
+        "header": "Lista Wszystkich Prowadzących",
+        "name" : "Imie i nazwisko",
+        "email": "Email",
+        "others": "Inne",
+        "search": "Szukaj...",
+        "edit": "Edytuj",
+        "delete": "Usuń",
+        "password": "Hasło",
+        "role": "Rola",
+        "cancel": "Anuluj",
+        "add_new": "Dodaj użytkownika",
+        "add": "Dodaj",
+        "delete_info": "Czy na pewno chcesz usunąć urzytkownika?"
+    },
+    "en.errors": {
+        "name": "The name field is required",
+        "email": "The email field is required",
+        "password": "Incorrect password. Password should have: at least 7 characters",
+        "role": "Start role field is required"
+
+    },
+    "pl.errors": {
+        "name": "Nazwa jest wymagana",
+        "email": "Email jest wymagany",
+        "password": "Niepoprawne hasło. Hasło powinno składać się przynajmniej z 7 znaków",
+        "role": "Rola jest wymagana"
+    }
+
+}

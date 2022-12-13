@@ -10,31 +10,31 @@
         <div class="border-l-2 w-full border-default">
             <div class="mt-20 w-2/3 mx-auto text-default">
                 <div class="flex flex-col md:flex-row justify-between items-center p-3">
-                    <h1 class="text-3xl font-semibold">    {{ lang.get('teachersIndex.header')}}</h1>
-                    <button type="button" class="text-right rounded px-1 min-w-fit md:mr-5 bg-blue-500 m-3 md:m-0" @click="showNewUser = true">Add new</button>
-                    <input v-model="search" type="text" :placeholder="lang.get('teachersIndex.search')" class="rounded-xl bg-page max-h-10">
+                    <h1 class="text-3xl font-semibold">    {{ lang.get('adminPanelUsers.header')}}</h1>
+                    <button type="button" class="text-right rounded px-1 min-w-fit md:mr-5 bg-blue-500 m-3 md:m-0" @click="showNewUser = true">{{ lang.get('adminPanelUsers.add_new')}}</button>
+                    <input v-model="search" type="text" :placeholder="lang.get('adminPanelUsers.search')" class="rounded-xl bg-page max-h-10">
                 </div>
                 <table class="w-full border-collapse block mx-auto md:table">
                     <thead class="block hidden md:static md:table-header-group ">
                     <tr class="border border-grey-500 md:border-none block md:table-row absolute top-full md:top-auto left-full md:left-auto  md:relative ">
-                        <th class="bg-page2 p-2  font-bold md:border md:border-default text-left block md:table-cell">    {{ lang.get('teachersIndex.name')}}</th>
-                        <th class="bg-page2 p-2  font-bold md:border md:border-default text-left block md:table-cell">    {{ lang.get('teachersIndex.email')}}</th>
+                        <th class="bg-page2 p-2  font-bold md:border md:border-default text-left block md:table-cell">    {{ lang.get('adminPanelUsers.name')}}</th>
+                        <th class="bg-page2 p-2  font-bold md:border md:border-default text-left block md:table-cell">    {{ lang.get('adminPanelUsers.email')}}</th>
                         <th class="bg-page2 p-2  font-bold md:border md:border-default text-left block md:table-cell">    Role</th>
-                        <th class="bg-page2 p-2  font-bold md:border md:border-default text-left block md:table-cell">    {{ lang.get('teachersIndex.others')}}</th>
+                        <th class="bg-page2 p-2  font-bold md:border md:border-default text-left block md:table-cell">    {{ lang.get('adminPanelUsers.others')}}</th>
                     </tr>
                     </thead>
                     <tbody class="block md:table-row-group">
 
                     <tr v-for="user in users.data" class="bg-page border border-default md:border-none block md:table-row">
-                        <td class="p-2 md:border md:border-default text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">{{ lang.get('teachersIndex.name')}}</span>
+                        <td class="p-2 md:border md:border-default text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">{{ lang.get('adminPanelUsers.name')}}</span>
                            {{user.name}}
                         </td>
-                        <td class="p-2 md:border md:border-default text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">{{ lang.get('teachersIndex.email')}}</span>{{user.email}}</td>
+                        <td class="p-2 md:border md:border-default text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">{{ lang.get('adminPanelUsers.email')}}</span>{{user.email}}</td>
                         <td class="p-2 md:border md:border-default text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Role</span>{{user.role_id === 3 ? 'Student' : 'Teacher'}}</td>
                         <td class="p-2 md:border md:border-default text-center block  sm:space-y-1 md:table-cell">
-                            <span class="inline-block  w-1/3 md:hidden font-bold">{{ lang.get('teachersIndex.others')}}</span>
-                            <button class="text-right rounded mr-3 px-2 bg-blue-500" @click="editUser(user)">Edit</button>
-                            <button class="text-right rounded px-2 bg-red-500" @click="deleteUser(user)">Delete</button>
+                            <span class="inline-block  w-1/3 md:hidden font-bold">{{ lang.get('adminPanelUsers.others')}}</span>
+                            <button class="text-right rounded mr-3 px-2 bg-blue-500" @click="editUser(user)">{{ lang.get('adminPanelUsers.edit')}}</button>
+                            <button class="text-right rounded px-2 bg-red-500" @click="deleteUser(user)">{{ lang.get('adminPanelUsers.delete')}}</button>
                         </td>
                     </tr>
                     </tbody>
@@ -53,24 +53,24 @@
             <div class="z-50 fixed inset-0 w-full h-screen flex items-center justify-center bg-bg-semi-75">
                 <div class="md:w-1/3 flex flex-col bg-page3 rounded-xl m-2 p-2">
                     <div class="flex flex-col bg-page rounded-xl m-2 p-2">
-                        <label>Name</label>
+                        <label>{{ lang.get('adminPanelUsers.name')}}</label>
                         <input type="text" v-model="editUserForm.user.name" class="bg-page text-default" required>
-                        <div class=" font-semibold text-red-500" v-if="editUserForm.errors.name">Error name</div>
+                        <div class=" font-semibold text-red-500" v-if="editUserForm.errors.name">{{lang.get('errors.name')}}</div>
 
-                        <label>Email</label>
+                        <label>{{ lang.get('adminPanelUsers.email')}}</label>
                         <input type="text" v-model="editUserForm.user.email" class="bg-page text-default" required>
-                        <div class=" font-semibold text-red-500" v-if="editUserForm.errors.email">Error email</div>
+                        <div class=" font-semibold text-red-500" v-if="editUserForm.errors.email">{{ lang.get('errors.email')}}</div>
 
-                        <label>Password</label>
+                        <label>{{ lang.get('adminPanelUsers.password')}}</label>
                         <input type="text" v-model="editUserForm.user.password" class="bg-page text-default">
-                        <div class=" font-semibold text-red-500" v-if="editUserForm.errors.password">Error password</div>
+                        <div class=" font-semibold text-red-500" v-if="editUserForm.errors.password">{{ lang.get('errors.password')}}</div>
 
-                        <label>Role</label>
+                        <label>{{ lang.get('adminPanelUsers.role')}}</label>
                         <select class="text-default bg-page" v-model="editUserForm.user.role_id">
                             <option value="3">Student</option>
                             <option value="2">Teacher</option>
                         </select>
-                        <div class=" font-semibold text-red-500" v-if="editUserForm.errors.role_id">Error role</div>
+                        <div class=" font-semibold text-red-500" v-if="editUserForm.errors.role_id">{{ lang.get('errors.role')}}</div>
 
 
 
@@ -78,8 +78,8 @@
                     </div>
 
                     <div class="flex flex-row justify-between mx-auto w-3/4 md:w-1/2">
-                        <button type="button" class="text-right rounded px-2 bg-green-600" @click="acceptEdit">Edit</button>
-                        <button type="button" class="text-right rounded px-2 bg-red-500" @click="showEditUser = false">Cancel</button>
+                        <button type="button" class="text-right rounded px-2 bg-green-600" @click="acceptEdit">{{ lang.get('adminPanelUsers.edit')}}</button>
+                        <button type="button" class="text-right rounded px-2 bg-red-500" @click="showEditUser = false">{{ lang.get('adminPanelUsers.cancel')}}</button>
                     </div>
                 </div>
             </div>
@@ -90,7 +90,7 @@
                 <div class="md:w-1/3 flex flex-col bg-page3 rounded-xl m-2 p-2">
                     <div class="flex flex-col bg-page rounded-xl m-2 p-2">
                         <div class="text-xl text-center">
-                            Are you sure to delete
+                            {{ lang.get('adminPanelUsers.delete_info')}}
                             <p class="font-bold">
                                 {{deleteUserForm.user.name}}
                             </p>
@@ -98,8 +98,8 @@
                     </div>
 
                     <div class="flex flex-row justify-between mx-auto w-3/4 md:w-1/2">
-                        <button type="button" class="text-right rounded px-2 bg-red-500" @click="acceptDelete">Delete</button>
-                        <button type="button" class="text-right rounded px-2 bg-page" @click="showDeleteUser = false">Cancel</button>
+                        <button type="button" class="text-right rounded px-2 bg-red-500" @click="acceptDelete">{{ lang.get('adminPanelUsers.delete')}}</button>
+                        <button type="button" class="text-right rounded px-2 bg-page" @click="showDeleteUser = false">{{ lang.get('adminPanelUsers.cancel')}}</button>
                     </div>
                 </div>
             </div>
@@ -109,28 +109,28 @@
             <div class="z-50 fixed inset-0 w-full h-screen flex items-center justify-center bg-bg-semi-75">
                 <div class="md:w-1/3 items-center justify-center flex flex-col bg-page3 rounded-xl m-2 p-2">
                     <div class="flex flex-col bg-page rounded-xl m-2 p-2">
-                        <label>Name</label>
+                        <label>{{ lang.get('adminPanelUsers.name')}}</label>
                         <input type="text" v-model="newUserForm.name" class="bg-page text-default" required>
-                        <div class=" font-semibold text-red-500" v-if="newUserForm.errors.name">Error name</div>
+                        <div class=" font-semibold text-red-500" v-if="newUserForm.errors.name">{{ lang.get('errors.name')}}</div>
 
-                        <label>Email</label>
+                        <label>{{ lang.get('adminPanelUsers.email')}}</label>
                         <input type="text" v-model="newUserForm.email" class="bg-page text-default" required>
-                        <div class=" font-semibold text-red-500" v-if="newUserForm.errors.email">Error email</div>
+                        <div class=" font-semibold text-red-500" v-if="newUserForm.errors.email">{{ lang.get('errors.email')}}</div>
 
-                        <label>Password</label>
+                        <label>{{ lang.get('adminPanelUsers.password')}}</label>
                         <input type="password" v-model="newUserForm.password" class="bg-page text-default" required>
-                        <div class=" font-semibold text-red-500" v-if="newUserForm.errors.password">Error password</div>
+                        <div class=" font-semibold text-red-500" v-if="newUserForm.errors.password">{{ lang.get('errors.password')}}</div>
 
-                        <label>Role</label>
+                        <label>{{ lang.get('adminPanelUsers.role')}}</label>
                         <select class="text-default bg-page" v-model="newUserForm.role_id">
                             <option value="3">Student</option>
                             <option value="2">Teacher</option>
                         </select>
-                        <div class=" font-semibold text-red-500" v-if="newUserForm.errors.role_id">Error role</div>
+                        <div class=" font-semibold text-red-500" v-if="newUserForm.errors.role_id">{{ lang.get('errors.role')}}</div>
                     </div>
                     <div class="flex flex-row justify-between w-3/4 md:w-1/2 mx-auto ">
-                        <button type="button" class="text-right rounded px-2 bg-green-600" @click="acceptNew">Add New</button>
-                        <button type="button" class="text-right rounded px-2 bg-red-500" @click="showNewUser = false">Cancel</button>
+                        <button type="button" class="text-right rounded px-2 bg-green-600" @click="acceptNew">{{ lang.get('adminPanelUsers.add')}}</button>
+                        <button type="button" class="text-right rounded px-2 bg-red-500" @click="showNewUser = false">{{ lang.get('adminPanelUsers.cancel')}}</button>
                     </div>
                 </div>
             </div>
@@ -151,14 +151,14 @@ export default {
 import SideBar from "@/Components/SideBar.vue";
 import {defineAsyncComponent, ref, watch} from "vue";
 import Lang from "lang.js";
-import teacherIndex from "../../../../../lang/teachersIndex.json";
+import adminPanelUsers from "../../../../lang/adminPanelUsers.json";
 import {useForm} from "@inertiajs/inertia-vue3";
 import {debounce} from "lodash/function";
 import {Inertia} from "@inertiajs/inertia";
 
 
 let lang = ref(new Lang({
-    messages: teacherIndex
+    messages: adminPanelUsers
 }));
 let chosenLang = ref(localStorage.getItem('lang') || 'en');
 lang.value.setLocale(chosenLang)

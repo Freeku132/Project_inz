@@ -6,12 +6,10 @@
     <div class="flex md:flex-row flex-col min-h-screen">
         <SideBar/>
         <div class="border-l-2 w-full text-xl font-semibold border-default">
-            <p>
-            Witaj, w tym miejscu możesz zarządzać użytkownikami systemu, oraz ustawieniami semestru. W przyszłości zostanie dodany moduł zarządzania eventami i uzyskiwania danych statystycznych.
-            </p>
-            <p>
-            Hello, here you can manage system users and semester settings. In the future, a module for managing events and obtaining statistical data will be added.
-            </p>
+
+            <div class=" p-4 w-2/3">
+                {{lang.get('adminPanel.info')}}
+            </div>
         </div>
 
     </div>
@@ -26,6 +24,15 @@ export default {
 
 <script setup>
 import SideBar from "@/Components/SideBar.vue"
+import {ref} from "vue";
+import Lang from "lang.js";
+import adminPanel from "../../../../lang/adminPanel.json";
+
+let lang = ref(new Lang({
+    messages: adminPanel
+}));
+let chosenLang = ref(localStorage.getItem('lang') || 'en');
+lang.value.setLocale(chosenLang)
 
 </script>
 

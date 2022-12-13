@@ -12,13 +12,13 @@
                         <button
                             @click="showForm = true"
                             class="text-right mx-auto mr-2 bg-page2 px-3 py-2 rounded-md text-default hover:bg-page3 hover:text-default2">
-                            Set new semester</button>
+                            {{lang.get('adminPanelSemester.set_new_semester')}}</button>
 
-                        <label>Start semester date:</label>
-                        <input v-model="props.startDate" type="date" class="rounded-md">
+                        <label>{{lang.get('adminPanelSemester.start_date')}}</label>
+                        <input v-model="props.startDate" type="date" class="rounded-md" disabled>
 
-                        <label>End semester date:</label>
-                        <input v-model="props.endDate" type="date" class="rounded-md">
+                        <label>{{lang.get('adminPanelSemester.end_date')}}</label>
+                        <input v-model="props.endDate" type="date" class="rounded-md" disabled>
                     </div>
 
                     <div v-if="showForm">
@@ -28,19 +28,19 @@
                                     <button type="button" class="text-right rounded px-2 bg-red-500" @click="showForm = false">x</button>
                                 </div>
                                 <div class="flex flex-col bg-page rounded-xl m-4 p-4">
-                                    <label>Semester years (example: 2022/2023) :</label>
+                                    <label>{{lang.get('adminPanelSemester.semester_years')}}</label>
                                     <input v-model="semesterForm.years" type="text" class="rounded-md">
 
-                                    <label>Start semester date:</label>
+                                    <label>{{lang.get('adminPanelSemester.start_date')}}</label>
                                     <input v-model="semesterForm.startDate" type="date" class="rounded-md">
 
-                                    <label>End semester date:</label>
+                                    <label>{{lang.get('adminPanelSemester.end_date')}}</label>
                                     <input v-model="semesterForm.endDate" type="date" class="rounded-md">
 
                                     <button
                                         @click="setNewSemester()"
                                         class="text-right mx-auto mr-2 mt-2 bg-page2 px-3 py-2 rounded-md text-default hover:bg-page3 hover:text-default2">
-                                        Set</button>
+                                        {{lang.get('adminPanelSemester.set')}}</button>
                                 </div>
                             </div>
                         </div>
@@ -48,13 +48,13 @@
 
                     <div class="grid grid-cols-1 md:grid-cols-3 bg-page rounded-xl m-4 p-4">
                         <div v-for="week in weeks">
-                            <WeekSymbolForm :week="week.startDate" :number="week.week_number" :designation="week.designation"/>
+                            <WeekSymbolForm :week="week.startDate" :number="week.week_number" :designation="week.designation" :lang="lang"/>
                         </div>
                     </div>
 
 
 
-                    <FreeDays :free-days="freeDays"/>
+                    <FreeDays :free-days="freeDays" :lang="lang"/>
 
 
                 </div>
@@ -77,6 +77,8 @@ import {useForm} from "@inertiajs/inertia-vue3";
 import WeekSymbolForm from "@/Components/WeekSymbolForm.vue";
 import {ref} from "vue";
 import FreeDays from "@/Components/FreeDays.vue";
+import Lang from "lang.js";
+import adminPanelSemester from "../../../../lang/adminPanelSemester.json";
 
 let props = defineProps({
     startDate: String,
@@ -84,6 +86,12 @@ let props = defineProps({
     weeks: Object,
     freeDays: Object
 })
+
+let lang = ref(new Lang({
+    messages: adminPanelSemester
+}));
+let chosenLang = ref(localStorage.getItem('lang') || 'en');
+lang.value.setLocale(chosenLang)
 
 let showForm = ref(false);
 

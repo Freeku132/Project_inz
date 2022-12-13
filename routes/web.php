@@ -44,8 +44,9 @@ Route::middleware('can:admin, App\Models\User')->group( function (){
 
 
     Route::get('adminPanel/semester', [SemestersController::class, 'index'])->name('adminPanel.semester');
-
     Route::post('adminPanel/semester',[SemestersController::class, 'store'])->name('adminPanel.semester.store');
+
+
     Route::post('adminPanel/semester/weekdesignations', [WeekDesignationsController::class, 'store'])->name('adminPanel.semester.weekdesignations');
 
 

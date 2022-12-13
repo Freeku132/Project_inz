@@ -1,0 +1,19 @@
+{
+    "en.sideBar": {
+        "users" : "users",
+        "events": "events",
+        "semester": "semester",
+        "manageUser": "Manage users",
+        "manageEvents": "Manage events",
+        "semesterConfig": "Semester configuration"
+    },
+    "pl.sideBar": {
+        "users" : "Użytkownicy",
+        "events": "Spotkania",
+        "semester": "Semestr",
+        "manageUser": "Zarządzaj użytkownikami",
+        "manageEvents": "Zarządzaj spotkaniami",
+        "semesterConfig": "Konfiguracja Semestru"
+
+    }
+}

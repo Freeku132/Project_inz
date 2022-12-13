@@ -27,7 +27,7 @@ class UserPolicy
      */
     public function admin(?User $user)     // Sprawdza czy jest nauczycielem lub adminem (Do edycji eventów)
     {
-        return $user->role->name === 'admin';
+        return $user ? $user->role->name === 'admin' : false;
     }
 
 
