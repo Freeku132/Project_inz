@@ -10,7 +10,7 @@ class UserPolicy
     use HandlesAuthorization;
 
     /**
-     *
+     * Determine whether the user is teacher
      *
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
@@ -19,10 +19,20 @@ class UserPolicy
     {
         return $user->role->name === 'teacher' || $user->role->name === 'admin';
     }
+    /**
+     * Determine whether the user is admin
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function admin(?User $user)     // Sprawdza czy jest nauczycielem lub adminem (Do edycji eventów)
+    {
+        return $user->role->name === 'admin';
+    }
 
 
     /**
-     * Determine whether the user can create models.
+     * Determine whether the user have public profile.
      *
      * @param  \App\Models\User  $user
      * @param  \App\Models\User  $model
@@ -32,8 +42,9 @@ class UserPolicy
     {
         return $model->role->name === 'teacher';
     }
+
     /**
-     * Determine whether the user can create models.
+     * Determine whether the user is student and has private profile.
      *
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
@@ -44,7 +55,7 @@ class UserPolicy
     }
 
     /**
-     * Determine whether the user can update the model.
+     * Determine whether the user is owner of the model(profile).
      *
      * @param  \App\Models\User  $user
      * @param  \App\Models\User  $model

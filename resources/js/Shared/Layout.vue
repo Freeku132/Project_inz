@@ -5,21 +5,19 @@
             <h1 class="h1 text-default ">{{ lang.get('nav.title') }}</h1>
         </div>
 
-        <div class="flex flex-col md:flex-row md:space-x-8 text-default">
+        <div class="flex flex-col md:flex-row md:space-x-4 text-default text-sm xl:text-xl md:text-center px-4">
             <Link class="text-default" :href="route('home') " >    {{ lang.get('nav.home') }}</Link>
             <Link class="text-default" :href="route('teachers.index')" > {{ lang.get('nav.teachers') }}</Link>
             <Link class="text-default" href="#" > {{ lang.get('nav.about') }}</Link>
             <Link class="text-default" href="/profile" > {{ lang.get('nav.profile') }}</Link>
+            <Link v-if="$page.props.auth.admin" class="text-default" :href="route('adminPanel')" > Admin Panel</Link>
         </div>
 
         <div class="items-center flex">
 
         <ThemeSwitcher />
-<!--            <select class="text-default bg-page ring-0  focus:ring-0 hover:text-default2 focus:border-default border-default rounded-md text-sm md:mr-5 ease-in-out " v-model="chosenLang" @change="selectLang">-->
-<!--                <option value="pl">PL</option>-->
-<!--                <option value="en">EN</option>-->
-<!--            </select>-->
-            <Dropdown align="right" class="mr-5" width="48">
+
+            <Dropdown align="right" class="mr-5" width="42">
                 <template #trigger>
                     <span class="inline-flex rounded-md ">
                         <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-default bg-page hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
@@ -33,7 +31,7 @@
                 </template>
 
                 <template #content>
-                    <DropdownLink @click="selectLang('pl')" class="bg-page text-default" method="post" as="button">
+                    <DropdownLink @click="selectLang('pl')" class="bg-page  text-default" method="post" as="button">
                         PL
                     </DropdownLink>
                     <DropdownLink @click="selectLang('en')" class="bg-page text-default" method="post" as="button">

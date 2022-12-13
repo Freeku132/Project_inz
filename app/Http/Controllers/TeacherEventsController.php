@@ -5,12 +5,15 @@ namespace App\Http\Controllers;
 use App\Events\EventUpdated;
 use App\Models\Event;
 use App\Models\EventClass;
+use App\Models\FreeDay;
+use App\Models\Semester;
 use App\Models\User;
+use App\Models\WeekDesignation;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class TeacherEventController extends Controller
+class TeacherEventsController extends Controller
 {
 
     public function index(Request $request, User $user)
@@ -71,58 +74,6 @@ class TeacherEventController extends Controller
 
 
 
-//        $events = Event::query()
-//            ->with(['teacher', 'student', 'eventClass'])
-//            ->whereIn('class', [2,3])
-//            ->whereDate('start','>' ,Carbon::now()->format('Y-m-d'))
-//            ->where('teacher_id', $user->id)
-//            ->orderBy('start')
-//            ->paginate(5)
-//            ->withQueryString()
-//            ->through(fn($event) => [
-//                'id'      => $event->id,
-//                'subject' => $event->subject,
-//                'message' => $event->message,
-//                'start'    => $event->start,
-//                'end'    => $event->end,
-//                'teacher' => $event->teacher,
-//                'student' => $event->student,
-//                'room' => $event->room,
-//                'class' => $event->eventClass->name
-//            ]);
-//
-////        dd($events);
-//
-//
-//        if($request->input('event')){
-//            if ($request->input('page') === null){
-//                $events = Event::query()
-//                    ->where('id' , $request->input('event'))
-//                    ->with(['teacher', 'student', 'eventClass'])
-//                    ->union(Event::query()
-//                    ->whereIn('class', [2,3])
-//                    ->whereDate('start','>' ,Carbon::now()->format('Y-m-d'))
-//                    ->where('teacher_id', $user->id)
-//                    ->orderByDesc('start')
-//                    )
-//                    ->paginate(5)
-//                    ->withQueryString()
-//                    ->through(fn($event) => [
-//                        'id'      => $event->id,
-//                        'subject' => $event->subject,
-//                        'message' => $event->message,
-//                        'start'    => $event->start,
-//                        'end'    => $event->end,
-//                        'teacher' => $event->teacher,
-//                        'student' => $event->student,
-//                        'room' => $event->room,
-//                        'class' => $event->eventClass->name
-//                    ]);
-//
-//            }
-//        }
-
-
         if ($request->only(['page'])) {
         $filters = $request->only(['page']);
             } else {
@@ -165,10 +116,6 @@ class TeacherEventController extends Controller
 
     public function store(Request $request)
     {
-        $freeClass = EventClass::query()->where('name', 'free')->first();
-
-
-  //      dd($request);
         $request->validate([
             'day' => 'required',
             'startTime' => 'required',
@@ -177,78 +124,31 @@ class TeacherEventController extends Controller
             'room' => 'required',
         ]);
 
-        $startSemester = '01-10-2022';
-//        $startSemester = '25-02-2023';
-        $endSemesterDate = "20-02-2023";
-//        $endSemesterDate = "12-07-2023";
+        $freeClass = EventClass::query()->where('name', 'free')->first();
 
-        $freeDays = [
-            '0'  => '31-10-2022',
-            '1'  => '01-11-2022',
-            '2'  => '11-11-2022',
-            '3'  => '23-12-2022',
-            '4'  => '24-12-2022',
-            '5'  => '25-12-2022',
-            '6'  => '26-12-2022',
-            '7'  => '27-12-2022',
-            '8'  => '28-12-2022',
-            '9'  => '29-12-2022',
-            '10' => '30-12-2022',
-            '11' => '30-12-2022',
-        ];
+        $semester = Semester::query()->where('active', 1)->first();
+
+
+        $startSemester = $semester->start_date;
+        $endSemesterDate = $semester->end_date;
+
+
+        $freeDays = FreeDay::query()->where('semester_id', $semester->id)->get();
+
 
         $endSemesterDate = Carbon::create($endSemesterDate);
         $startSemesterDate = Carbon::parse($startSemester);
-
         $chosenDayDate = $startSemesterDate->weekday($request->day);
 
-        $weekArray = [
-            '38' => 'B',
-            '39' => 'A',
-            '40' => 'B',
-            '41' => 'A',
-            '42' => 'B',
-            '43' => 'A',
-            '44' => 'B',
-            '45' => 'A',
-            '46' => 'B',
-            '47' => 'A',
-            '48' => 'B',
-            '49' => 'A',
-            '50' => 'B',
-            '51' => 'A',
-            '52' => Null,
-            '53' => Null,
-            '1' => 'B',
-            '2' => 'A',
-            '3' => 'B',
-            '4' => 'A',
-            '5' => 'B',
-            '6' => 'A',
-            '7' => 'B',
-            '8' => 'B',
-            '9' => 'A',
-            '10' => 'B',
-            '11' => 'A',
-            '12' => 'B',
-            '13' => 'A',
-            '14' => 'B',
-            '15' => 'A',
-            '16' => 'B',
-            '17' => 'A',
-            '18' => 'B',
-            '19' => 'A',
-            '20' => 'B',
-            '21' => 'A',
-            '22' => 'B',
-            '23' => 'A',
-            '24' => 'B',
-            '25' => 'A',
-            '26' => 'B',
-            '27' => 'A',
-            '28' => 'B',
-            '29' => 'A',
-        ];
+
+        $weeks = WeekDesignation::query()->where('semester_id', $semester->id)->get();
+
+
+        $weekArray = array();
+
+        foreach ($weeks as $week) {
+            $weekArray[$week->week_number] = $week->designation;
+        }
 
 
         $diff = (date_diff($endSemesterDate, $chosenDayDate)->days)/7;
@@ -265,7 +165,7 @@ class TeacherEventController extends Controller
             ]);
 
             foreach ($freeDays as $freeDay) {
-                if ($chosenDayDate == Carbon::create($freeDay)) {
+                if ($chosenDayDate == Carbon::create($freeDay->date)) {
                     $dayDates->forget($i);
                 }
             }
@@ -273,18 +173,17 @@ class TeacherEventController extends Controller
             $chosenDayDate->addDays(7);
         }
 
-        //  dd($dayDates);
 
-//        dd($eventsDates);
-        foreach ($dayDates as $item){
+
+        foreach ($dayDates as $day){
             if($request->week === 'A/B'){
-                if($weekArray[$item['week']] === 'A' || $weekArray[$item['week']] === 'B'){
-                    if($item['startDate'] < Carbon::create($startSemester)){
+                if($weekArray[$day['week']] === 'A' || $weekArray[$day['week']] === 'B'){
+                    if($day['startDate'] < Carbon::create($startSemester)){
 
                     } else {
                         Event::create([
-                        'start'       => $item['startDate'],
-                        'end'         => $item['endDate'],
+                        'start'       => $day['startDate'],
+                        'end'         => $day['endDate'],
                         'room'        => $request->room,
                         'class'       => $freeClass->id,
                         'subject'     => '',
@@ -296,15 +195,14 @@ class TeacherEventController extends Controller
                 }
 
 
-            }elseif ($weekArray[$item['week']] === $request->week){
-                if($item['startDate'] < Carbon::create($startSemester)){
-
+            }elseif ($weekArray[$day['week']] === $request->week){
+                if($day['startDate'] < Carbon::create($startSemester)){
                 } else {
-                    echo $item['week'];
+                    echo $day['week'];
                     echo "- $request->week ";
                     Event::create([
-                        'start'       => $item['startDate'],
-                        'end'         => $item['endDate'],
+                        'start'       => $day['startDate'],
+                        'end'         => $day['endDate'],
                         'room'        => $request->room,
                         'class'       => $freeClass->id,
                         'subject'     => '',

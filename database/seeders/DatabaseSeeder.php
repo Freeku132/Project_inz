@@ -6,7 +6,9 @@ namespace Database\Seeders;
 use App\Models\Event;
 use App\Models\EventClass;
 use App\Models\Role;
+use App\Models\Semester;
 use App\Models\User;
+use Database\Factories\SemesterFactory;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -18,6 +20,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        Semester::factory()->create([
+            'name' => 'semestr_1',
+            'start_date' => '2022-10-01',
+            'end_date' => '2023-02-20',
+            'active' => true,
+        ]);
 
         $classFree = EventClass::factory()->create([
             'id' => 1,

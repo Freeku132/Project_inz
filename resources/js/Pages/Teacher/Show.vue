@@ -57,9 +57,9 @@
                             </g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g></svg>
                     </InfoIcon>
 
-                    <button v-if="can.createEvent" @click="create = !create" class="bg-page hover:bg-page2 p-2 rounded m-4">{{ lang.get('teachersShow.addEvents')}}</button>
+                    <button v-if="can.createEvent" @click="create = !create" class="bg-page w-11/12 hover:bg-page2 p-2 rounded m-4">{{ lang.get('teachersShow.addEvents')}}</button>
 
-                    <Link class="bg-page p-2 rounded m-4 no-underline text-default text-center hover:bg-page2" v-if="can.createEvent" :href="route('event-teacher.index', user.id)">
+                    <Link class="bg-page p-2 rounded m-4 no-underline w-11/12 text-default text-center hover:bg-page2" v-if="can.createEvent" :href="route('event-teacher.index', user.id)">
                         {{lang.get('teachersShow.eventsList')}}
                     </Link>
                 </div>

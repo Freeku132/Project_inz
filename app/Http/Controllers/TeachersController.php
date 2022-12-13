@@ -11,7 +11,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
-class TeacherController extends Controller
+class TeachersController extends Controller
 {
     public function index(Request $request)
     {
