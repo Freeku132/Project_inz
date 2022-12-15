@@ -8,7 +8,7 @@
             <button @click="deleteDay(day)" type="button" class="text-right rounded px-2 bg-red-500">{{lang.get('adminPanelSemester.delete')}}</button>
         </div>
         <div>
-            <input v-model="freeDayForm.date" type="date" class="md:w-1/6 rounded-md">
+            <input v-model="freeDayForm.date" type="date" class="md:w-1/6 bg-page rounded-md">
             <button @click="addFreeDay" type="button" class="bg-page2 px-3 py-2 rounded-md text-default hover:bg-page3 hover:text-default2 ml-4" :disabled="freeDayForm.processing">{{lang.get('adminPanelSemester.add')}}</button>
         </div>
         <div class=" font-semibold text-red-500" v-if="freeDayForm.errors.date">{{lang.get('adminPanelSemester.add_error')}}</div>

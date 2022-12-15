@@ -54,21 +54,21 @@
                 <div class="md:w-1/3 flex flex-col bg-page3 rounded-xl m-2 p-2">
                     <div class="flex flex-col bg-page rounded-xl m-2 p-2">
                         <label>{{ lang.get('adminPanelUsers.name')}}</label>
-                        <input type="text" v-model="editUserForm.user.name" class="bg-page text-default" required>
+                        <input type="text" v-model="editUserForm.user.name" class="bg-page rounded-md text-default" required>
                         <div class=" font-semibold text-red-500" v-if="editUserForm.errors.name">{{lang.get('errors.name')}}</div>
 
                         <label>{{ lang.get('adminPanelUsers.email')}}</label>
-                        <input type="text" v-model="editUserForm.user.email" class="bg-page text-default" required>
+                        <input type="text" v-model="editUserForm.user.email" class="bg-page rounded-md text-default" required>
                         <div class=" font-semibold text-red-500" v-if="editUserForm.errors.email">{{ lang.get('errors.email')}}</div>
 
                         <label>{{ lang.get('adminPanelUsers.password')}}</label>
-                        <input type="text" v-model="editUserForm.user.password" class="bg-page text-default">
+                        <input type="text" v-model="editUserForm.user.password" class="bg-page rounded-md text-default">
                         <div class=" font-semibold text-red-500" v-if="editUserForm.errors.password">{{ lang.get('errors.password')}}</div>
 
                         <label>{{ lang.get('adminPanelUsers.role')}}</label>
-                        <select class="text-default bg-page" v-model="editUserForm.user.role_id">
-                            <option value="3">Student</option>
-                            <option value="2">Teacher</option>
+                        <select class="text-default rounded-md bg-page" v-model="editUserForm.user.role_id">
+                            <option class="rounded-md" value="3">Student</option>
+                            <option class="rounded-md" value="2">Teacher</option>
                         </select>
                         <div class=" font-semibold text-red-500" v-if="editUserForm.errors.role_id">{{ lang.get('errors.role')}}</div>
 
@@ -107,24 +107,24 @@
 
         <div v-show="showNewUser">
             <div class="z-50 fixed inset-0 w-full h-screen flex items-center justify-center bg-bg-semi-75">
-                <div class="md:w-1/3 items-center justify-center flex flex-col bg-page3 rounded-xl m-2 p-2">
+                <div class=" items-center justify-center flex flex-col bg-page3 rounded-xl m-2 p-2">
                     <div class="flex flex-col bg-page rounded-xl m-2 p-2">
                         <label>{{ lang.get('adminPanelUsers.name')}}</label>
-                        <input type="text" v-model="newUserForm.name" class="bg-page text-default" required>
+                        <input type="text" v-model="newUserForm.name" class="bg-page text-default rounded-md" required>
                         <div class=" font-semibold text-red-500" v-if="newUserForm.errors.name">{{ lang.get('errors.name')}}</div>
 
                         <label>{{ lang.get('adminPanelUsers.email')}}</label>
-                        <input type="text" v-model="newUserForm.email" class="bg-page text-default" required>
+                        <input type="text" v-model="newUserForm.email" class="bg-page text-default rounded-md " required>
                         <div class=" font-semibold text-red-500" v-if="newUserForm.errors.email">{{ lang.get('errors.email')}}</div>
 
                         <label>{{ lang.get('adminPanelUsers.password')}}</label>
-                        <input type="password" v-model="newUserForm.password" class="bg-page text-default" required>
+                        <input type="password" v-model="newUserForm.password" class="bg-page text-default rounded-md " required>
                         <div class=" font-semibold text-red-500" v-if="newUserForm.errors.password">{{ lang.get('errors.password')}}</div>
 
                         <label>{{ lang.get('adminPanelUsers.role')}}</label>
-                        <select class="text-default bg-page" v-model="newUserForm.role_id">
-                            <option value="3">Student</option>
-                            <option value="2">Teacher</option>
+                        <select class="text-default bg-page rounded-md " v-model="newUserForm.role_id">
+                            <option class="rounded-md" value="3">Student</option>
+                            <option class="rounded-md" value="2">Teacher</option>
                         </select>
                         <div class=" font-semibold text-red-500" v-if="newUserForm.errors.role_id">{{ lang.get('errors.role')}}</div>
                     </div>

@@ -15,10 +15,10 @@
                             {{lang.get('adminPanelSemester.set_new_semester')}}</button>
 
                         <label>{{lang.get('adminPanelSemester.start_date')}}</label>
-                        <input v-model="props.startDate" type="date" class="rounded-md" disabled>
+                        <input v-model="props.startDate" type="date" class="rounded-md bg-page" disabled>
 
                         <label>{{lang.get('adminPanelSemester.end_date')}}</label>
-                        <input v-model="props.endDate" type="date" class="rounded-md" disabled>
+                        <input v-model="props.endDate" type="date" class="rounded-md bg-page" disabled>
                     </div>
 
                     <div v-if="showForm">
@@ -29,13 +29,13 @@
                                 </div>
                                 <div class="flex flex-col bg-page rounded-xl m-4 p-4">
                                     <label>{{lang.get('adminPanelSemester.semester_years')}}</label>
-                                    <input v-model="semesterForm.years" type="text" class="rounded-md">
+                                    <input v-model="semesterForm.years" type="text" class="rounded-md bg-page">
 
                                     <label>{{lang.get('adminPanelSemester.start_date')}}</label>
-                                    <input v-model="semesterForm.startDate" type="date" class="rounded-md">
+                                    <input v-model="semesterForm.startDate" type="date" class="rounded-md bg-page">
 
                                     <label>{{lang.get('adminPanelSemester.end_date')}}</label>
-                                    <input v-model="semesterForm.endDate" type="date" class="rounded-md">
+                                    <input v-model="semesterForm.endDate" type="date" class="rounded-md bg-page">
 
                                     <button
                                         @click="setNewSemester()"

@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-col">
         <label class="mr-2 "> {{lang.get('adminPanelSemester.week')}}: {{number}} - {{week}}</label>
-        <select class="w-1/2 rounded-md" @change="submit(week)" v-model="weekForm.designation">
+        <select class="w-1/2 bg-page rounded-md" @change="submit(week)" v-model="weekForm.designation">
             <option value="Null">{{lang.get('adminPanelSemester.null')}}</option>
             <option value="A">A</option>
             <option value="B">B</option>
