@@ -4,7 +4,7 @@
         <title>Home</title>
     </Head>
     <div>
-
+        Welcome
     </div>
 </template>
 

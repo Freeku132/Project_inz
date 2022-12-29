@@ -62,8 +62,9 @@ class DatabaseSeeder extends Seeder
             'name' => 'admin',
             'password' => '$2y$10$lnHMRaXDApRVMHLqgKlWb.p7ciXt0m0nZC7Go05N8e7hFt5dXoTP2',
             'email' => 'admin@admin.pl',
-            'role_id' => $role2
+            'role_id' => $role1
         ]);
+
         $user2 = User::factory()->create([
             'name' => 'student1',
             'password' => '$2y$10$lnHMRaXDApRVMHLqgKlWb.p7ciXt0m0nZC7Go05N8e7hFt5dXoTP2',
@@ -76,24 +77,30 @@ class DatabaseSeeder extends Seeder
             'email' => 'student2@student.pl',
             'role_id' => $role3
         ]);
+        $user4 = User::factory()->create([
+            'name' => 'teacher',
+            'password' => '$2y$10$lnHMRaXDApRVMHLqgKlWb.p7ciXt0m0nZC7Go05N8e7hFt5dXoTP2',
+            'email' => 'teacher@teacher.pl',
+            'role_id' => $role2
+        ]);
 
         Event::factory()->create([
-            'start' => '2022-10-10 8:00',
-            'end' => '2022-10-10 9:30',
+            'start' => '2022-12-14 8:00',
+            'end' => '2022-12-14 9:30',
             'class' => $classFree,
-            'teacher_id' => $user1,
+            'teacher_id' => $user4,
         ]);
         Event::factory()->create([
-            'start' => '2022-10-11 10:00',
-            'end' => '2022-10-11 11:30',
+            'start' => '2022-12-13 10:00',
+            'end' => '2022-12-13 11:30',
             'class' => $classFree,
-            'teacher_id' => $user1,
+            'teacher_id' => $user4,
         ]);
         Event::factory()->create([
-            'start' => '2022-10-12 9:00',
-            'end' => '2022-10-12 10:30',
+            'start' => '2022-12-12 9:00',
+            'end' => '2022-12-12 10:30',
             'class' => $classFree,
-            'teacher_id' => $user1,
+            'teacher_id' => $user4,
         ]);
 
     }

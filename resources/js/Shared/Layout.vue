@@ -20,7 +20,7 @@
             <Dropdown align="right" class="mr-5" width="42">
                 <template #trigger>
                     <span class="inline-flex rounded-md ">
-                        <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-default bg-page hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                        <button type="button" id="language" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-default bg-page hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
                             {{ chosenLang.toString().toUpperCase() }}
 
                             <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -31,10 +31,10 @@
                 </template>
 
                 <template #content>
-                    <DropdownLink @click="selectLang('pl')" class="bg-page  text-default" method="post" as="button">
+                    <DropdownLink @click="selectLang('pl')" id="pl" class="bg-page  text-default" method="post" as="button">
                         PL
                     </DropdownLink>
-                    <DropdownLink @click="selectLang('en')" class="bg-page text-default" method="post" as="button">
+                    <DropdownLink @click="selectLang('en')" id="en" class="bg-page text-default" method="post" as="button">
                         EN
                     </DropdownLink>
                 </template>
@@ -44,7 +44,7 @@
             <Dropdown align="right" width="48">
                 <template #trigger>
                     <span class="inline-flex rounded-md ">
-                        <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-default bg-page hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                        <button type="button" id="dropdown_user" dusk="dropdown_user" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-default bg-page hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
                             {{ $page.props.auth.user.name }}
 
                             <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -62,14 +62,14 @@
                     <DropdownLink v-if="$page.props.auth.user.role_id === 2" :href="route('event-teacher.index', $page.props.auth.user)" class="bg-page text-default" method="get" as="button">
                         {{ lang.get('nav.eventList') }}
                     </DropdownLink>
-                    <DropdownLink :href="route('logout')" class="bg-page text-default" method="post" as="button">
+                    <DropdownLink id="logout" :href="route('logout')" class="bg-page text-default" method="post" as="button">
                         {{ lang.get('nav.logout') }}
                     </DropdownLink>
                 </template>
             </Dropdown>
         </div>
         <div v-else>
-            <Link :href="route('login')" class="text-sm text-default dark:text-gray-500 underline"> {{ lang.get('nav.login') }}</Link>
+            <Link id="login" :href="route('login')" class="text-sm text-default dark:text-gray-500 underline"> {{ lang.get('nav.login') }}</Link>
 
             <Link :href="route('register')" class="ml-4 text-sm text-default dark:text-gray-500 underline"> {{ lang.get('nav.register') }}</Link>
         </div>

@@ -73,8 +73,8 @@
                         :time-from="7 * 60"
                         :time-to="21 * 60"
                         :time-step="15"
-                        :min-date="'2022-10-12'"
-                        :max-date="'2022-10-14'"
+                        :min-date="semester.start_date"
+                        :max-date="semester.end_date"
                         :editable-events="{ title: false, drag: false, resize: false, delete: false, create: false }"
                         :locale="props.lang.getLocale()"
                         :events="props.events.data"
@@ -92,8 +92,8 @@
                                     <div v-html="props.lang.get('class.'+event.class)"/>
                                 </div>
                                 <div class="flex flex-col md:flex-row justify-center">
-                                    <div>{{event.start.format('HH:mm')}}-</div>
-                                    <div>{{event.end.format('HH:mm')}}</div>
+                                    <div>{{ event.start.format('HH:mm') }}-</div>
+                                    <div>{{ event.end.format('HH:mm') }}</div>
                                 </div>
                             </div>
                         </template>
@@ -123,6 +123,7 @@ let props = defineProps({
     events: Object,
     currentDate: String,
     user: Object,
+    semester: Object,
     lang: Object,
 })
 
@@ -173,7 +174,7 @@ let endOptions = ref([]); // Available hours to choose on book
 
 function onEventClick(event, e) {
     if (usePage().props.value.auth.user) {
-        if (event.class === 'free' || usePage().props.value.auth.user.id === props.user.id
+        if (event.class === 'free' || usePage().props.value.auth.user.id === props.user.id || event.student_id === usePage().props.value.auth.user.id
         ) {
             let start = event.start.format('YYYY-MM-DD HH:mm')
             let end = event.end.format('YYYY-MM-DD HH:mm')

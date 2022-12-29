@@ -12,7 +12,7 @@
             <form @submit.prevent="submit">
                 <div>
                     <InputLabel for="email" :value="lang.get('login.email')" />
-                    <TextInput id="email" type="email" class="mt-1 block w-full" v-model="form.email" required autofocus autocomplete="username" />
+                    <TextInput id="email" name="email" type="email" class="mt-1 block w-full" v-model="form.email" required autofocus autocomplete="username" />
 <!--                    <InputError class="mt-2" :message="form.errors.email" />-->
                     <!--Do zatwierdzenia!!-->
                     <InputError class="mt-2" v-if="form.errors.email" :message="lang.get('error.email')" />
@@ -20,7 +20,7 @@
 
                 <div class="mt-4">
                     <InputLabel for="password" :value="lang.get('login.password')" />
-                    <TextInput id="password" type="password" class="mt-1 block w-full" v-model="form.password" required autocomplete="current-password" />
+                    <TextInput id="password" name="password" type="password" class="mt-1 block w-full" v-model="form.password" required autocomplete="current-password" />
 <!--                    <InputError class="mt-2" :message="form.errors.password" />-->
                     <InputError class="mt-2" v-if="form.errors.password" :message="lang.get('error.password')" />
                 </div>
@@ -37,7 +37,7 @@
                         {{ lang.get('login.forgot') }}
                     </Link>
 
-                    <PrimaryButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                    <PrimaryButton id="login" class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                         {{ lang.get('login.login') }}
                     </PrimaryButton>
                 </div>

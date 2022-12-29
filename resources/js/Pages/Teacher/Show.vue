@@ -80,7 +80,7 @@
                         </div>
                     </div>
 
-                <EventsCal :user="user" :events="events" :currentDate="currentDate" :lang="lang"/>
+                <EventsCal dusk="events-cal" :user="user" :events="events" :currentDate="currentDate" :semester="semester" :lang="lang" />
                 </div>
             </div>
         </div>
@@ -109,6 +109,7 @@ let props = defineProps({
     user : Object,
     events: Object,
     currentDate: String,
+    semester: Object,
     can: Object,
 })
 

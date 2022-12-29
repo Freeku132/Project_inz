@@ -33,7 +33,7 @@
                     {{ lang.get('register.registered') }}
                 </Link>
 
-                <PrimaryButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                <PrimaryButton class="ml-4" id="register" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                     {{ lang.get('register.register') }}
                 </PrimaryButton>
             </div>

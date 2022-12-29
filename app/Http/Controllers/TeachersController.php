@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\EventResource;
 use App\Models\Event;
 use App\Models\Role;
+use App\Models\Semester;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -54,6 +55,11 @@ class TeachersController extends Controller
             ->with('eventClass')
             ->get());
 
+        $semester = Semester::query()
+            ->where('active', 1)
+            ->first();
+
+//        dd($semester);
 
         if (Auth::user()) {
             $can = Auth::user()->can('owner', [User::class, $user]);
@@ -66,6 +72,7 @@ class TeachersController extends Controller
             'user'        => $user,
             'events'      => $events,
             'currentDate' => $currentDate,
+            'semester' => $semester,
             'can' => [
                 'createEvent' => $can,
                 'teacher'     => $user->can('teacher', $user)

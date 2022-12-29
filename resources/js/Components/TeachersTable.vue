@@ -2,7 +2,7 @@
     <div class="mt-20 w-2/3 mx-auto text-default">
         <div class="flex flex-col md:flex-row justify-between  p-3">
             <h1 class="text-3xl font-semibold">    {{ lang.get('teachersIndex.header')}}</h1>
-            <input v-model="search" type="text" :placeholder="lang.get('teachersIndex.search')" class="rounded-xl bg-page max-h-10">
+            <input v-model="search" id="search" type="text" :placeholder="lang.get('teachersIndex.search')" class="rounded-xl bg-page max-h-10">
         </div>
         <table class="w-full border-collapse block mx-auto md:table">
             <thead class="block md:table-header-group">
