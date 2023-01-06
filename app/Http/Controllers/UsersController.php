@@ -38,30 +38,40 @@ class UsersController extends Controller
     {
         $user->delete();
 
-        return back()->with('success_message', 'UserDelete');
+        return back()->with('success_message', 'user_delete');
     }
 
     public function update(User $user, Request $request)
     {
+
         $attributes = $request->validate([
-            'user' => 'required',
-            'user.id' => 'required',
-            'user.name' => 'required',
-            'user.email' => 'required|email',
-            'user.password' => 'min_digits:7|nullable',
-            'user.role_id' => 'required'
+
+            'id' => 'required',
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,'.$user->id,
+            'password' => 'min:7|nullable',
+            'role_id' => 'required'
         ]);
 
-        $attributes = $attributes['user'];
 
-        $user->update([
-            'name' => $attributes['name'],
-            'email' => $attributes['email'],
-            'role_id' => $attributes['role_id'],
-            'password' => Hash::make($attributes['password'])
+        if($request['password']){
+            $user->update([
+                'name' => $attributes['name'],
+                'email' => $attributes['email'],
+                'role_id' => $attributes['role_id'],
+                'password' => Hash::make($attributes['password'])
             ]);
+        } else{
+            $user->update([
+                'name' => $attributes['name'],
+                'email' => $attributes['email'],
+                'role_id' => $attributes['role_id'],
+            ]);
+        }
 
-        return back()->with('success_message', 'UserEdit');
+
+
+        return back()->with('success_message', 'user_edit');
 
     }
 
@@ -69,9 +79,9 @@ class UsersController extends Controller
     {
 
         $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required',
+            'name' => 'required|string|max:50',
+            'email' => 'required|string|email|max:30|unique:users',
+            'password' => 'min_digits:7|required',
             'role_id' => 'required',
         ]);
 
@@ -82,5 +92,6 @@ class UsersController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
+         return redirect()->back()->with('success_message', 'adding_completed');
     }
 }

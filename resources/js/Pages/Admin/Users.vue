@@ -54,19 +54,24 @@
                 <div class="md:w-1/3 flex flex-col bg-page3 rounded-xl m-2 p-2">
                     <div class="flex flex-col bg-page rounded-xl m-2 p-2">
                         <label>{{ lang.get('adminPanelUsers.name')}}</label>
-                        <input type="text" v-model="editUserForm.user.name" class="bg-page rounded-md text-default" required>
+                        <input type="text" v-model="editUserForm.name" class="bg-page rounded-md text-default" required>
                         <div class=" font-semibold text-red-500" v-if="editUserForm.errors.name">{{lang.get('errors.name')}}</div>
+                        <div class=" font-semibold text-red-500" v-if="editUserForm.errors.name">{{ lang.get('errors.'+editUserForm.errors.name)}}</div>
 
                         <label>{{ lang.get('adminPanelUsers.email')}}</label>
-                        <input type="text" v-model="editUserForm.user.email" class="bg-page rounded-md text-default" required>
+                        <input type="text" v-model="editUserForm.email" class="bg-page rounded-md text-default" required>
                         <div class=" font-semibold text-red-500" v-if="editUserForm.errors.email">{{ lang.get('errors.email')}}</div>
+                        <div class=" font-semibold text-red-500" v-if="editUserForm.errors.email">{{ lang.get('errors.'+editUserForm.errors.email)}}</div>
+
 
                         <label>{{ lang.get('adminPanelUsers.password')}}</label>
-                        <input type="text" v-model="editUserForm.user.password" class="bg-page rounded-md text-default">
+                        <input type="password" v-model="editUserForm.password" class="bg-page rounded-md text-default">
                         <div class=" font-semibold text-red-500" v-if="editUserForm.errors.password">{{ lang.get('errors.password')}}</div>
+                        <div class=" font-semibold text-red-500" v-if="editUserForm.errors.password">{{ lang.get('errors.'+editUserForm.errors.password)}}</div>
+
 
                         <label>{{ lang.get('adminPanelUsers.role')}}</label>
-                        <select class="text-default rounded-md bg-page" v-model="editUserForm.user.role_id">
+                        <select class="text-default rounded-md bg-page" v-model="editUserForm.role_id">
                             <option class="rounded-md" value="3">Student</option>
                             <option class="rounded-md" value="2">Teacher</option>
                         </select>
@@ -111,15 +116,15 @@
                     <div class="flex flex-col bg-page rounded-xl m-2 p-2">
                         <label>{{ lang.get('adminPanelUsers.name')}}</label>
                         <input type="text" v-model="newUserForm.name" class="bg-page text-default rounded-md" required>
-                        <div class=" font-semibold text-red-500" v-if="newUserForm.errors.name">{{ lang.get('errors.name')}}</div>
+                        <div class=" font-semibold text-red-500" v-if="newUserForm.errors.name">{{ lang.get('errors.'+newUserForm.errors.name)}}</div>
 
                         <label>{{ lang.get('adminPanelUsers.email')}}</label>
                         <input type="text" v-model="newUserForm.email" class="bg-page text-default rounded-md " required>
-                        <div class=" font-semibold text-red-500" v-if="newUserForm.errors.email">{{ lang.get('errors.email')}}</div>
+                        <div class=" font-semibold text-red-500" v-if="newUserForm.errors.email">{{lang.get('errors.'+newUserForm.errors.email)}}</div>
 
                         <label>{{ lang.get('adminPanelUsers.password')}}</label>
                         <input type="password" v-model="newUserForm.password" class="bg-page text-default rounded-md " required>
-                        <div class=" font-semibold text-red-500" v-if="newUserForm.errors.password">{{ lang.get('errors.password')}}</div>
+                        <div class=" font-semibold text-red-500" v-if="newUserForm.errors.password">{{lang.get('errors.'+newUserForm.errors.password)}}</div>
 
                         <label>{{ lang.get('adminPanelUsers.role')}}</label>
                         <select class="text-default bg-page rounded-md " v-model="newUserForm.role_id">
@@ -152,10 +157,12 @@ import SideBar from "@/Components/SideBar.vue";
 import {defineAsyncComponent, ref, watch} from "vue";
 import Lang from "lang.js";
 import adminPanelUsers from "../../../../lang/adminPanelUsers.json";
-import {useForm} from "@inertiajs/inertia-vue3";
+import {useForm, usePage} from "@inertiajs/inertia-vue3";
 import {debounce} from "lodash/function";
 import {Inertia} from "@inertiajs/inertia";
+import {useToast} from "vue-toastification";
 
+const toast = useToast();
 
 let lang = ref(new Lang({
     messages: adminPanelUsers
@@ -173,10 +180,14 @@ let showEditUser = ref(false);
 let showNewUser = ref(false);
 
 let deleteUserForm = useForm({
-    user : Object
+    user : Object,
 })
 let editUserForm = useForm({
-    user: Object,
+    id:'',
+    name: '',
+    email: '',
+    password: '',
+    role_id: '',
 })
 let newUserForm = useForm({
     name: '',
@@ -192,20 +203,41 @@ let deleteUser = (user) => {
     deleteUserForm.user = user
 }
 let acceptDelete = () => {
-    deleteUserForm.submit('delete', route('adminPanel.users.delete', deleteUserForm.user))
+    deleteUserForm.submit('delete', route('adminPanel.users.delete', deleteUserForm.user),{
+        onSuccess: () => {
+            showDeleteUser.value = false
+            toast.success(lang.value.get('toast.'+usePage().props.value.flash.success_message))
+        }
+    })
 }
 
 let editUser = (user) => {
     showEditUser.value = true
-    editUserForm.user = user
+    editUserForm.id = user.id,
+    editUserForm.name = user.name,
+    editUserForm.email= user.email,
+    editUserForm.password = user.password,
+    editUserForm.role_id= user.role_id
 
 }
 let acceptEdit = () => {
-    editUserForm.submit('patch', route('adminPanel.users.update', editUserForm.user))
+    editUserForm.submit('patch', route('adminPanel.users.update', editUserForm.id),{
+        onSuccess: () => {
+            toast.success(lang.value.get('toast.'+usePage().props.value.flash.success_message))
+            }
+        })
 }
 
 let acceptNew = () => {
-    newUserForm.submit('post', route('adminPanel.users.store', newUserForm.user))
+    newUserForm.submit('post', route('adminPanel.users.store', newUserForm.user), {
+        onSuccess: () => {
+                    showNewUser.value = false
+                    toast.success(lang.value.get('toast.'+usePage().props.value.flash.success_message))
+            }
+        })
+
+
+
 }
 
 
