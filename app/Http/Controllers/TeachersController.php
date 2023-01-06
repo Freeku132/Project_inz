@@ -42,9 +42,9 @@ class TeachersController extends Controller
             $startDate = $request->startDate;
             $endDate = $request->endDate;
         } else {
-            $currentDate = Carbon::now()->format('Y-m-d h:i');
-            $startDate = Carbon::now()->startOfWeek()->format('Y-m-d h:i');
-            $endDate = Carbon::now()->endOfWeek()->format('Y-m-d h:i');
+            $currentDate = Carbon::now()->format('Y-m-d H:i');
+            $startDate = Carbon::now()->startOfWeek()->format('Y-m-d H:i');
+            $endDate = Carbon::now()->endOfWeek()->format('Y-m-d H:i');
         }
 
 

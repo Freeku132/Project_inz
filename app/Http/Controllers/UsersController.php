@@ -21,7 +21,7 @@ class UsersController extends Controller
 
         $users = User::query()->whereIn('role_id' , [$roleTeacher->id, $roleStudent->id])
             ->when($request->input('search'), function ($query, $search){
-                $query->where('name', 'like', '%'.$search.'%');
+                $query->where('name', 'like', '%'.$search.'%')->orWhere('email', 'like', '%'.$search.'%');
             })
             ->paginate(5)
             ->withQueryString();
@@ -81,7 +81,7 @@ class UsersController extends Controller
         $request->validate([
             'name' => 'required|string|max:50',
             'email' => 'required|string|email|max:30|unique:users',
-            'password' => 'min_digits:7|required',
+            'password' => 'min:7|required',
             'role_id' => 'required',
         ]);
 

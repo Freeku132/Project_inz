@@ -10,17 +10,19 @@
         <div class="border-l-2 w-full border-default">
             <div class="mt-20 w-2/3 mx-auto text-default">
                 <div class="flex flex-col md:flex-row justify-between items-center p-3">
-                    <h1 class="text-3xl font-semibold">    {{ lang.get('adminPanelUsers.header')}}</h1>
-                    <button type="button" class="text-right rounded px-1 min-w-fit md:mr-5 bg-blue-500 m-3 md:m-0" @click="showNewUser = true">{{ lang.get('adminPanelUsers.add_new')}}</button>
-                    <input v-model="search" type="text" :placeholder="lang.get('adminPanelUsers.search')" class="rounded-xl bg-page max-h-10">
+                    <h1 class="text-3xl font-semibold"> {{ lang.get('adminPanelUsers.header')}}</h1>
+                    <div class="flex items-center">
+                        <button type="button" class="rounded-md px-1 min-w-fit mr-4 h-8 bg-blue-500 " @click="showNewUser = true">{{ lang.get('adminPanelUsers.add_new')}}</button>
+                        <input v-model="search" type="text" :placeholder="lang.get('adminPanelUsers.search')" class="rounded-xl bg-page max-h-10">
+                    </div>
                 </div>
                 <table class="w-full border-collapse block mx-auto md:table">
                     <thead class="block hidden md:static md:table-header-group ">
                     <tr class="border border-grey-500 md:border-none block md:table-row absolute top-full md:top-auto left-full md:left-auto  md:relative ">
-                        <th class="bg-page2 p-2  font-bold md:border md:border-default text-left block md:table-cell">    {{ lang.get('adminPanelUsers.name')}}</th>
-                        <th class="bg-page2 p-2  font-bold md:border md:border-default text-left block md:table-cell">    {{ lang.get('adminPanelUsers.email')}}</th>
-                        <th class="bg-page2 p-2  font-bold md:border md:border-default text-left block md:table-cell">    Role</th>
-                        <th class="bg-page2 p-2  font-bold md:border md:border-default text-left block md:table-cell">    {{ lang.get('adminPanelUsers.others')}}</th>
+                        <th class="bg-page2 p-2 font-bold md:border md:border-default text-left block md:table-cell">    {{ lang.get('adminPanelUsers.name')}}</th>
+                        <th class="bg-page2 p-2 font-bold md:border md:border-default text-left block md:table-cell">    {{ lang.get('adminPanelUsers.email')}}</th>
+                        <th class="bg-page2 p-2 font-bold md:border md:border-default text-left block md:table-cell">    Role</th>
+                        <th class="bg-page2 p-2 font-bold md:border md:border-default text-left block md:table-cell">    {{ lang.get('adminPanelUsers.others')}}</th>
                     </tr>
                     </thead>
                     <tbody class="block md:table-row-group">
@@ -31,8 +33,8 @@
                         </td>
                         <td class="p-2 md:border md:border-default text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">{{ lang.get('adminPanelUsers.email')}}</span>{{user.email}}</td>
                         <td class="p-2 md:border md:border-default text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Role</span>{{user.role_id === 3 ? 'Student' : 'Teacher'}}</td>
-                        <td class="p-2 md:border md:border-default text-center block  sm:space-y-1 md:table-cell">
-                            <span class="inline-block  w-1/3 md:hidden font-bold">{{ lang.get('adminPanelUsers.others')}}</span>
+                        <td class="p-2 md:border md:border-default text-left block sm:space-y-1 md:table-cell">
+                            <span class="inline-block text-left w-1/3 md:hidden font-bold">{{ lang.get('adminPanelUsers.others')}}</span>
                             <button class="text-right rounded mr-3 px-2 bg-blue-500" @click="editUser(user)">{{ lang.get('adminPanelUsers.edit')}}</button>
                             <button class="text-right rounded px-2 bg-red-500" @click="deleteUser(user)">{{ lang.get('adminPanelUsers.delete')}}</button>
                         </td>
@@ -55,18 +57,15 @@
                     <div class="flex flex-col bg-page rounded-xl m-2 p-2">
                         <label>{{ lang.get('adminPanelUsers.name')}}</label>
                         <input type="text" v-model="editUserForm.name" class="bg-page rounded-md text-default" required>
-                        <div class=" font-semibold text-red-500" v-if="editUserForm.errors.name">{{lang.get('errors.name')}}</div>
                         <div class=" font-semibold text-red-500" v-if="editUserForm.errors.name">{{ lang.get('errors.'+editUserForm.errors.name)}}</div>
 
                         <label>{{ lang.get('adminPanelUsers.email')}}</label>
                         <input type="text" v-model="editUserForm.email" class="bg-page rounded-md text-default" required>
-                        <div class=" font-semibold text-red-500" v-if="editUserForm.errors.email">{{ lang.get('errors.email')}}</div>
                         <div class=" font-semibold text-red-500" v-if="editUserForm.errors.email">{{ lang.get('errors.'+editUserForm.errors.email)}}</div>
 
 
                         <label>{{ lang.get('adminPanelUsers.password')}}</label>
                         <input type="password" v-model="editUserForm.password" class="bg-page rounded-md text-default">
-                        <div class=" font-semibold text-red-500" v-if="editUserForm.errors.password">{{ lang.get('errors.password')}}</div>
                         <div class=" font-semibold text-red-500" v-if="editUserForm.errors.password">{{ lang.get('errors.'+editUserForm.errors.password)}}</div>
 
 
@@ -224,6 +223,7 @@ let acceptEdit = () => {
     editUserForm.submit('patch', route('adminPanel.users.update', editUserForm.id),{
         onSuccess: () => {
             toast.success(lang.value.get('toast.'+usePage().props.value.flash.success_message))
+
             }
         })
 }
@@ -233,6 +233,7 @@ let acceptNew = () => {
         onSuccess: () => {
                     showNewUser.value = false
                     toast.success(lang.value.get('toast.'+usePage().props.value.flash.success_message))
+                    newUserForm.reset()
             }
         })
 
@@ -248,11 +249,13 @@ let Pagination = defineAsyncComponent( () => {
 let search = ref(props.filters.search);
 
 watch(search, debounce( (value) => {
-    Inertia.get(props.routing, {
+    Inertia.get(route('adminPanel.users'), {
         search: value,
     }, {
         replace: true,
         preserveState : true,
+        preserveScroll: true
+
     });
 }, 300));
 

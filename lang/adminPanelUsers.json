@@ -33,17 +33,33 @@
         "delete_info": "Czy na pewno chcesz usunąć urzytkownika?"
     },
     "en.errors": {
-        "name": "The name field is required",
-        "email": "The email field is required",
-        "password": "Incorrect password. Password should have: at least 7 characters",
+        "The name field is required.": "The name field is required",
+        "The name must not be greater than 50 characters.": "The name must not be greater than 50 characters.",
+        "The email has already been taken.": "The email has already been taken.",
+        "The email field is required.": "The email field is required.",
+        "The email must be a valid email address.": "The email must be a valid email address.",
+        "The password must be at least 7 characters.":"The password must be at least 7 characters.",
         "role": "Start role field is required"
 
     },
     "pl.errors": {
-        "name": "Nazwa jest wymagana",
-        "email": "Email jest wymagany",
-        "password": "Niepoprawne hasło. Hasło powinno składać się przynajmniej z 7 znaków",
+        "The name field is required.": "Nazwa jest wymagana",
+        "The name must not be greater than 50 characters.": "Nazwa nie może być dłuża od 50 znaków",
+        "The email field is required.": "Adres email jest wymagany",
+        "The email has already been taken.": "Email jest już w użyciu",
+        "The email must be a valid email address.": "Nieprawidłowy adres email",
+        "The password must be at least 7 characters.":"Hasło powinno składać się przynajmniej z 7 znaków",
         "role": "Rola jest wymagana"
+    },
+    "en.toast": {
+        "adding_completed": "User has been added",
+        "user_edit": "User has been edited",
+        "user_delete": "User has been deleted"
+    },
+    "pl.toast": {
+        "adding_completed": "Użytkownik został dodany",
+        "user_edit": "Użytkownik został edytowany pomyślnie",
+        "user_delete": "Użytkownik został usunięty"
     }
 
 }

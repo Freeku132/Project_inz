@@ -78,6 +78,7 @@ class DatabaseSeeder extends Seeder
             'role_id' => $role3
         ]);
         $user4 = User::factory()->create([
+            'id' => 4,
             'name' => 'teacher',
             'password' => '$2y$10$lnHMRaXDApRVMHLqgKlWb.p7ciXt0m0nZC7Go05N8e7hFt5dXoTP2',
             'email' => 'teacher@teacher.pl',
