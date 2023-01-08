@@ -35,17 +35,15 @@
 
     },
     "en.errors": {
-        "name": "The name field is required",
-        "email": "The email field is required",
-        "password": "Incorrect password. Password should have: at least 7 characters",
-        "role": "Start role field is required"
+        "The years field is required.": "The years field is required.",
+        "The start date field is required.": "The start date field is required.",
+        "The end date field is required.": "The end date field is required."
 
     },
     "pl.errors": {
-        "name": "Nazwa jest wymagana",
-        "email": "Email jest wymagany",
-        "password": "Niepoprawne hasło. Hasło powinno składać się przynajmniej z 7 znaków",
-        "role": "Rola jest wymagana"
+        "The years field is required.": "Pole nazwy roku jest wymagane",
+        "The start date field is required.": "Pole daty rozpoczęscia semestru jest wymagane",
+        "The end date field is required.": "Pole daty zakończenia semestru jest wymagane"
     }
 
 }

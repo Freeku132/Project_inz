@@ -30,12 +30,15 @@
                                 <div class="flex flex-col bg-page rounded-xl m-4 p-4">
                                     <label>{{lang.get('adminPanelSemester.semester_years')}}</label>
                                     <input v-model="semesterForm.years" type="text" class="rounded-md bg-page">
+                                    <div class=" font-semibold text-red-500" v-if="semesterForm.errors.years">{{ lang.get('errors.'+semesterForm.errors.years)}}</div>
 
                                     <label>{{lang.get('adminPanelSemester.start_date')}}</label>
                                     <input v-model="semesterForm.startDate" type="date" class="rounded-md bg-page">
+                                    <div class=" font-semibold text-red-500" v-if="semesterForm.errors.startDate">{{ lang.get('errors.'+semesterForm.errors.startDate)}}</div>
 
                                     <label>{{lang.get('adminPanelSemester.end_date')}}</label>
                                     <input v-model="semesterForm.endDate" type="date" class="rounded-md bg-page">
+                                    <div class=" font-semibold text-red-500" v-if="semesterForm.errors.endDate">{{ lang.get('errors.'+semesterForm.errors.endDate)}}</div>
 
                                     <button
                                         @click="setNewSemester()"
@@ -48,7 +51,7 @@
 
                     <div class="grid grid-cols-1 md:grid-cols-3 bg-page rounded-xl m-4 p-4">
                         <div v-for="week in weeks">
-                            <WeekSymbolForm :week="week.startDate" :number="week.week_number" :designation="week.designation" :lang="lang"/>
+                            <WeekSymbolForm :week="week.start_date" :number="week.week_number" :designation="week.designation" :lang="lang"/>
                         </div>
                     </div>
 
@@ -104,7 +107,9 @@ let semesterForm = useForm({
 let setNewSemester = () => {
     if (semesterForm.startDate != null && semesterForm.endDate != null) {
         semesterForm.submit('post', route('adminPanel.semester.store'), {
-
+            onSuccess : () =>{
+                showForm.value = false;
+            }
         })
     }
 }

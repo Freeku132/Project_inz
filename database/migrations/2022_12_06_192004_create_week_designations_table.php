@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->integer('week_number');
             $table->text('designation');
-            $table->date('startDate');
+            $table->date('start_date');
             $table->foreignId('semester_id')->constrained('semesters')->cascadeOnDelete();
             $table->timestamps();
         });

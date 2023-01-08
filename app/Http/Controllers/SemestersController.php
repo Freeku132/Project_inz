@@ -61,7 +61,7 @@ class SemestersController extends Controller
             WeekDesignation::firstOrCreate([
                 'week_number' => $firstWeekDay->week(),
                 'designation' => 'Null',
-                'startDate' => $firstWeekDay->format("Y-m-d"),
+                'start_date' => $firstWeekDay->format("Y-m-d"),
                 'semester_id' => $semester->id
             ]);
             $firstWeekDay = $firstWeekDay->addDays(7);

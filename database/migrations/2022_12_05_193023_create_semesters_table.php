@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('semesters', function (Blueprint $table) {
             $table->id();
-            $table->text('name');
+            $table->text('name')->unique();
             $table->date('start_date');
             $table->date('end_date');
             $table->boolean('active');
