@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         Semester::factory()->create([
-            'name' => 'semestr_1',
+            'name' => 'semester_test',
             'start_date' => '2022-10-01',
             'end_date' => '2023-02-20',
             'active' => true,

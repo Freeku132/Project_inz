@@ -93,7 +93,8 @@
         "endNew": "End time field is required",
         "day": "The day field is required",
         "week": "Selecting one option is required",
-        "room": "The room field is required"
+        "room": "The room field is required",
+        "semester_error": "The semester has not yet been set up"
     },
     "pl.errors": {
         "subject": "Temat jest wymagany",
@@ -103,6 +104,7 @@
         "endNew": "Należy wybrać godzinę zakończenia",
         "day": "Dzień jest wymagany",
         "week": "Należy wybrać symbol tygodnia",
-        "room": "Sala jest wymagana"
+        "room": "Sala jest wymagana",
+        "semester_error": "Semestr nie został jeszcze skonfigurowany"
     }
 }

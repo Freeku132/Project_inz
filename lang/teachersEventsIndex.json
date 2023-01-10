@@ -18,7 +18,8 @@
         "category": {
             "all": "All",
             "busy": "Busy",
-            "accepted": "Accepted"
+            "accepted": "Accepted",
+            "cancelled": "Cancelled"
         },
         "action": "Action",
         "show" : "Show",
@@ -38,7 +39,8 @@
         "category": {
             "all": "Wszystkie",
             "busy": "Zarezerwowany",
-            "accepted": "Potwierdzony"
+            "accepted": "Potwierdzony",
+            "cancelled": "Odwołany"
         },
         "action": "Więcej",
         "show": "Pokaż",

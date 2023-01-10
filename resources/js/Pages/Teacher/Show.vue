@@ -71,7 +71,7 @@
 
                     <div v-if="create">
                         <div class="z-50 fixed inset-0 w-full h-screen flex items-center justify-center bg-bg-semi-75">
-                            <div class="md:w-2/3 flex flex-col bg-page rounded-xl m-4 p-4">
+                            <div class="md:w-2/3 flex flex-col bg-page3 rounded-xl m-4 p-4">
                                 <div class="text-right">
                                     <button type="button" class="text-right rounded px-2 bg-red-500" @click="create = !create">x</button>
                                 </div>

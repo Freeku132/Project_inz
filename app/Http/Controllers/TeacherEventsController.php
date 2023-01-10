@@ -53,7 +53,7 @@ class TeacherEventsController extends Controller
             })
             ->with(['teacher', 'student', 'eventClass'])
 //            ->whereIn('class', $category)
-            ->whereDate('start','>' ,Carbon::now()->format('Y-m-d'))
+            ->whereDate('start','>=' , Carbon::now()->startOfDay()->format('Y-m-d H:i'))
             ->where('teacher_id', $user->id)
             ->orderByDesc('start')
             ->paginate(5)
@@ -124,9 +124,17 @@ class TeacherEventsController extends Controller
             'room' => 'required',
         ]);
 
+        $semester = Semester::query()->where('active', 1)->first();
+
+
+
+        if($semester->name == 'semester_test'){
+            return redirect()->back()->withErrors(['semester_error' => 'semester_error']);
+        }
+
+
         $freeClass = EventClass::query()->where('name', 'free')->first();
 
-        $semester = Semester::query()->where('active', 1)->first();
 
 
         $startSemester = $semester->start_date;
@@ -144,11 +152,13 @@ class TeacherEventsController extends Controller
         $weeks = WeekDesignation::query()->where('semester_id', $semester->id)->get();
 
 
+
         $weekArray = array();
 
         foreach ($weeks as $week) {
             $weekArray[$week->week_number] = $week->designation;
         }
+
 
 
         $diff = (date_diff($endSemesterDate, $chosenDayDate)->days)/7;

@@ -1,7 +1,7 @@
 <template>
     <form @submit.prevent="createEvent">
         <p class="mx-8 uppercase text-xl">{{ lang.get('freeForm.addNew') }}</p>
-        <div class="flex flex-col bg-page rounded-xl m-4 p-4" >
+        <div class="flex flex-col bg-page2 rounded-xl m-4 p-4" >
             <label>{{ lang.get('freeForm.day') }}</label>
             <select v-model="form.day" class="bg-page text-default" required>
                 <option value="1">{{ lang.get('freeForm.monday') }}</option>
@@ -34,7 +34,7 @@
             <input type="text" v-model="form.room" class="bg-page text-default" required>
             <div class=" font-semibold text-red-500" v-if="form.errors.room">{{ lang.get('errors.room') }}</div>
 
-            <button type="submit" class="bg-page2 mt-2 rounded-md p-2 mx-auto disabled:bg-page" :disabled="form.processing" > {{lang.get('freeForm.create')}} </button>
+            <button type="submit" class="bg-page3 mt-2 rounded-md p-2 mx-auto disabled:bg-page2" :disabled="form.processing" > {{lang.get('freeForm.create')}} </button>
         </div>
     </form>
 </template>
@@ -60,6 +60,10 @@ let createEvent = () =>{
     form.post('/teachers/event/store', {
         onSuccess: () => {
             toast.success(usePage().props.value.flash.success_message, {})
+        },
+        onError: () =>{
+            toast.error(props.lang.get('errors.'+usePage().props.value.errors.semester_error), {})
+
         }
     });
 }

@@ -58,7 +58,7 @@
                         {{event.end}}
                     </div>
                     <div class="text-center space-x-8">
-                        <button @click.prevent="submit('accepted')" class="p-1 rounded bg-green-600 disabled:bg-gray-500" :disabled="form.processing">
+                        <button @click.prevent="submit('accepted')" class="p-1 rounded bg-green-600 disabled:bg-gray-500" :disabled="form.processing || event.class === 'accepted'">
                             {{ props.lang.get('table.accept') }}
                         </button>
                         <button @click.prevent="submit('cancelled')" class="p-1 rounded bg-red-600 mt-3 disabled:bg-gray-500" :disabled="form.processing">
