@@ -257,7 +257,7 @@ let changeStatus = (value) => {
     changeStatusForm.class = value
     changeStatusForm.patch('/teachers/'+props.user.id+'/events/'+form.id+'/update',{
         onSuccess: () => {
-            toast.success(usePage().props.value.flash.success_message, {})
+            toast.success(props.lang.get('teachersShow.' + usePage().props.value.flash.success_message))
         },
     })
 }

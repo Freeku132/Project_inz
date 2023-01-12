@@ -10,6 +10,7 @@ use App\Models\Semester;
 use App\Models\User;
 use Database\Factories\SemesterFactory;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -60,27 +61,27 @@ class DatabaseSeeder extends Seeder
 
         $user1 = User::factory()->create([
             'name' => 'admin',
-            'password' => '$2y$10$lnHMRaXDApRVMHLqgKlWb.p7ciXt0m0nZC7Go05N8e7hFt5dXoTP2',
+            'password' => Hash::make('12qwaszx'),
             'email' => 'admin@admin.pl',
             'role_id' => $role1
         ]);
 
         $user2 = User::factory()->create([
             'name' => 'student1',
-            'password' => '$2y$10$lnHMRaXDApRVMHLqgKlWb.p7ciXt0m0nZC7Go05N8e7hFt5dXoTP2',
+            'password' => Hash::make('12qwaszx'),
             'email' => 'student1@student.pl',
             'role_id' => $role3
         ]);
         $user3 = User::factory()->create([
             'name' => 'student2',
-            'password' => '$2y$10$lnHMRaXDApRVMHLqgKlWb.p7ciXt0m0nZC7Go05N8e7hFt5dXoTP2',
+            'password' => Hash::make('12qwaszx'),
             'email' => 'student2@student.pl',
             'role_id' => $role3
         ]);
         $user4 = User::factory()->create([
             'id' => 4,
             'name' => 'teacher',
-            'password' => '$2y$10$lnHMRaXDApRVMHLqgKlWb.p7ciXt0m0nZC7Go05N8e7hFt5dXoTP2',
+            'password' => Hash::make('12qwaszx'),
             'email' => 'teacher@teacher.pl',
             'role_id' => $role2
         ]);

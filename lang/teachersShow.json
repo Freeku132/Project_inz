@@ -18,7 +18,9 @@
         "accept": "Accept",
         "addEvents": "Declare new appointment date",
         "eventsList": "Check appointment list",
-        "created_info": "You has been successfully reserved appointment"
+        "created_info": "You has been successfully reserved appointment",
+        "accepted" : "You has been successfully change event status to accepted",
+        "cancelled" : "You has been successfully change event status to cancelled"
     },
     "pl.teachersShow": {
         "title": "Profil",
@@ -39,7 +41,9 @@
         "accept": "Potwierdź",
         "addEvents": "Dodaj nową godzinę konsultacji",
         "eventsList": "Sprawdź listę zarezerwowanych terminów",
-        "created_info": "Pomyślnie zarezerwowano spotkanie"
+        "created_info": "Pomyślnie zarezerwowano spotkanie",
+        "accepted" : "Pomyślnie zmieniono status spotkania na potwierdzony",
+        "cancelled" : "Pomyślnie zmieniono status spotkania na odrzucony"
     },
     "en.class": {
         "free": "Free",
