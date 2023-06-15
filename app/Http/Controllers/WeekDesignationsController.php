@@ -10,7 +10,6 @@ class WeekDesignationsController extends Controller
 {
     public function store(Request $request)
     {
-//        dd($request);
         $semester = Semester::query()->where('active', 1)->first();
 
         $week = WeekDesignation::firstOrCreate([

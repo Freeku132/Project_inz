@@ -25,7 +25,7 @@ class UserPolicy
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function admin(?User $user)     // Sprawdza czy jest nauczycielem lub adminem (Do edycji eventów)
+    public function admin(?User $user)
     {
         return $user ? $user->role->name === 'admin' : false;
     }

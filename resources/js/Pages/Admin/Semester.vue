@@ -28,9 +28,9 @@
                                     <button type="button" class="text-right rounded px-2 bg-red-500" @click="showForm = false">x</button>
                                 </div>
                                 <div class="flex flex-col bg-page rounded-xl m-4 p-4">
-                                    <label>{{lang.get('adminPanelSemester.semester_years')}}</label>
-                                    <input v-model="semesterForm.years" type="text" class="rounded-md bg-page">
-                                    <div class=" font-semibold text-red-500" v-if="semesterForm.errors.years">{{ lang.get('errors.'+semesterForm.errors.years)}}</div>
+                                    <label>{{lang.get('adminPanelSemester.semester_name')}}</label>
+                                    <input v-model="semesterForm.name" type="text" class="rounded-md bg-page">
+                                    <div class=" font-semibold text-red-500" v-if="semesterForm.errors.name">{{ lang.get('errors.'+semesterForm.errors.name)}}</div>
 
                                     <label>{{lang.get('adminPanelSemester.start_date')}}</label>
                                     <input v-model="semesterForm.startDate" type="date" class="rounded-md bg-page">
@@ -76,12 +76,13 @@ export default {
 
 <script setup>
 import SideBar from "@/Components/SideBar.vue"
-import {useForm} from "@inertiajs/inertia-vue3";
+import {useForm, usePage} from "@inertiajs/inertia-vue3";
 import WeekSymbolForm from "@/Components/WeekSymbolForm.vue";
 import {ref} from "vue";
 import FreeDays from "@/Components/FreeDays.vue";
 import Lang from "lang.js";
 import adminPanelSemester from "../../../../lang/adminPanelSemester.json";
+import {useToast} from "vue-toastification";
 
 let props = defineProps({
     startDate: String,
@@ -89,6 +90,8 @@ let props = defineProps({
     weeks: Object,
     freeDays: Object
 })
+
+const toast = useToast();
 
 let lang = ref(new Lang({
     messages: adminPanelSemester
@@ -99,7 +102,7 @@ lang.value.setLocale(chosenLang)
 let showForm = ref(false);
 
 let semesterForm = useForm({
-    years: '',
+    name: '',
     startDate: '',
     endDate: '',
 })
@@ -109,6 +112,7 @@ let setNewSemester = () => {
         semesterForm.submit('post', route('adminPanel.semester.store'), {
             onSuccess : () =>{
                 showForm.value = false;
+                toast.success(lang.value.get('adminPanelSemester.' + usePage().props.value.flash.success_message));
             }
         })
     }

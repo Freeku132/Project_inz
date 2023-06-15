@@ -2,13 +2,11 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Event;
 use App\Models\EventClass;
 use App\Models\Role;
 use App\Models\Semester;
 use App\Models\User;
-use Database\Factories\SemesterFactory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -28,6 +26,7 @@ class DatabaseSeeder extends Seeder
             'active' => true,
         ]);
 
+        // Seed DB with event classes
         $classFree = EventClass::factory()->create([
             'id' => 1,
             'name' => 'free'
@@ -59,7 +58,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'student'
         ]);
 
-        $user1 = User::factory()->create([
+        User::factory()->create([
             'name' => 'admin',
             'password' => Hash::make('12qwaszx'),
             'email' => 'admin@admin.pl',

@@ -97,9 +97,9 @@ class TeacherEventsController extends Controller
 
     public function update(User $user,Request $request)
     {
-
-
         $event = Event::findOrFail($request->id);
+
+
 
         $class = EventClass::query()->where('name', $request->class)->first();
 
@@ -107,9 +107,10 @@ class TeacherEventsController extends Controller
             'class' => $class->id
         ]);
 
+        if ($event->student_id !== null){
 //        Mail::to($event->student->email)->send(new UpdateEventMail($event));
-        EventUpdated::dispatch($event);
-
+            EventUpdated::dispatch($event);
+        }
         return redirect()->back()->with('success_message', $request->class);
     }
 
@@ -124,46 +125,36 @@ class TeacherEventsController extends Controller
             'room' => 'required',
         ]);
 
+        // get active semester model
         $semester = Semester::query()->where('active', 1)->first();
-
-
 
         if($semester->name == 'semester_test'){
             return redirect()->back()->withErrors(['semester_error' => 'semester_error']);
         }
 
 
+        // queries
         $freeClass = EventClass::query()->where('name', 'free')->first();
-
-
-
-        $startSemester = $semester->start_date;
-        $endSemesterDate = $semester->end_date;
-
-
         $freeDays = FreeDay::query()->where('semester_id', $semester->id)->get();
-
-
-        $endSemesterDate = Carbon::create($endSemesterDate);
-        $startSemesterDate = Carbon::parse($startSemester);
-        $chosenDayDate = $startSemesterDate->weekday($request->day);
-
-
         $weeks = WeekDesignation::query()->where('semester_id', $semester->id)->get();
 
+        // create date variables
+        $endSemesterDate = Carbon::create($semester->end_date);
+        $startSemesterDate = Carbon::parse($semester->start_date);
+        // get chosen day date
+        $chosenDayDate = $startSemesterDate->weekday($request->day);
 
-
+        // get right array form
         $weekArray = array();
-
         foreach ($weeks as $week) {
             $weekArray[$week->week_number] = $week->designation;
         }
 
-
-
+        // number of weeks between end semester date and chosen date
         $diff = (date_diff($endSemesterDate, $chosenDayDate)->days)/7;
 
 
+        // collection with chosen day every week from chosen date to end semester date
         $dayDates = collect([]);
         for ($i = 0; $diff >= $i; $i++){
 
@@ -174,42 +165,42 @@ class TeacherEventsController extends Controller
                 'week'      => Carbon::create($chosenDayDate)->week
             ]);
 
+            // the loop checks if the selected date is not a free day
             foreach ($freeDays as $freeDay) {
+                // if chosen day is free day delete it
                 if ($chosenDayDate == Carbon::create($freeDay->date)) {
                     $dayDates->forget($i);
                 }
             }
-
+            // add 7 days to chosen day date
             $chosenDayDate->addDays(7);
         }
 
 
 
         foreach ($dayDates as $day){
+            // check in which weeks meetings should be generated
             if($request->week === 'A/B'){
+                // save events in A and B weeks
                 if($weekArray[$day['week']] === 'A' || $weekArray[$day['week']] === 'B'){
-                    if($day['startDate'] < Carbon::create($startSemester)){
-
-                    } else {
+                    // check if the start date is later than the semester start date
+                    if($day['startDate'] > Carbon::create($semester->start_date)){
                         Event::create([
-                        'start'       => $day['startDate'],
-                        'end'         => $day['endDate'],
-                        'room'        => $request->room,
-                        'class'       => $freeClass->id,
-                        'subject'     => '',
-                        'message'     => '',
-                        'student_info'=> '',
-                        'teacher_id'  => auth()->id(),
+                            'start'       => $day['startDate'],
+                            'end'         => $day['endDate'],
+                            'room'        => $request->room,
+                            'class'       => $freeClass->id,
+                            'subject'     => '',
+                            'message'     => '',
+                            'student_info'=> '',
+                            'teacher_id'  => auth()->id(),
                         ]);
                     }
                 }
-
-
-            }elseif ($weekArray[$day['week']] === $request->week){
-                if($day['startDate'] < Carbon::create($startSemester)){
-                } else {
-                    echo $day['week'];
-                    echo "- $request->week ";
+                // save events only in selected week designations
+            } elseif ($weekArray[$day['week']] === $request->week){
+                // check if the start date is later than the semester start date
+                if($day['startDate'] > Carbon::create($semester->start_date)){
                     Event::create([
                         'start'       => $day['startDate'],
                         'end'         => $day['endDate'],
@@ -223,7 +214,6 @@ class TeacherEventsController extends Controller
                 }
             }
         }
-
         return redirect()->back()->with('success_message', 'Creating events completed');
     }
 }

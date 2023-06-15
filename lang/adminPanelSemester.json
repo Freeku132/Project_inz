@@ -3,7 +3,7 @@
         "start_date" : "Start semester date",
         "end_date": "End semester date",
         "set_new_semester" : "Set new semester",
-        "semester_years": "Semester years (example: 2022/2023)",
+        "semester_name": "Semester name (example: winter 2022/2023)",
         "week": "Week",
         "week_designation": "Week designations",
         "null": "Null",
@@ -13,7 +13,8 @@
         "delete": "Delete",
         "cancel": "Cancel",
         "delete_info": "Are you sure you want to delete the date?",
-        "set" : "Set"
+        "set" : "Set",
+        "create_semester_completed" : "You has been completed create semester"
 
 
     },
@@ -21,7 +22,7 @@
         "start_date" : "Data rozpoczęcia semestru",
         "end_date": "Data zakończenia semestru",
         "set_new_semester" : "Ustaw nowy semestr",
-        "semester_years": "Rok akademicki (przykład: 2022/2023)",
+        "semester_name": "Nazwa semestru (przykład: zimowy 2022/2023)",
         "week": "Tydzień",
         "week_designation": "Oznaczenia tygodni",
         "null": "Brak",
@@ -31,17 +32,20 @@
         "delete": "Usuń",
         "cancel": "Anuluj",
         "delete_info": "Czy na pewno chcesz usunąć datę?",
-        "set": "Ustaw"
+        "set": "Ustaw",
+        "create_semester_completed" : "Pomyślnie utworzono semestr"
 
     },
     "en.errors": {
-        "The years field is required.": "The years field is required.",
+        "The name field is required.": "The name field is required.",
+        "The name has already been taken.": "The name has already been taken.",
         "The start date field is required.": "The start date field is required.",
         "The end date field is required.": "The end date field is required."
 
     },
     "pl.errors": {
-        "The years field is required.": "Pole nazwy roku jest wymagane",
+        "The name field is required.": "Pole nazwy roku jest wymagane",
+        "The name has already been taken.": "Nazwa jest już w użyciu",
         "The start date field is required.": "Pole daty rozpoczęscia semestru jest wymagane",
         "The end date field is required.": "Pole daty zakończenia semestru jest wymagane"
     }

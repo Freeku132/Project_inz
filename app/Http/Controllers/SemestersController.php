@@ -26,38 +26,36 @@ class SemestersController extends Controller
         ]);
     }
 
-
     public function store(Request $request)
     {
         $request->validate([
-            'years' => 'required',
+            'name' => 'required|unique:semesters',
             'startDate' => 'required',
             'endDate' => 'required'
         ]);
 
-        $semesterToDelete = Semester::query()->where('active', true)->first();
 
-        $semesterToDelete->update([
-            'active' => false,
-        ]);
+        Semester::query()->where('active', true)->first()->update(['active' => false]); // deactivate old semester
 
+        // Store a new semester in DB
         $semester = Semester::firstOrCreate([
-            'name' => $request->years,
+            'name'       => $request->name,
             'start_date' => $request->startDate,
-            'end_date' => $request->endDate,
-            'active' => 1,
+            'end_date'   => $request->endDate,
+            'active'     => true,
         ]);
 
-
-
+        //Use Carbon klass to transform start and end date from form to dateTime format
         $start = Carbon::create($request->startDate);
         $end = Carbon::create($request->endDate);
 
+        //Get the first day(monday) of the weekend that starts the semester
         $firstWeekDay = $start->weekday(1);
-        $diff = ($start->diff($end)->days)/7;
+        //Get number of weeks between the start and end date
+        $numberOfWeeks = ($start->diff($end)->days)/7;
 
-
-        for($i = 0; $i <= $diff; $i++){
+        //Create WeekDesignations in for loop using number of weeks.
+        for($i = 0; $i <= $numberOfWeeks; $i++){
             WeekDesignation::firstOrCreate([
                 'week_number' => $firstWeekDay->week(),
                 'designation' => 'Null',
@@ -67,8 +65,6 @@ class SemestersController extends Controller
             $firstWeekDay = $firstWeekDay->addDays(7);
         }
 
-        return back();
-
-
+        return back()->with('success_message', 'create_semester_completed');
     }
 }

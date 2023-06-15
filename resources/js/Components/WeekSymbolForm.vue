@@ -30,8 +30,6 @@ let weekForm = useForm({
 
 let submit = (week) =>{
     weekForm.date = week;
-    console.log(weekForm.designation);
-    console.log(weekForm.date);
 
     weekForm.submit('post', route('adminPanel.semester.weekdesignations'), {
         preserveState:true,

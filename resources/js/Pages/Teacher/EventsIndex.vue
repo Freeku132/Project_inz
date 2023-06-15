@@ -25,7 +25,7 @@
                         {{ lang.get('teachersEventsIndex.back')}}</Link>
                 </div>
 
-                <div class="overflow-x-auto relative m-5 rounded-xl">
+                <div class="relative m-5 rounded-xl">
                     <table class="w-full text-xl text-left text-default ">
                         <tr class="text-default uppercase bg-page ">
                             <th scope="col" class="py-3 px-6">

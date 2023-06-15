@@ -154,7 +154,10 @@ let submit = () =>{
             onSuccess: () => {
                 showForm.value = false;
                 toast.success(props.lang.get('teachersShow.' + usePage().props.value.flash.success_message));
-
+            },
+            onError: () => {
+                showForm.value = false;
+                toast.error(props.lang.get('teachersShow.' + usePage().props.value.errors[0]));
             }
         })
 }
@@ -183,10 +186,14 @@ function onEventClick(event, e) {
             endOptions.value = [];
 
             for (let i = 0; i < diff; i++) {
-                if (event.end.getTime() === new Date(event.start.getTime() + 15 * 60000).format('YYYY-MM-DD HH:mm')) {
-                    return;
+                // if (event.end.getTime() === new Date(event.start.getTime() + 15 * 60000).format('YYYY-MM-DD HH:mm')) {
+                //     return;
+                // }
+                if ((event.end.getTime() - 15 * 60000) < new Date(event.start.getTime()+ (i * 15 * 60000))) {
+
+                } else {
+                    startOptions.value.push(new Date(event.start.getTime() + (i * 15 * 60000)).format('YYYY-MM-DD HH:mm'))
                 }
-                startOptions.value.push(new Date(event.start.getTime() + (i * 15 * 60000)).format('YYYY-MM-DD HH:mm'))
             }
 
             showForm.value = true
@@ -202,6 +209,13 @@ function onEventClick(event, e) {
             form.class = event.class
             form.teacher = props.user.id
             form.student = usePage().props.value.auth.user.id
+
+            if(event.class !== 'free'){
+                startOptions.value= [event.start.format('YYYY-MM-DD HH:mm')]
+                endOptions.value= [event.end.format('YYYY-MM-DD HH:mm')]
+                form.startNew = event.start.format('YYYY-MM-DD HH:mm')
+                form.endNew = event.end.format('YYYY-MM-DD HH:mm')
+            }
             return;
         }
         toast.error(props.lang.get('teachersShow.admin'));
@@ -217,7 +231,7 @@ function setEndOptions() {
     endOptions.value = [
         new Date((new Date(form.startNew).getTime() +15*60000)).format('YYYY-MM-DD HH:mm')
     ]
-    if (form.end !== new Date((new Date(form.startNew).getTime() +15*60000)).format('YYYY-MM-DD HH:mm')){
+    if (form.end >= new Date((new Date(form.startNew).getTime() +30 * 60000)).format('YYYY-MM-DD HH:mm')){
         endOptions.value.push(new Date((new Date(form.startNew).getTime() +30*60000)).format('YYYY-MM-DD HH:mm'))
     }
 }

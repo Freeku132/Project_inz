@@ -31,7 +31,7 @@ class NewEventBookingMail extends Mailable implements ShouldQueue
      */
     public function build()
     {
-        $url = 'http://localhost/teachers/1/events?event='.$this->event->id;
+        $url = 'http://localhost/teachers/'.$this->event->teacher_id.'/events?event='.$this->event->id;
 
         return $this->markdown('events.booking', [
             'url' => $url,

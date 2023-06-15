@@ -25,6 +25,7 @@ class AuthTest extends DuskTestCase
 
 
     /**
+     * Check if the guest can register a new account
      * @test
      */
     public function guest_can_register()
@@ -39,10 +40,7 @@ class AuthTest extends DuskTestCase
                 ->click('button[id="register"]')
                 ->pause(1000)
                 ->assertDontSee('Register')
-                ->logout()
-//                ->click('button[id="dropdown_user"]')
-//                ->click('button[id="logout"]')
-            ;
+                ->logout();
         });
 
         $this->assertDatabaseHas('users', ['email'=>'user@user.pl']);
@@ -70,8 +68,7 @@ class AuthTest extends DuskTestCase
                 ->pause(1000)
                 ->assertDontSee('Register');
         });
-        $this->assertDatabaseHas('users', ['email'=>'user@user.pl'])
-        ;
+        $this->assertDatabaseHas('users', ['email'=>'user@user.pl']);
     }
 
     /**

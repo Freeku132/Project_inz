@@ -20,7 +20,8 @@
         "eventsList": "Check appointment list",
         "created_info": "You has been successfully reserved appointment",
         "accepted" : "You has been successfully change event status to accepted",
-        "cancelled" : "You has been successfully change event status to cancelled"
+        "cancelled" : "You has been successfully change event status to cancelled",
+        "event_already_booked" : "Event already booked"
     },
     "pl.teachersShow": {
         "title": "Profil",
@@ -43,7 +44,8 @@
         "eventsList": "Sprawdź listę zarezerwowanych terminów",
         "created_info": "Pomyślnie zarezerwowano spotkanie",
         "accepted" : "Pomyślnie zmieniono status spotkania na potwierdzony",
-        "cancelled" : "Pomyślnie zmieniono status spotkania na odrzucony"
+        "cancelled" : "Pomyślnie zmieniono status spotkania na odrzucony",
+        "event_already_booked" : "Spotkanie zostało już zarezerwowane"
     },
     "en.class": {
         "free": "Free",

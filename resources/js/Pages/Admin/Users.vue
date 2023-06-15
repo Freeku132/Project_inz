@@ -175,19 +175,13 @@ let props = defineProps({
 })
 
 let showDeleteUser = ref(false);
-let showEditUser = ref(false);
+
 let showNewUser = ref(false);
 
 let deleteUserForm = useForm({
     user : Object,
 })
-let editUserForm = useForm({
-    id:'',
-    name: '',
-    email: '',
-    password: '',
-    role_id: '',
-})
+
 let newUserForm = useForm({
     name: '',
     email: '',
@@ -209,7 +203,19 @@ let acceptDelete = () => {
         }
     })
 }
+// variable used for display
+let showEditUser = ref(false);
 
+// edit user form
+let editUserForm = useForm({
+    id:'',
+    name: '',
+    email: '',
+    password: '',
+    role_id: '',
+})
+
+// function that completes the form with user data after opening the modal window
 let editUser = (user) => {
     showEditUser.value = true
     editUserForm.id = user.id,
@@ -217,8 +223,9 @@ let editUser = (user) => {
     editUserForm.email= user.email,
     editUserForm.password = user.password,
     editUserForm.role_id= user.role_id
-
 }
+
+// function that sends a request to the route with changed user data
 let acceptEdit = () => {
     editUserForm.submit('patch', route('adminPanel.users.update', editUserForm.id),{
         onSuccess: () => {
@@ -236,9 +243,6 @@ let acceptNew = () => {
                     newUserForm.reset()
             }
         })
-
-
-
 }
 
 
